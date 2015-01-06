@@ -35,7 +35,6 @@ namespace BankProject.DBContext
         public DbSet<B_DEBUG> B_DEBUG { get; set; }
         public DbSet<B_Denomination> B_Denomination { get; set; }
         public DbSet<B_ExchangeBanknotesManyDeno> B_ExchangeBanknotesManyDeno { get; set; }
-        public DbSet<B_ExchangeRates> B_ExchangeRates { get; set; }
         public DbSet<B_ExportLCPayment> B_ExportLCPayment { get; set; }
         public DbSet<B_ExportLCPaymentCharge> B_ExportLCPaymentCharge { get; set; }
         public DbSet<B_ExportLCPaymentMT202> B_ExportLCPaymentMT202 { get; set; }
@@ -55,7 +54,6 @@ namespace BankProject.DBContext
         public DbSet<BACCOUNT> BACCOUNTS { get; set; }
         public DbSet<BADVISINGANDNEGOTIATION> BADVISINGANDNEGOTIATIONs { get; set; }
         public DbSet<BADVISINGANDNEGOTIATION_CHARGES> BADVISINGANDNEGOTIATION_CHARGES { get; set; }
-        public DbSet<BAdvisingAndNegotiationLC> BAdvisingAndNegotiationLCs { get; set; }
         public DbSet<BAdvisingAndNegotiationLCCharge> BAdvisingAndNegotiationLCCharges { get; set; }
         public DbSet<BBANK_BRANCH> BBANK_BRANCH { get; set; }
         public DbSet<BBANKCODE> BBANKCODEs { get; set; }
@@ -168,5 +166,9 @@ namespace BankProject.DBContext
         public DbSet<Sochu> Sochus { get; set; }
         public DbSet<sysdiagram> sysdiagrams { get; set; }
         public DbSet<B_CollectCharges> B_CollectCharges { get; set; }
+        public DbSet<BAdvisingAndNegotiationLC> BAdvisingAndNegotiationLCs { get; set; }
+        public DbSet<BEXPORT_LC_AMEND> BEXPORT_LC_AMEND { get; set; }
+        public DbSet<BEXPORT_LC> BEXPORT_LC { get; set; }
+        public DbSet<BEXPORT_LC_CHARGES> BEXPORT_LC_CHARGES { get; set; }
     }
 }

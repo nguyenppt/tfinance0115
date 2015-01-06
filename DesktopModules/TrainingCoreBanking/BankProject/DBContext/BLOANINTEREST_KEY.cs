@@ -18,5 +18,6 @@ namespace BankProject.DBContext
         public string LoanInterest_Key { get; set; }
         public Nullable<decimal> VND_InterestRate { get; set; }
         public Nullable<decimal> USD_InterestRate { get; set; }
+        public long MonthLoanRateNo { get; set; }
     }
 }
