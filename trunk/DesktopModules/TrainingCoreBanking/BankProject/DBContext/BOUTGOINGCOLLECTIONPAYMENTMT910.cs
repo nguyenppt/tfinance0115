@@ -19,6 +19,7 @@ namespace BankProject.DBContext
         public string TransactionReferenceNumber { get; set; }
         public string RelatedReference { get; set; }
         public string AccountIndentification { get; set; }
+        public string NostroAccount { get; set; }
         public Nullable<System.DateTime> ValueDate { get; set; }
         public string Currency { get; set; }
         public Nullable<decimal> Amount { get; set; }

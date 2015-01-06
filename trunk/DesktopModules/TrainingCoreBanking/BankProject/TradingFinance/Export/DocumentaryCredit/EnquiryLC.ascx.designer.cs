@@ -13,49 +13,22 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit {
     public partial class EnquiryLC {
         
         /// <summary>
-        /// RadToolBar2 control.
+        /// RadToolBar1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadToolBar RadToolBar2;
+        protected global::Telerik.Web.UI.RadToolBar RadToolBar1;
         
         /// <summary>
-        /// txtCode control.
+        /// txtRefNo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCode;
-        
-        /// <summary>
-        /// rcbBeneficiary control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox rcbBeneficiary;
-        
-        /// <summary>
-        /// txtBeneficiaryName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtBeneficiaryName;
-        
-        /// <summary>
-        /// rcbApplicantID control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox rcbApplicantID;
+        protected global::Telerik.Web.UI.RadTextBox txtRefNo;
         
         /// <summary>
         /// txtApplicantName control.
@@ -64,7 +37,43 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtApplicantName;
+        protected global::Telerik.Web.UI.RadTextBox txtApplicantName;
+        
+        /// <summary>
+        /// txtBeneficiaryID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtBeneficiaryID;
+        
+        /// <summary>
+        /// txtBeneficiaryName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtBeneficiaryName;
+        
+        /// <summary>
+        /// txtIssueDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDatePicker txtIssueDate;
+        
+        /// <summary>
+        /// txtIssuingBank control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtIssuingBank;
         
         /// <summary>
         /// radGridReview control.
@@ -83,14 +92,5 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadCodeBlock RadCodeBlock1;
-        
-        /// <summary>
-        /// btSearch control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btSearch;
     }
 }

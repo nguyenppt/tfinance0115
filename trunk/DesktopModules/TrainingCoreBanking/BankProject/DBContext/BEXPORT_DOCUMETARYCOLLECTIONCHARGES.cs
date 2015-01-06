@@ -22,7 +22,7 @@ namespace BankProject.DBContext
         public string ChargePeriod { get; set; }
         public string ChargeCcy { get; set; }
         public string ExchRate { get; set; }
-        public string ChargeAmt { get; set; }
+        public Nullable<decimal> ChargeAmt { get; set; }
         public string PartyCharged { get; set; }
         public string OmortCharges { get; set; }
         public string AmtInLocalCCY { get; set; }
@@ -36,5 +36,12 @@ namespace BankProject.DBContext
         public string TaxinLCCYAmt { get; set; }
         public string TaxDate { get; set; }
         public string Rowchages { get; set; }
+        public Nullable<int> TabId { get; set; }
+        public string AmendNo { get; set; }
+        public string ActiveRecordFlag { get; set; }
+        public Nullable<double> OldAmount { get; set; }
+        public Nullable<System.DateTime> OldDocsReceivedDate { get; set; }
+        public Nullable<int> AmendId { get; set; }
+        public string RefAmendNo { get; set; }
     }
 }

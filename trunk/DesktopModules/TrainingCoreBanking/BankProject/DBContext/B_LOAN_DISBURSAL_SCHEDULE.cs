@@ -19,5 +19,6 @@ namespace BankProject.DBContext
         public Nullable<System.DateTime> DisbursalDate { get; set; }
         public Nullable<double> DisbursalAmount { get; set; }
         public Nullable<System.DateTime> DrawdownDate { get; set; }
+        public bool IsCreditToAcc { get; set; }
     }
 }

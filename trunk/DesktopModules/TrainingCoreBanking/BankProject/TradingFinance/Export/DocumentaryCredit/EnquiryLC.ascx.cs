@@ -17,174 +17,106 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
 {
     public partial class EnquiryLC : DotNetNuke.Entities.Modules.PortalModuleBase
     {
-        private readonly ExportLC entContext = new ExportLC();
+        VietVictoryCoreBankingEntities dbEntities = new VietVictoryCoreBankingEntities();
+        protected string lstType = "";
+        protected int refId;
+        protected struct Tabs
+        {
+            public const int Register = 242;
+            public const int Confirm = 236;
+            public const int Cancel = 237;
+            public const int Close = 265;
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
+            lstType = Request.QueryString["lst"];
+            if (!string.IsNullOrEmpty(Request.QueryString["refid"]))
+                refId = Convert.ToInt32(Request.QueryString["refid"]);
+            else
+                refId = Tabs.Register;
+            RadToolBar1.FindItemByValue("btSearch").Enabled = (string.IsNullOrEmpty(lstType) || !lstType.ToLower().Equals("4appr"));
             if (IsPostBack) return;
-            InitToolBar(false);
-            //bind ApplicantID
-            var dsApp = entContext.BAdvisingAndNegotiationLCs.ToList();
-            BindBeneficiary(dsApp);
-            BindApplicant(dsApp);
-            
-            //bind Beneficiary
         }
-        protected void BindBeneficiary(List<BAdvisingAndNegotiationLC> dsApp)
-        {
 
-            var resultBE = dsApp.Select(x => x.BeneficiaryNo).Distinct().ToList();
-            rcbBeneficiary.Items.Clear();
-            rcbBeneficiary.Items.Add(new RadComboBoxItem(""));
-            rcbBeneficiary.DataTextField = "BeneficiaryNo";
-            rcbBeneficiary.DataValueField = "BeneficiaryName";
-            //rcbBeneficiary.DataSource = CreateDataset(resultBE, "Benef");
-
-            DataSet datasourceBE = new DataSet();//Tab1
-            DataTable tblBE = new DataTable();
-            tblBE.Columns.Add("BeneficiaryNo");
-            tblBE.Columns.Add("BeneficiaryName");
-            foreach (var item in resultBE)
-            {
-                if (!String.IsNullOrEmpty(item))
-                {
-                    tblBE.Rows.Add(item, item);
-                }
-
-            }
-            datasourceBE.Tables.Add(tblBE);
-            rcbBeneficiary.DataSource = datasourceBE;
-            rcbBeneficiary.DataBind();
-        }
-        protected string geturlReview(string Id)
-        {
-            return "Default.aspx?tabid=242" + "&CodeID=" + Id + "&enquiry=true";
-        }
-        protected void radGridReview_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)
-        {
-            var obj = entContext.BAdvisingAndNegotiationLCs.ToList();
-            radGridReview.DataSource = obj;
-        }
-        protected void btSearch_Click(object sender, EventArgs e)
-        {
-            Search();
-        }
-        protected void Search()
-        {
-            var ds = entContext.BAdvisingAndNegotiationLCs.ToList();
-            if (!String.IsNullOrEmpty(txtCode.Text))
-            {
-                ds = ds.Where(x => x.NormalLCCode == txtCode.Text).ToList();  
-            }
-            if (!String.IsNullOrEmpty(rcbApplicantID.SelectedValue))
-            {
-                ds = ds.Where(x => x.ApplicantNo == rcbApplicantID.SelectedValue).ToList();
-            }
-            if (!String.IsNullOrEmpty(txtApplicantName.Text))
-            {
-                ds = ds.Where(x => x.ApplicantName == txtApplicantName.Text).ToList();
-            }
-            radGridReview.DataSource = ds;
-            //radGridReview.DataSource = SQLData.B_BIMPORT_NORMAILLC_GetByEnquiry(txtCode.Text.Trim(), rcbApplicantID.SelectedValue, txtApplicantName.Text.Trim(), UserId);
-            radGridReview.DataBind();
-        }
         protected void RadToolBar1_ButtonClick(object sender, RadToolBarEventArgs e)
         {
             var toolBarButton = e.Item as RadToolBarButton;
-            var commandName = toolBarButton.CommandName;
+            string commandName = toolBarButton.CommandName;
             switch (commandName)
             {
-                case "search":
-                    Search();
+                case bc.Commands.Search:
+                    loadData();
+                    radGridReview.Rebind();
                     break;
             }
         }
-        protected void BindApplicant(List<BAdvisingAndNegotiationLC> dsApp)
-        {
-            var result = dsApp.Select(x => x.ApplicantNo).Distinct().ToList();
-            //List<BIMPORT_NORMAILLC> dsApp = dsApp.GroupBy(x => x.ApplicantId).Select(g => g.First()).ToList();
-            rcbApplicantID.Items.Clear();
-            rcbApplicantID.Items.Add(new RadComboBoxItem(""));
-            rcbApplicantID.DataTextField = "ApplicantId";
-            rcbApplicantID.DataValueField = "ApplicantId";
 
-            DataSet datasource = new DataSet();//Tab1
-            DataTable tbl1 = new DataTable();
-            tbl1.Columns.Add("ApplicantId");
-            tbl1.Columns.Add("ApplicantName");
-            foreach (var item in result)
-            {
-                if (!String.IsNullOrEmpty(item))
-                {
-                    tbl1.Rows.Add(item, item);
-                }
+        protected void radGridReview_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            if (!IsPostBack && !string.IsNullOrEmpty(lstType) && lstType.ToLower().Equals("4appr")) loadData();
+        }
 
-            }
-            datasource.Tables.Add(tbl1);
-            rcbApplicantID.DataSource = datasource;
-            rcbApplicantID.DataBind();
-        }
-        protected void rcbBeneficiary_ItemDataBound(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        private void loadData()
         {
-            var row = e.Text;
-            var Name = entContext.BAdvisingAndNegotiationLCs.Where(x => x.BeneficiaryNo == row).FirstOrDefault();
-            if (Name == null)
+            IQueryable<BEXPORT_LC> enquiry = dbEntities.BEXPORT_LC.AsQueryable();
+            if (!string.IsNullOrEmpty(lstType) && lstType.ToLower().Equals("4appr"))
             {
-                txtBeneficiaryName.Text = "";
-            }
-            else
-            {
-                txtBeneficiaryName.Text = Name.BeneficiaryName;
-            }
-            Search();
-        }
-        protected void rcbApplicant_ItemDataBound(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
-        {
-            var row = e.Text;
-            var Name = entContext.BAdvisingAndNegotiationLCs.Where(x => x.ApplicantNo == row).FirstOrDefault();
-            if (Name == null)
-            {
-                txtApplicantName.Text = "";
-            }
-            else
-            {
-                txtApplicantName.Text = Name.ApplicantName;
-            }
-            Search();
-        }
-        
-        private DataSet CreateDataset(List<BIMPORT_NORMAILLC> ds,string Type)
-        {
-            
-            DataSet datasource = new DataSet();//Tab1
-            DataTable tbl1 = new DataTable();
-            if (Type == "App")
-            {
-                tbl1.Columns.Add("ApplicantId");
-                tbl1.Columns.Add("ApplicantName");
-                foreach (var item in ds)
+                switch (refId)
                 {
-                    tbl1.Rows.Add(item.ApplicantId, item.ApplicantName);
-                    datasource.Tables.Add(tbl1);
-                }
+                    case Tabs.Confirm:
+                        enquiry = enquiry.Where(p => p.ConfirmStatus.Equals(bd.TransactionStatus.UNA));
+                        break;
+                    case Tabs.Cancel:
+                        enquiry = enquiry.Where(p => p.CancelStatus.Equals(bd.TransactionStatus.UNA));
+                        break;
+                    case Tabs.Close:
+                        enquiry = enquiry.Where(p => p.ClosedStatus.Equals(bd.TransactionStatus.UNA));
+                        break;
+                    default:// Tabs.Register:
+                        enquiry = enquiry.Where(p => p.Status.Equals(bd.TransactionStatus.UNA));
+                        break;
+                }                
             }
-            else if(Type=="Benef") {
-                tbl1.Columns.Add("BeneficiaryNo");
-                tbl1.Columns.Add("BeneficiaryName");
-                foreach (var item in ds)
-                {
-                    tbl1.Rows.Add(item.BeneficiaryNo, item.BeneficiaryName);
-                    datasource.Tables.Add(tbl1);
-                }
+                        
+            if (!string.IsNullOrEmpty(txtRefNo.Text))
+                enquiry = enquiry.Where(p => p.ImportLCCode.Equals(txtRefNo.Text));
+            if (!string.IsNullOrEmpty(txtApplicantName.Text))
+                enquiry = enquiry.Where(p => p.ApplicantName.Contains(txtApplicantName.Text));
+            if (!string.IsNullOrEmpty(txtBeneficiaryID.Text))
+                enquiry = enquiry.Where(p => p.BeneficiaryNo.Equals(txtBeneficiaryID.Text));
+            if (!string.IsNullOrEmpty(txtBeneficiaryName.Text))
+                enquiry = enquiry.Where(p => p.BeneficiaryName.Contains(txtBeneficiaryName.Text));
+            if (txtIssueDate.SelectedDate.HasValue)
+                enquiry = enquiry.Where(p => p.DateOfIssue.Equals(txtIssueDate.SelectedDate));
+            if (!string.IsNullOrEmpty(txtIssuingBank.Text))
+                enquiry = enquiry.Where(p => p.IssuingBankNo.Equals(txtIssuingBank.Text));
+            switch (refId)
+            {
+                case Tabs.Confirm:
+                    radGridReview.DataSource = enquiry
+                        .OrderByDescending(p => p.ConfirmDate)
+                        .Select(q => new { q.ExportLCCode, q.ImportLCCode, q.ApplicantName, q.Amount, q.Currency, q.BeneficiaryNo, q.BeneficiaryName, q.DateOfIssue, q.IssuingBankNo, Status = q.ConfirmStatus })
+                        .ToList();
+                    return;
+                case Tabs.Cancel:
+                    radGridReview.DataSource = enquiry
+                        .OrderByDescending(p => p.CancelDate)
+                        .Select(q => new { q.ExportLCCode, q.ImportLCCode, q.ApplicantName, q.Amount, q.Currency, q.BeneficiaryNo, q.BeneficiaryName, q.DateOfIssue, q.IssuingBankNo, Status = q.CancelStatus })
+                        .ToList();
+                    return;
+                case Tabs.Close:
+                    radGridReview.DataSource = enquiry
+                        .OrderByDescending(p => p.ClosedDate)
+                        .Select(q => new { q.ExportLCCode, q.ImportLCCode, q.ApplicantName, q.Amount, q.Currency, q.BeneficiaryNo, q.BeneficiaryName, q.DateOfIssue, q.IssuingBankNo, Status = q.ClosedStatus })
+                        .ToList();
+                    return;
+                default:// Tabs.Register:
+                    radGridReview.DataSource = enquiry
+                        .OrderByDescending(p => p.CreateDate)
+                        .Select(q => new { q.ExportLCCode, q.ImportLCCode, q.ApplicantName, q.Amount, q.Currency, q.BeneficiaryNo, q.BeneficiaryName, q.DateOfIssue, q.IssuingBankNo, Status = q.Status })
+                        .ToList();
+                    return;
             }
-            return datasource;
-        }
-        protected void InitToolBar(bool flag)
-        {
-            RadToolBar2.FindItemByValue("btAuthorize").Enabled = flag;
-            RadToolBar2.FindItemByValue("btRevert").Enabled = flag;
-            RadToolBar2.FindItemByValue("btReview").Enabled = flag;
-            RadToolBar2.FindItemByValue("btSave").Enabled = flag;
-            RadToolBar2.FindItemByValue("btPrint").Enabled = flag;
         }
     }
 }
