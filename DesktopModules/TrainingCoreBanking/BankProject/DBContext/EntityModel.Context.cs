@@ -167,8 +167,8 @@ namespace BankProject.DBContext
         public DbSet<sysdiagram> sysdiagrams { get; set; }
         public DbSet<B_CollectCharges> B_CollectCharges { get; set; }
         public DbSet<BAdvisingAndNegotiationLC> BAdvisingAndNegotiationLCs { get; set; }
-        public DbSet<BEXPORT_LC_AMEND> BEXPORT_LC_AMEND { get; set; }
         public DbSet<BEXPORT_LC> BEXPORT_LC { get; set; }
         public DbSet<BEXPORT_LC_CHARGES> BEXPORT_LC_CHARGES { get; set; }
+        public DbSet<BEXPORT_LC_AMEND> BEXPORT_LC_AMEND { get; set; }
     }
 }

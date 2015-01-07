@@ -153,14 +153,14 @@
             </div>
             <table cellpadding="0" cellspacing="0">
                 <tr>
-                    <td style="width: 250px" class="MyLable">Import LC No. <span class="Required">(*)</span>
+                    <td style="width: 250px" class="MyLable">20. Documentary Credit Number <span class="Required">(*)</span>
                         <asp:RequiredFieldValidator
                             runat="server" Display="None"
                             ID="RequiredFieldValidator20"
                             ControlToValidate="txtCustomerName"
                             ValidationGroup="Commit"
                             InitialValue=""
-                            ErrorMessage="[Import LC No] is required" ForeColor="Red">
+                            ErrorMessage="[Documentary Credit Number] is required" ForeColor="Red">
                         </asp:RequiredFieldValidator><asp:TextBox ID="txtCustomerName" runat="server" CssClass="NoDisplay"></asp:TextBox>
                     </td>
                     <td class="MyContent"><telerik:RadTextBox ID="txtImportLCNo" runat="server" Width="195" AutoPostBack="true" OnTextChanged="txtImportLCNo_TextChanged" />
