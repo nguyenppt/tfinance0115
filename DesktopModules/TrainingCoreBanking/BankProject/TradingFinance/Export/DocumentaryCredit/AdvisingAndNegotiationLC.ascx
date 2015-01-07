@@ -14,7 +14,7 @@
         var button = args.get_item();
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Print%>") {
             //args.set_cancel(false);
-            radconfirm("Do you want to download Thu Thong Bao file ?", confirmCallbackFunction_ThuThongBao, 420, 150, null, 'Download');
+            radconfirm("Do you want to download 'Mau Bia Hs Lc' file ?", confirmCallbackFunction_MauBiaHsLc, 420, 150, null, 'Download');
         }
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Search%>" ||
             button.get_commandName() == "<%=BankProject.Controls.Commands.Preview%>") {
@@ -25,33 +25,20 @@
             window.location.href = url;
         }        
     }
-    function confirmCallbackFunction_ThuThongBao(result) {
+    function confirmCallbackFunction_MauBiaHsLc(result) {
         clickCalledAfterRadconfirm = false;
         if (result) {
-            $("#<%=btnReportThuThongBao.ClientID %>").click();
+            $("#<%=btnReportMauBiaHsLc.ClientID %>").click();
         }
-        setTimeout(function () {
-            radconfirm("Do you want to download Phieu Thu file?", confirmCallbackFunction_PhieuThu, 420, 150, null, 'Download');
-        }, 5000);
-
-            //radconfirm("Do you want to download Phieu Xuat Ngoai Bang file?", confirmCallbackFunction_PhieuXuatNgoaiBang, 420, 150, null, 'Download');
+        radconfirm("Do you want to download 'Mau Thong Bao Lc' file ?", confirmCallbackFunction_MauThongBaoLc, 420, 150, null, 'Download');
     }
-    function confirmCallbackFunction_PhieuThu(result)
-    {
+    function confirmCallbackFunction_MauThongBaoLc(result) {
         clickCalledAfterRadconfirm = false;
         if (result) {
-            $("#<%=btnReportPhieuThu.ClientID %>").click();
+            $("#<%=btnReportMauThongBaoLc.ClientID %>").click();
         }
     }
-    function confirmCallbackFunction_PhieuXuatNgoaiBang(result)
-    {
-        clickCalledAfterRadconfirm = false;
-        if (result)
-        {
-            $("#<%=btnReportPhieuXuatNgoaiBang.ClientID %>").click();
-        }
-    }
-    </script>
+</script>
 </telerik:RadCodeBlock>
 <telerik:RadToolBar runat="server" ID="RadToolBar1" EnableRoundedCorners="true" EnableShadows="true" Width="100%" 
          OnClientButtonClicking="RadToolBar1_OnClientButtonClicking" OnButtonClick="RadToolBar1_ButtonClick">
@@ -846,7 +833,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Commodity <span class="Required">(*)</span>
+                    <td class="MyLable">45A.1 Commodity <span class="Required">(*)</span>
                         <asp:RequiredFieldValidator
                             runat="server" Display="None"
                             ID="RequiredFieldValidator19"
@@ -1557,8 +1544,7 @@
     </AjaxSettings>
 </telerik:RadAjaxManager>
 <div style="visibility: hidden;">
-    <asp:Button ID="btnReportThuThongBao" runat="server" OnClick="btnReportThuThongBao_Click" Text="PhieuXuatNgoaiBang" />
-    <asp:Button ID="btnReportPhieuXuatNgoaiBang" runat="server" OnClick="btnReportPhieuXuatNgoaiBang_Click" Text="PhieuXuatNgoaiBang" />
-    <asp:Button ID="btnReportPhieuThu" runat="server" OnClick="btnReportPhieuThu_Click" Text="PhieuXuatNgoaiBang" />
+    <asp:Button ID="btnReportMauBiaHsLc" runat="server" OnClick="btnReportMauBiaHsLc_Click" />
+    <asp:Button ID="btnReportMauThongBaoLc" runat="server" OnClick="btnReportMauThongBaoLc_Click" />
 </div>
     
