@@ -17,23 +17,16 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
 {
     public partial class EnquiryLC : DotNetNuke.Entities.Modules.PortalModuleBase
     {
-        VietVictoryCoreBankingEntities dbEntities = new VietVictoryCoreBankingEntities();
+        private ExportLC dbEntities = new ExportLC();
         protected string lstType = "";
         protected int refId;
-        protected struct Tabs
-        {
-            public const int Register = 242;
-            public const int Confirm = 236;
-            public const int Cancel = 237;
-            public const int Close = 265;
-        }
         protected void Page_Load(object sender, EventArgs e)
         {
             lstType = Request.QueryString["lst"];
             if (!string.IsNullOrEmpty(Request.QueryString["refid"]))
                 refId = Convert.ToInt32(Request.QueryString["refid"]);
             else
-                refId = Tabs.Register;
+                refId = ExportLC.Actions.Register;
             RadToolBar1.FindItemByValue("btSearch").Enabled = (string.IsNullOrEmpty(lstType) || !lstType.ToLower().Equals("4appr"));
             if (IsPostBack) return;
         }
@@ -63,16 +56,16 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             {
                 switch (refId)
                 {
-                    case Tabs.Confirm:
+                    case ExportLC.Actions.Confirm:
                         enquiry = enquiry.Where(p => p.ConfirmStatus.Equals(bd.TransactionStatus.UNA));
                         break;
-                    case Tabs.Cancel:
+                    case ExportLC.Actions.Cancel:
                         enquiry = enquiry.Where(p => p.CancelStatus.Equals(bd.TransactionStatus.UNA));
                         break;
-                    case Tabs.Close:
+                    case ExportLC.Actions.Close:
                         enquiry = enquiry.Where(p => p.ClosedStatus.Equals(bd.TransactionStatus.UNA));
                         break;
-                    default:// Tabs.Register:
+                    default:// ExportLC.Actions.Register:
                         enquiry = enquiry.Where(p => p.Status.Equals(bd.TransactionStatus.UNA));
                         break;
                 }                
@@ -92,25 +85,25 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 enquiry = enquiry.Where(p => p.IssuingBankNo.Equals(txtIssuingBank.Text));
             switch (refId)
             {
-                case Tabs.Confirm:
+                case ExportLC.Actions.Confirm:
                     radGridReview.DataSource = enquiry
                         .OrderByDescending(p => p.ConfirmDate)
                         .Select(q => new { q.ExportLCCode, q.ImportLCCode, q.ApplicantName, q.Amount, q.Currency, q.BeneficiaryNo, q.BeneficiaryName, q.DateOfIssue, q.IssuingBankNo, Status = q.ConfirmStatus })
                         .ToList();
                     return;
-                case Tabs.Cancel:
+                case ExportLC.Actions.Cancel:
                     radGridReview.DataSource = enquiry
                         .OrderByDescending(p => p.CancelDate)
                         .Select(q => new { q.ExportLCCode, q.ImportLCCode, q.ApplicantName, q.Amount, q.Currency, q.BeneficiaryNo, q.BeneficiaryName, q.DateOfIssue, q.IssuingBankNo, Status = q.CancelStatus })
                         .ToList();
                     return;
-                case Tabs.Close:
+                case ExportLC.Actions.Close:
                     radGridReview.DataSource = enquiry
                         .OrderByDescending(p => p.ClosedDate)
                         .Select(q => new { q.ExportLCCode, q.ImportLCCode, q.ApplicantName, q.Amount, q.Currency, q.BeneficiaryNo, q.BeneficiaryName, q.DateOfIssue, q.IssuingBankNo, Status = q.ClosedStatus })
                         .ToList();
                     return;
-                default:// Tabs.Register:
+                default:// ExportLC.Actions.Register:
                     radGridReview.DataSource = enquiry
                         .OrderByDescending(p => p.CreateDate)
                         .Select(q => new { q.ExportLCCode, q.ImportLCCode, q.ApplicantName, q.Amount, q.Currency, q.BeneficiaryNo, q.BeneficiaryName, q.DateOfIssue, q.IssuingBankNo, Status = q.Status })

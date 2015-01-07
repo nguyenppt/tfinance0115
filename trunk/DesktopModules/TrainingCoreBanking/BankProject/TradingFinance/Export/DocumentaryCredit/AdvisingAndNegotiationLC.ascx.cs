@@ -20,15 +20,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
 {
     public partial class AdvisingAndNegotiationLC : DotNetNuke.Entities.Modules.PortalModuleBase
     {
-        private const string breakLine = "\r\n";
-        private VietVictoryCoreBankingEntities dbEntities = new VietVictoryCoreBankingEntities();
-        protected struct Tabs
-        {
-            public const int Register = 242;
-            public const int Confirm = 236;
-            public const int Cancel = 237;
-            public const int Close = 265;
-        }
+        private ExportLC dbEntities = new ExportLC();
         //
         private void setDefaultControls()
         {
@@ -40,16 +32,16 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             rcbChargeCode3.Enabled = false;
             //
             divConfirmLC.Style.Remove("Display");
-            divConfirmLC.Style.Add("Display", (TabId == Tabs.Confirm ? "" : "none"));
-            rcbGenerateDelivery.Enabled = (TabId == Tabs.Confirm);
-            txtDateConfirm.Enabled = (TabId == Tabs.Confirm);
-            rcbConfirmInstr.Enabled = (TabId == Tabs.Confirm);
+            divConfirmLC.Style.Add("Display", (TabId == ExportLC.Actions.Confirm ? "" : "none"));
+            rcbGenerateDelivery.Enabled = (TabId == ExportLC.Actions.Confirm);
+            txtDateConfirm.Enabled = (TabId == ExportLC.Actions.Confirm);
+            rcbConfirmInstr.Enabled = (TabId == ExportLC.Actions.Confirm);
             //
             divCancelLC.Style.Remove("Display");
-            divCancelLC.Style.Add("Display", (TabId == Tabs.Cancel ? "" : "none"));
-            txtCancelDate.Enabled = (TabId == Tabs.Cancel);
-            txtContingentExpiryDate.Enabled = (TabId == Tabs.Cancel);
-            txtCancelRemark.Enabled = (TabId == Tabs.Cancel);
+            divCancelLC.Style.Add("Display", (TabId == ExportLC.Actions.Cancel ? "" : "none"));
+            txtCancelDate.Enabled = (TabId == ExportLC.Actions.Cancel);
+            txtContingentExpiryDate.Enabled = (TabId == ExportLC.Actions.Cancel);
+            txtCancelRemark.Enabled = (TabId == ExportLC.Actions.Cancel);
         }
         protected void Page_Load(object sender, EventArgs e)
         {            
@@ -66,7 +58,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             if (!string.IsNullOrEmpty(Request.QueryString["Code"]))
             {
                 tbLCCode.Text = Request.QueryString["Code"];
-                var ExLC = FindCode(tbLCCode.Text);
+                var ExLC = dbEntities.findExportLC(tbLCCode.Text);
                 if (ExLC == null)
                 {
                     lblLCCodeMessage.Text = "Can not find this Code !";
@@ -83,7 +75,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 RadToolBar1.FindItemByValue("btSearch").Enabled = true;
                 RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                 //
-                if (TabId == Tabs.Register)
+                if (TabId == ExportLC.Actions.Register)
                 {
                     switch (ExLC.Status)
                     {
@@ -115,7 +107,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             break;
                     }
                 }
-                /*if (TabId == Tabs.Confirm)
+                /*if (TabId == ExportLC.Actions.Confirm)
                 {
                     switch (ExLC.Status)
                     {
@@ -147,7 +139,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             break;
                     }
                 }*/
-                if (TabId == Tabs.Cancel)
+                if (TabId == ExportLC.Actions.Cancel)
                 {
                     bc.Commont.SetTatusFormControls(this.Controls, false);
                     if (!ExLC.Status.Equals(bd.TransactionStatus.AUT))
@@ -189,7 +181,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         }
                     }
                 }
-                if (TabId == Tabs.Close)
+                if (TabId == ExportLC.Actions.Close)
                 {
                     bc.Commont.SetTatusFormControls(this.Controls, false);
                     if (!ExLC.Status.Equals(bd.TransactionStatus.AUT))
@@ -233,7 +225,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             }
             else
             {
-                if (TabId == Tabs.Register)
+                if (TabId == ExportLC.Actions.Register)
                 {
                     var vatno = bd.Database.B_BMACODE_GetNewSoTT("VATNO");
                     tbVatNo.Text = vatno.Tables[0].Rows[0]["SoTT"].ToString();
@@ -260,20 +252,16 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             setDefaultControls();                     
         }
 
-        private BEXPORT_LC FindCode(string Code)
-        {
-            return dbEntities.BEXPORT_LC.Where(p => p.ExportLCCode.Trim().ToLower().Equals(Code.Trim().ToLower())).FirstOrDefault();
-        }
         protected void RadToolBar1_ButtonClick(object sender, RadToolBarEventArgs e)
         {
             var toolBarButton = e.Item as RadToolBarButton;
-            var ExLC = FindCode(tbLCCode.Text);
+            var ExLC = dbEntities.findExportLC(tbLCCode.Text);
             var commandName = toolBarButton.CommandName.ToLower();
-            if (TabId == Tabs.Register)
+            if (TabId == ExportLC.Actions.Register)
             {                
                 switch (commandName)
                 {
-                    case bc.Commands.Commit:                        
+                    case bc.Commands.Commit:
                         if (ExLC == null)
                         {
                             ExLC = new BEXPORT_LC();
@@ -349,7 +337,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
 
                 return;
             }
-            if (TabId == Tabs.Cancel)
+            if (TabId == ExportLC.Actions.Cancel)
             {
                 switch (commandName)
                 {
@@ -381,6 +369,43 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             }
                             //
                             ExLC.CancelStatus = bd.TransactionStatus.REV;
+                            dbEntities.SaveChanges();
+                            Response.Redirect("Default.aspx?tabid=" + this.TabId + "&code=" + tbLCCode.Text);
+                        }
+                        break;
+                }
+
+                return;
+            }
+            if (TabId == ExportLC.Actions.Close)
+            {
+                switch (commandName)
+                {
+                    case bc.Commands.Commit:
+                        if (ExLC != null)
+                        {
+                            ExLC.ClosedStatus = bd.TransactionStatus.UNA;
+                            ExLC.ClosedDate = DateTime.Now;
+                            //
+                            dbEntities.SaveChanges();
+                        }
+                        //
+                        Response.Redirect("Default.aspx?tabid=" + this.TabId);
+                        break;
+                    case bc.Commands.Authorize:
+                    case bc.Commands.Reverse:
+                        if (ExLC != null)
+                        {
+                            if (commandName.Equals(bc.Commands.Authorize))
+                            {
+                                ExLC.ClosedStatus = bd.TransactionStatus.AUT;
+                                //
+                                dbEntities.SaveChanges();
+                                Response.Redirect("Default.aspx?tabid=" + this.TabId);
+                                return;
+                            }
+                            //
+                            ExLC.ClosedStatus = bd.TransactionStatus.REV;
                             dbEntities.SaveChanges();
                             Response.Redirect("Default.aspx?tabid=" + this.TabId + "&code=" + tbLCCode.Text);
                         }
@@ -439,10 +464,10 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             ExLC.AvailableWithAddr3 = tbAvailableWithAddr3.Text.Trim();
             ExLC.AvailableWithBy = rcbAvailableWithBy.SelectedValue;
             //
-            ExLC.DraftsAt = txtDraftsAt1.Text.Trim() + breakLine + txtDraftsAt2.Text.Trim();
+            ExLC.DraftsAt = txtDraftsAt1.Text.Trim() + bc.Commont.breakLine + txtDraftsAt2.Text.Trim();
             ExLC.Tenor = rcbTenor.SelectedValue;
-            ExLC.MixedPaymentDetails = txtMixedPaymentDetails1.Text.Trim() + breakLine + txtMixedPaymentDetails2.Text.Trim() + breakLine + txtMixedPaymentDetails3.Text.Trim() + breakLine + txtMixedPaymentDetails4.Text.Trim();
-            ExLC.DeferedPaymentDetails = txtDeferredPaymentDetails1.Text.Trim() + breakLine + txtDeferredPaymentDetails2.Text.Trim() + breakLine + txtDeferredPaymentDetails3.Text.Trim() + breakLine + txtDeferredPaymentDetails4.Text.Trim();
+            ExLC.MixedPaymentDetails = txtMixedPaymentDetails1.Text.Trim() + bc.Commont.breakLine + txtMixedPaymentDetails2.Text.Trim() + bc.Commont.breakLine + txtMixedPaymentDetails3.Text.Trim() + bc.Commont.breakLine + txtMixedPaymentDetails4.Text.Trim();
+            ExLC.DeferedPaymentDetails = txtDeferredPaymentDetails1.Text.Trim() + bc.Commont.breakLine + txtDeferredPaymentDetails2.Text.Trim() + bc.Commont.breakLine + txtDeferredPaymentDetails3.Text.Trim() + bc.Commont.breakLine + txtDeferredPaymentDetails4.Text.Trim();
             ExLC.PartialShipment = rcbPartialShipment.SelectedValue;
             ExLC.TranShipment = rcbTranshipment.SelectedValue;
             ExLC.PlaceOfTakingInCharge = txtPlaceOfTakingInCharge.Text.Trim();
@@ -450,7 +475,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             ExLC.PortOfDischarge = txtPortOfDischarge.Text.Trim();
             ExLC.PlaceOfFinalDestination = txtPlaceOfFinalDestination.Text.Trim();
             ExLC.LatesDateOfShipment = txtLatesDateOfShipment.SelectedDate;
-            ExLC.ShipmentPeriod = txtShipmentPeriod1.Text.Trim() + breakLine + txtShipmentPeriod2.Text.Trim() + breakLine + txtShipmentPeriod3.Text.Trim() + breakLine + txtShipmentPeriod4.Text.Trim() + breakLine + txtShipmentPeriod5.Text.Trim() + breakLine + txtShipmentPeriod6.Text.Trim();
+            ExLC.ShipmentPeriod = txtShipmentPeriod1.Text.Trim() + bc.Commont.breakLine + txtShipmentPeriod2.Text.Trim() + bc.Commont.breakLine + txtShipmentPeriod3.Text.Trim() + bc.Commont.breakLine + txtShipmentPeriod4.Text.Trim() + bc.Commont.breakLine + txtShipmentPeriod5.Text.Trim() + bc.Commont.breakLine + txtShipmentPeriod6.Text.Trim();
             //
             ExLC.DescriptionOfGoodsServices = txtDescriptionOfGoodsServices.Text.Trim();
             ExLC.Commodity = rcbCommodity.SelectedValue;
@@ -500,17 +525,17 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         {
             switch (TabId)
             {
-                case Tabs.Confirm:
+                case ExportLC.Actions.Confirm:
                     rcbGenerateDelivery.SelectedValue = ExLC.ConfirmGenerateDelivery;
                     txtDateConfirm.SelectedDate = ExLC.ConfirmDay;
                     //rcbConfirmInstr
                     break;
-                case Tabs.Cancel:
+                case ExportLC.Actions.Cancel:
                     txtCancelDate.SelectedDate = ExLC.CancelDay;
                     txtContingentExpiryDate.SelectedDate = ExLC.CancelContingentExpiryDate;
                     txtCancelRemark.Text = ExLC.CancelRemark;
                     break;
-                case Tabs.Close:
+                case ExportLC.Actions.Close:
                     break;
             }
             //
@@ -567,14 +592,14 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             //
             if (!string.IsNullOrEmpty(ExLC.DraftsAt))
             {
-                string[] DraftsAt = ExLC.DraftsAt.Split(new string[] { breakLine }, StringSplitOptions.None);
+                string[] DraftsAt = ExLC.DraftsAt.Split(new string[] { bc.Commont.breakLine }, StringSplitOptions.None);
                 txtDraftsAt1.Text = DraftsAt[0];
                 if (DraftsAt.Length > 1) txtDraftsAt2.Text = DraftsAt[1];
             }
             rcbTenor.SelectedValue = ExLC.Tenor;
             if (!string.IsNullOrEmpty(ExLC.MixedPaymentDetails))
             {
-                string[] MixedPaymentDetails = ExLC.MixedPaymentDetails.Split(new string[] { breakLine }, StringSplitOptions.None);
+                string[] MixedPaymentDetails = ExLC.MixedPaymentDetails.Split(new string[] { bc.Commont.breakLine }, StringSplitOptions.None);
                 txtMixedPaymentDetails1.Text = MixedPaymentDetails[0];
                 if (MixedPaymentDetails.Length > 1)
                 {
@@ -589,7 +614,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             }
             if (!string.IsNullOrEmpty(ExLC.DeferedPaymentDetails))
             {
-                string[] DeferedPaymentDetails = ExLC.DeferedPaymentDetails.Split(new string[] { breakLine }, StringSplitOptions.None);
+                string[] DeferedPaymentDetails = ExLC.DeferedPaymentDetails.Split(new string[] { bc.Commont.breakLine }, StringSplitOptions.None);
                 txtMixedPaymentDetails1.Text = DeferedPaymentDetails[0];
                 if (DeferedPaymentDetails.Length > 1)
                 {
@@ -611,7 +636,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             txtLatesDateOfShipment.SelectedDate = ExLC.LatesDateOfShipment;
             if (!string.IsNullOrEmpty(ExLC.ShipmentPeriod))
             {
-                string[] ShipmentPeriod = ExLC.ShipmentPeriod.Split(new string[] { breakLine }, StringSplitOptions.None);
+                string[] ShipmentPeriod = ExLC.ShipmentPeriod.Split(new string[] { bc.Commont.breakLine }, StringSplitOptions.None);
                 txtShipmentPeriod1.Text = ShipmentPeriod[0];
                 if (ShipmentPeriod.Length > 1)
                 {
@@ -732,20 +757,23 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             LoadChargeAcct(ref rcbChargeAcct3, rcbChargeCcy3.SelectedValue);
         }
 
-        protected void btnReportThuThongBao_Click(object sender, EventArgs e)
+        protected void btnReportMauBiaHsLc_Click(object sender, EventArgs e)
+        {
+            showReport("BiaHs");
+        }
+        protected void btnReportMauThongBaoLc_Click(object sender, EventArgs e)
         {
             showReport("ThuThongBao");
         }
-        protected void btnReportPhieuXuatNgoaiBang_Click(object sender, EventArgs e)
-        {
-            showReport("PhieuXuatNgoaiBang");
-        }
-        protected void btnReportPhieuThu_Click(object sender, EventArgs e)
-        {
-            showReport("PhieuThu");
-        }
         private void showReport(string reportType)
         {
+            var ExLC = dbEntities.findExportLC(tbLCCode.Text);
+            if (ExLC == null)
+            {
+                lblLCCodeMessage.Text = "Can not find this LC.";
+                return;
+            }
+            //
             string reportTemplate = "~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/Export/";
             string reportSaveName = "";
             DataSet reportData = new DataSet();
@@ -754,127 +782,83 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             Aspose.Words.SaveType saveType = Aspose.Words.SaveType.OpenInApplication;
             try
             {
-                var obj = dbEntities.BAdvisingAndNegotiationLCs.Where(x => x.NormalLCCode == tbLCCode.Text).FirstOrDefault();
-                var objCharge = new List<BAdvisingAndNegotiationLCCharge>();
-                if (obj == null)
-                {
-                    obj = new BAdvisingAndNegotiationLC();
-                }
-                else
-                {
-                    objCharge = dbEntities.BAdvisingAndNegotiationLCCharges.Where(x => x.DocCollectCode == tbLCCode.Text).ToList();
-                }
                 switch (reportType)
                 {
                     case "ThuThongBao":
-                        reportTemplate = Context.Server.MapPath(reportTemplate + "BM_TTQT_LCXK_01A.doc");
-
+                        reportTemplate = Context.Server.MapPath(reportTemplate + "Mau Thong bao LC va Tu chinh LC.doc");
                         reportSaveName = "ThuThongBao" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
-                        var query = dbEntities.BAdvisingAndNegotiationLCs.Where(x => x.NormalLCCode == tbLCCode.Text).FirstOrDefault();
-                        var TBThuTinDung = new List<ThuThongBao>();
-                        if (query != null)
+                        //
+                        var dataThuThongBao = new MauThongBaoVaTuChinhLc()
                         {
-                            var DataThuThongBao = new ThuThongBao()
-                            {
-                                BeneficiaryNo = query.BeneficiaryNo,
-                                BeneficiaryName = query.BeneficiaryName,
-                                BeneficiaryAddress = query.BeneficiaryAddr1,
-                                NormalLCCode = query.NormalLCCode,
-                                ReceivingBank = query.ReceivingBank,
-                                ApplicantNo = query.ApplicantNo,
-                                Currency = query.Currency,
-                                ApplicantName = query.ApplicantName,
-                                ApplicantAddress = query.ApplicantAddr1
-                            };
-                            if (query.Amount != null)
-                            {
-                                DataThuThongBao.Amount = double.Parse(query.Amount.ToString());
-                            }
-                            if (query.DateOfIssue != null)
-                            {
-                                DataThuThongBao.DateIssue = obj.DateOfIssue.Value.Date.Day + "/" + obj.DateOfIssue.Value.Date.Month + "/" + obj.DateOfIssue.Value.Date.Year;
-                            }
-                            if (query.DateExpiry != null)
-                            {
-                                DataThuThongBao.DateExpiry = obj.DateExpiry.Value.Date.Day + "/" + obj.DateExpiry.Value.Date.Month + "/" + obj.DateExpiry.Value.Date.Year;
-                            }
-                            DataThuThongBao.Date = DateTime.Now.Day + "/" + DateTime.Now.Month + "/" + DateTime.Now.Year;
-                            TBThuTinDung.Add(DataThuThongBao);
-                        }
-                        tbl1 = Utils.CreateDataTable<ThuThongBao>(TBThuTinDung);
+                            Ref = "",
+                            Beneficiary = ExLC.BeneficiaryName,
+                            LCCode = "",
+                            DateOfIssue = (ExLC.DateOfIssue.HasValue ? ExLC.DateOfIssue.Value.ToString("dd/MM/yyyy") : ""),
+                            DateOfExpiry = (ExLC.DateOfExpiry.HasValue ? ExLC.DateOfExpiry.Value.ToString("dd/MM/yyyy") : ""),
+                            IssuingBank = ExLC.IssuingBankName,
+                            Amount = ExLC.Amount + " " + ExLC.Currency,
+                            Applicant = ExLC.ApplicantName
+                        };
+                        if (!string.IsNullOrEmpty(ExLC.BeneficiaryAddr1)) dataThuThongBao.Beneficiary += ", " + ExLC.BeneficiaryAddr1;
+                        if (!string.IsNullOrEmpty(ExLC.BeneficiaryAddr2)) dataThuThongBao.Beneficiary += ", " + ExLC.BeneficiaryAddr2;
+                        if (!string.IsNullOrEmpty(ExLC.BeneficiaryAddr3)) dataThuThongBao.Beneficiary += ", " + ExLC.BeneficiaryAddr3;
+
+                        if (!string.IsNullOrEmpty(ExLC.IssuingBankAddr1)) dataThuThongBao.IssuingBank += ", " + ExLC.IssuingBankAddr1;
+                        if (!string.IsNullOrEmpty(ExLC.IssuingBankAddr2)) dataThuThongBao.IssuingBank += ", " + ExLC.IssuingBankAddr2;
+                        if (!string.IsNullOrEmpty(ExLC.IssuingBankAddr3)) dataThuThongBao.IssuingBank += ", " + ExLC.IssuingBankAddr3;
+
+                        if (!string.IsNullOrEmpty(ExLC.ApplicantAddr1)) dataThuThongBao.Applicant += ", " + ExLC.ApplicantAddr1;
+                        if (!string.IsNullOrEmpty(ExLC.ApplicantAddr2)) dataThuThongBao.Applicant += ", " + ExLC.ApplicantAddr2;
+                        if (!string.IsNullOrEmpty(ExLC.ApplicantAddr3)) dataThuThongBao.Applicant += ", " + ExLC.ApplicantAddr3;
+                        //
+                        var lstData = new List<MauThongBaoVaTuChinhLc>();
+                        lstData.Add(dataThuThongBao);
+                        tbl1 = Utils.CreateDataTable<MauThongBaoVaTuChinhLc>(lstData);
                         reportData.Tables.Add(tbl1);
                         break;
-                    case "PhieuThu":
-                        reportTemplate = Context.Server.MapPath(reportTemplate + "RegisterDocumentaryCollectionVAT.doc");
-                        reportSaveName = "PhieuThu" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
-                        var queryPhieuThu = (from CHA in dbEntities.BAdvisingAndNegotiationLCCharges
-                                             join AD in dbEntities.BAdvisingAndNegotiationLCs on CHA.DocCollectCode equals AD.NormalLCCode
-                                             join CU in dbEntities.BCUSTOMERS on AD.BeneficiaryNo equals CU.CustomerID
-                                             join BC in dbEntities.BCHARGECODEs on CHA.Chargecode equals BC.Code
-                                             where AD.NormalLCCode == tbLCCode.Text
-                                             select new { CHA, AD, CU, BC });
-                        var tbPhieuThu = new List<PhieuThu>();
-                        var DataPhieuThu = new PhieuThu();
-                        foreach (var item in queryPhieuThu)
+                    case "BiaHs":
+                        reportTemplate = Context.Server.MapPath(reportTemplate + "Mau Bia hs lc.doc");
+                        reportSaveName = "BiaHs" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        //
+                        var dataBiaHs = new MauBiaHsLc()
                         {
-                            DataPhieuThu.VATNo = item.CHA.VATNo;
-                            DataPhieuThu.CustomerName = item.AD.BeneficiaryName;
-                            DataPhieuThu.DocCollectCode = item.CHA.DocCollectCode;
-                            DataPhieuThu.CustomerAddress = item.AD.BeneficiaryAddr1;
-                            DataPhieuThu.UserNameLogin = UserInfo.DisplayName;
-                            DataPhieuThu.IdentityNo = item.CU.IdentityNo;
-                            DataPhieuThu.ChargeAcct = item.CHA.ChargeAcct;
-                            DataPhieuThu.Remarks = item.CHA.ChargeRemarks;
-                            DataPhieuThu.MCurrency = item.AD.Currency;
-                            DataPhieuThu.CustomerID = item.AD.BeneficiaryNo;
+                            Ref = "",
+                            LCCode = "",
+                            DateOfIssue = (ExLC.DateOfIssue.HasValue ? ExLC.DateOfIssue.Value.ToString("dd/MM/yyyy") : ""),
+                            Beneficiary = ExLC.BeneficiaryName,
+                            Applicant = ExLC.ApplicantName,
+                            IssuingBank = ExLC.IssuingBankName,
+                            Tenor = ExLC.Tenor,
+                            AdvisingBank = ExLC.AdvisingBankName,
+                            Amount = ExLC.Amount + " " + ExLC.Currency,
+                            LatestDateOfShipment = (ExLC.LatesDateOfShipment.HasValue ? ExLC.LatesDateOfShipment.Value.ToString("dd/MM/yyyy") : ""),
+                            DateOfExpiry = (ExLC.DateOfExpiry.HasValue ? ExLC.DateOfExpiry.Value.ToString("dd/MM/yyyy") : ""),
+                            Transhipment = ExLC.TranShipment,
+                            PartialShipment = ExLC.PartialShipment,
+                            Commodity = ExLC.Commodity,
+                            PortOfLoading = ExLC.PortOfLoading,
+                            PeriodForPresentation = ExLC.PeriodForPresentation,
+                            PortOfDischarge = ExLC.PortOfDischarge
+                        };
+                        if (!string.IsNullOrEmpty(ExLC.BeneficiaryAddr1)) dataBiaHs.Beneficiary += ", " + ExLC.BeneficiaryAddr1;
+                        if (!string.IsNullOrEmpty(ExLC.BeneficiaryAddr2)) dataBiaHs.Beneficiary += ", " + ExLC.BeneficiaryAddr2;
+                        if (!string.IsNullOrEmpty(ExLC.BeneficiaryAddr3)) dataBiaHs.Beneficiary += ", " + ExLC.BeneficiaryAddr3;
 
-                            if (item.CHA.Chargecode == "ELC.ADVISE")
-                            {
-                                if (item.BC.Code == "ELC.ADVISE")
-                                {
-                                    DataPhieuThu.Cot9_1Name = item.BC.Name_VN;
-                                    DataPhieuThu.PL1 = item.BC.PLAccount;
-                                }
-                                if (item.CHA.ChargeAmt != null)
-                                {
-                                    DataPhieuThu.Amount1 = double.Parse(item.CHA.ChargeAmt.ToString());
-                                }
-                                DataPhieuThu.Currency1 = item.CHA.ChargeCcy;
+                        if (!string.IsNullOrEmpty(ExLC.IssuingBankAddr1)) dataBiaHs.IssuingBank += ", " + ExLC.IssuingBankAddr1;
+                        if (!string.IsNullOrEmpty(ExLC.IssuingBankAddr2)) dataBiaHs.IssuingBank += ", " + ExLC.IssuingBankAddr2;
+                        if (!string.IsNullOrEmpty(ExLC.IssuingBankAddr3)) dataBiaHs.IssuingBank += ", " + ExLC.IssuingBankAddr3;
 
-                            }
-                            //tab2
-                            if (item.CHA.Chargecode == "ELC.CONFIRM")
-                            {
-                                if (item.BC.Code == "ELC.CONFIRM")
-                                {
-                                    DataPhieuThu.Cot9_2Name = item.BC.Name_VN;
-                                    DataPhieuThu.PL2 = item.BC.PLAccount;
-                                }
-                                if (item.CHA.ChargeAmt != null)
-                                {
-                                    DataPhieuThu.Amount2 = double.Parse(item.CHA.ChargeAmt.ToString());
-                                }
-                                DataPhieuThu.Currency2 = item.CHA.ChargeCcy;
-                            }
+                        if (!string.IsNullOrEmpty(ExLC.ApplicantAddr1)) dataBiaHs.Applicant += ", " + ExLC.ApplicantAddr1;
+                        if (!string.IsNullOrEmpty(ExLC.ApplicantAddr2)) dataBiaHs.Applicant += ", " + ExLC.ApplicantAddr2;
+                        if (!string.IsNullOrEmpty(ExLC.ApplicantAddr3)) dataBiaHs.Applicant += ", " + ExLC.ApplicantAddr3;
 
-                            //tab3
-                            if (item.CHA.Chargecode == "ELC.OTHER")
-                            {
-                                if (item.BC.Code == "ELC.OTHER")
-                                {
-                                    DataPhieuThu.Cot9_3Name = item.BC.Name_VN;
-                                    DataPhieuThu.PL3 = item.BC.PLAccount;
-                                }
-                                if (item.CHA.ChargeAmt != null)
-                                {
-                                    DataPhieuThu.Amount3 = double.Parse(item.CHA.ChargeAmt.ToString());
-                                }
-                                DataPhieuThu.Currency3 = item.CHA.ChargeCcy;
-                            }
-
-                        }
-                        tbPhieuThu.Add(DataPhieuThu);
-                        tbl1 = Utils.CreateDataTable<PhieuThu>(tbPhieuThu);
+                        if (!string.IsNullOrEmpty(ExLC.AdvisingBankAddr1)) dataBiaHs.AdvisingBank += ", " + ExLC.AdvisingBankAddr1;
+                        if (!string.IsNullOrEmpty(ExLC.AdvisingBankAddr2)) dataBiaHs.AdvisingBank += ", " + ExLC.AdvisingBankAddr2;
+                        if (!string.IsNullOrEmpty(ExLC.AdvisingBankAddr3)) dataBiaHs.AdvisingBank += ", " + ExLC.AdvisingBankAddr3;
+                        //
+                        var lstData1 = new List<MauBiaHsLc>();
+                        lstData1.Add(dataBiaHs);
+                        tbl1 = Utils.CreateDataTable<MauBiaHsLc>(lstData1);
                         reportData.Tables.Add(tbl1);
                         break;
                 }
@@ -892,14 +876,16 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 }
             }
             catch (Exception ex)
-            { }
+            {
+                lblLCCodeMessage.Text = ex.Message;
+            }
         }
 
         protected void txtImportLCNo_TextChanged(object sender, EventArgs e)
         {
             lblImportLCNoMessage.Text = "";
             txtCustomerName.Text = "";
-            var lc = dbEntities.BIMPORT_NORMAILLC.Where(p => p.NormalLCCode.ToLower().Trim().Equals(txtImportLCNo.Text.ToLower().Trim())).FirstOrDefault();
+            var lc = dbEntities.findImportLC(txtImportLCNo.Text);
             if (lc == null)
             {
                 lblImportLCNoMessage.Text = "Can not found this LC !";

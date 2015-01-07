@@ -147,9 +147,9 @@
         <EntityTypeShape EntityType="bisolutions_vvcbModel.sysdiagram" Width="1.5" PointX="44.75" PointY="15.75" IsExpanded="true" />
         <EntityTypeShape EntityType="bisolutions_vvcbModel.B_CollectCharges" Width="1.5" PointX="5.6613943994331155" PointY="28.005032626914343" />
         <EntityTypeShape EntityType="bisolutions_vvcbModel.BAdvisingAndNegotiationLC" Width="1.5" PointX="11.43769910905403" PointY="29.379549949141008" />
-        <EntityTypeShape EntityType="bisolutions_vvcbModel.BEXPORT_LC_AMEND" Width="1.5" PointX="0.70619767192108451" PointY="23.540123384231759" />
         <EntityTypeShape EntityType="bisolutions_vvcbModel.BEXPORT_LC" Width="1.5" PointX="10.881187945083337" PointY="10.169887845483556" />
         <EntityTypeShape EntityType="bisolutions_vvcbModel.BEXPORT_LC_CHARGES" Width="1.5" PointX="9.5133932221277586" PointY="1.7293934830135636" />
+        <EntityTypeShape EntityType="bisolutions_vvcbModel.BEXPORT_LC_AMEND" Width="1.5" PointX="4.8633033190217345" PointY="13.803196764459459" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
