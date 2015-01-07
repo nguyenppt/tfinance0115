@@ -14,8 +14,7 @@ namespace BankProject.DBContext
     
     public partial class BEXPORT_LC_AMEND
     {
-        public long Id { get; set; }
-        public string ExportLCCode { get; set; }
+        public string AmendNo { get; set; }
         public string ImportLCCode { get; set; }
         public string SenderReference { get; set; }
         public string ReceiverReference { get; set; }
@@ -28,7 +27,7 @@ namespace BankProject.DBContext
         public string IssuingBankAddr3 { get; set; }
         public Nullable<System.DateTime> DateOfIssue { get; set; }
         public Nullable<System.DateTime> DateOfAmendment { get; set; }
-        public int NumberOfAmendment { get; set; }
+        public Nullable<int> NumberOfAmendment { get; set; }
         public string BeneficiaryNo { get; set; }
         public string BeneficiaryName { get; set; }
         public string BeneficiaryAddr1 { get; set; }

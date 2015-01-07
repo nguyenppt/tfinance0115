@@ -24,7 +24,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         //
         private void setDefaultControls()
         {
-            rcbWaiveCharges.SelectedValue = bd.YesNo.NO;
+            //rcbWaiveCharges.SelectedValue = bd.YesNo.NO;
             rcbWaiveCharges_OnSelectedIndexChanged(null, null);
             tbVatNo.Enabled = false;
             rcbChargeCode.Enabled = false;
@@ -57,171 +57,217 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             //
             if (!string.IsNullOrEmpty(Request.QueryString["Code"]))
             {
+                RadToolBar1.FindItemByValue("btCommit").Enabled = false;
+                RadToolBar1.FindItemByValue("btPreview").Enabled = false;
+                RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
+                RadToolBar1.FindItemByValue("btReverse").Enabled = false;
+                RadToolBar1.FindItemByValue("btSearch").Enabled = false;
+                RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+                //
                 tbLCCode.Text = Request.QueryString["Code"];
                 var ExLC = dbEntities.findExportLC(tbLCCode.Text);
                 if (ExLC == null)
                 {
                     lblLCCodeMessage.Text = "Can not find this Code !";
-                    RadToolBar1.FindItemByValue("btCommit").Enabled = false;
                     bc.Commont.SetTatusFormControls(this.Controls, false);
                     return;
                 }
                 loadLC(ExLC);
-                //                
-                RadToolBar1.FindItemByValue("btCommit").Enabled = false;
-                RadToolBar1.FindItemByValue("btPreview").Enabled = true;
-                RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
-                RadToolBar1.FindItemByValue("btReverse").Enabled = false;
-                RadToolBar1.FindItemByValue("btSearch").Enabled = true;
-                RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                 //
+                #region Register
                 if (TabId == ExportLC.Actions.Register)
                 {
-                    switch (ExLC.Status)
+                    if (ExLC.Status.Equals(bd.TransactionStatus.AUT))
                     {
-                        case bd.TransactionStatus.UNA:
-                        case bd.TransactionStatus.REV:
-                            if (!string.IsNullOrEmpty(Request.QueryString["lst"]) && ExLC.Status.Equals(bd.TransactionStatus.UNA))
-                            {
-                                RadToolBar1.FindItemByValue("btPreview").Enabled = false;
-                                RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
-                                RadToolBar1.FindItemByValue("btReverse").Enabled = true;
-                                RadToolBar1.FindItemByValue("btSearch").Enabled = false;
-                                bc.Commont.SetTatusFormControls(this.Controls, false);
-                            }
-                            else
-                            {
-                                RadToolBar1.FindItemByValue("btCommit").Enabled = true;
-                                RadToolBar1.FindItemByValue("btPreview").Enabled = true;
-                                RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
-                                RadToolBar1.FindItemByValue("btReverse").Enabled = false;
-                                RadToolBar1.FindItemByValue("btSearch").Enabled = true;
-                                RadToolBar1.FindItemByValue("btPrint").Enabled = false;
-                            }
-                            break;
-                        case bd.TransactionStatus.AUT:
-                            lblLCCodeMessage.Text = "This LC is authorized !";
-                            break;
-                        default:
-                            lblLCCodeMessage.Text = "This LC is wrong status(" + ExLC.Status + ") !";
-                            break;
+                        lblLCCodeMessage.Text = "This LC is authorized !";
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        bc.Commont.SetTatusFormControls(this.Controls, false);
+                        return;
+                    }
+                    if (!string.IsNullOrEmpty(Request.QueryString["lst"]) && Request.QueryString["lst"].Equals("4appr"))
+                    {
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        bc.Commont.SetTatusFormControls(this.Controls, false);
+                        if (!ExLC.Status.Equals(bd.TransactionStatus.UNA))
+                        {
+                            lblLCCodeMessage.Text = "This Code is reversed !";                            
+                            return;
+                        }
+                        //cho phép duyệt
+                        RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
+                        RadToolBar1.FindItemByValue("btReverse").Enabled = true;
+                    }
+                    else//cho phép edit
+                    {
+                        RadToolBar1.FindItemByValue("btCommit").Enabled = true;
+                        RadToolBar1.FindItemByValue("btPreview").Enabled = true;
+                        RadToolBar1.FindItemByValue("btSearch").Enabled = true;
                     }
                 }
-                /*if (TabId == ExportLC.Actions.Confirm)
+                #endregion
+                #region Confirm
+                if (TabId == ExportLC.Actions.Confirm)
                 {
-                    switch (ExLC.Status)
+                    if (!ExLC.Status.Equals(bd.TransactionStatus.AUT))
                     {
-                        case bd.TransactionStatus.UNA:
-                        case bd.TransactionStatus.REV:
-                            if (!string.IsNullOrEmpty(Request.QueryString["lst"]) && ExLC.Status.Equals(bd.TransactionStatus.UNA))
-                            {
-                                RadToolBar1.FindItemByValue("btPreview").Enabled = false;
-                                RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
-                                RadToolBar1.FindItemByValue("btReverse").Enabled = true;
-                                RadToolBar1.FindItemByValue("btSearch").Enabled = false;
-                                bc.Commont.SetTatusFormControls(this.Controls, false);
-                            }
-                            else
-                            {
-                                RadToolBar1.FindItemByValue("btCommit").Enabled = true;
-                                RadToolBar1.FindItemByValue("btPreview").Enabled = true;
-                                RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
-                                RadToolBar1.FindItemByValue("btReverse").Enabled = false;
-                                RadToolBar1.FindItemByValue("btSearch").Enabled = true;
-                                RadToolBar1.FindItemByValue("btPrint").Enabled = false;
-                            }
-                            break;
-                        case bd.TransactionStatus.AUT:
-                            lblLCCodeMessage.Text = "This LC is authorized !";
-                            break;
-                        default:
-                            lblLCCodeMessage.Text = "This LC is wrong status(" + ExLC.Status + ") !";
-                            break;
+                        lblLCCodeMessage.Text = "This LC is not authorized !";
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        bc.Commont.SetTatusFormControls(this.Controls, false);
+                        return;
                     }
-                }*/
+                    if (ExLC.ConfirmStatus.Equals(bd.TransactionStatus.AUT))
+                    {
+                        lblLCCodeMessage.Text = "This LC is confirm !";
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        bc.Commont.SetTatusFormControls(this.Controls, false);
+                        return;
+                    }
+                    if (!string.IsNullOrEmpty(ExLC.AmendStatus) && ExLC.AmendStatus.Equals(bd.TransactionStatus.UNA))
+                    {
+                        lblLCCodeMessage.Text = "This LC Amend is not authorized !";
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        bc.Commont.SetTatusFormControls(this.Controls, false);
+                        return;
+                    }
+                    if (!string.IsNullOrEmpty(ExLC.CancelStatus) && !ExLC.CancelStatus.Equals(bd.TransactionStatus.REV))
+                    {
+                        lblLCCodeMessage.Text = "This LC Close is canceled !";
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        bc.Commont.SetTatusFormControls(this.Controls, false);
+                        return;
+                    }
+                    if (!string.IsNullOrEmpty(ExLC.ClosedStatus) && !ExLC.ClosedStatus.Equals(bd.TransactionStatus.REV))
+                    {
+                        lblLCCodeMessage.Text = "This LC Close is closed !";
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        bc.Commont.SetTatusFormControls(this.Controls, false);
+                        return;
+                    }
+                    if (!string.IsNullOrEmpty(Request.QueryString["lst"]) && Request.QueryString["lst"].Equals("4appr"))
+                    {
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        bc.Commont.SetTatusFormControls(this.Controls, false);
+                        if (!ExLC.ConfirmStatus.Equals(bd.TransactionStatus.UNA))
+                        {
+                            lblLCCodeMessage.Text = "This Code is reversed !";                            
+                            return;
+                        }
+                        //cho phép duyệt
+                        RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
+                        RadToolBar1.FindItemByValue("btReverse").Enabled = true;
+                    }
+                    else//cho phép edit
+                    {
+                        RadToolBar1.FindItemByValue("btCommit").Enabled = true;
+                        RadToolBar1.FindItemByValue("btPreview").Enabled = true;
+                        RadToolBar1.FindItemByValue("btSearch").Enabled = true;
+                    }
+                }
+                #endregion
+                #region Cancel
                 if (TabId == ExportLC.Actions.Cancel)
                 {
-                    bc.Commont.SetTatusFormControls(this.Controls, false);
                     if (!ExLC.Status.Equals(bd.TransactionStatus.AUT))
-                        lblLCCodeMessage.Text = "This LC is not authorized !";
-                    else if (!string.IsNullOrEmpty(ExLC.AmendStatus) && ExLC.AmendStatus.Equals(bd.TransactionStatus.UNA))
-                        lblLCCodeMessage.Text = "This LC Amend is not authorized !";
-                    else if (!string.IsNullOrEmpty(ExLC.ClosedStatus) && !ExLC.ClosedStatus.Equals(bd.TransactionStatus.REV))
-                        lblLCCodeMessage.Text = "This LC Close is closed !";
-                    else
                     {
-                        switch (ExLC.CancelStatus)
+                        lblLCCodeMessage.Text = "This LC is not authorized !";
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        bc.Commont.SetTatusFormControls(this.Controls, false);
+                        return;
+                    }
+                    if (ExLC.CancelStatus.Equals(bd.TransactionStatus.AUT))
+                    {
+                        lblLCCodeMessage.Text = "This LC is canceled !";
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        bc.Commont.SetTatusFormControls(this.Controls, false);
+                        return;
+                    }
+                    if (!string.IsNullOrEmpty(ExLC.AmendStatus) && ExLC.AmendStatus.Equals(bd.TransactionStatus.UNA))
+                    {
+                        lblLCCodeMessage.Text = "This LC Amend is not authorized !";
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        bc.Commont.SetTatusFormControls(this.Controls, false);
+                        return;
+                    }
+                    if (!string.IsNullOrEmpty(ExLC.ClosedStatus) && !ExLC.ClosedStatus.Equals(bd.TransactionStatus.REV))
+                    {
+                        lblLCCodeMessage.Text = "This LC Close is closed !";
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        bc.Commont.SetTatusFormControls(this.Controls, false);
+                        return;
+                    }
+                    if (!string.IsNullOrEmpty(Request.QueryString["lst"]) && Request.QueryString["lst"].Equals("4appr"))
+                    {
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        bc.Commont.SetTatusFormControls(this.Controls, false);
+                        if (!ExLC.CancelStatus.Equals(bd.TransactionStatus.UNA))
                         {
-                            case null:
-                            case bd.TransactionStatus.UNA:
-                            case bd.TransactionStatus.REV:
-                                if (!string.IsNullOrEmpty(Request.QueryString["lst"]) && ExLC.CancelStatus.Equals(bd.TransactionStatus.UNA))
-                                {
-                                    RadToolBar1.FindItemByValue("btPreview").Enabled = false;
-                                    RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
-                                    RadToolBar1.FindItemByValue("btReverse").Enabled = true;
-                                    RadToolBar1.FindItemByValue("btSearch").Enabled = false;
-                                }
-                                else
-                                {
-                                    RadToolBar1.FindItemByValue("btCommit").Enabled = true;
-                                    RadToolBar1.FindItemByValue("btPreview").Enabled = true;
-                                    RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
-                                    RadToolBar1.FindItemByValue("btReverse").Enabled = false;
-                                    RadToolBar1.FindItemByValue("btSearch").Enabled = true;
-                                    RadToolBar1.FindItemByValue("btPrint").Enabled = false;
-                                }
-                                break;
-                            case bd.TransactionStatus.AUT:
-                                lblLCCodeMessage.Text = "This LC Cancel is authorized !";
-                                break;
-                            default:
-                                lblLCCodeMessage.Text = "This LC Cancel is wrong status(" + ExLC.CancelStatus + ") !";
-                                break;
+                            lblLCCodeMessage.Text = "This Code is reversed !";
+                            return;
                         }
+                        //cho phép duyệt
+                        RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
+                        RadToolBar1.FindItemByValue("btReverse").Enabled = true;
+                    }
+                    else//cho phép edit
+                    {
+                        RadToolBar1.FindItemByValue("btCommit").Enabled = true;
+                        RadToolBar1.FindItemByValue("btPreview").Enabled = true;
+                        RadToolBar1.FindItemByValue("btSearch").Enabled = true;
                     }
                 }
+                #endregion
+                #region Close
                 if (TabId == ExportLC.Actions.Close)
                 {
-                    bc.Commont.SetTatusFormControls(this.Controls, false);
                     if (!ExLC.Status.Equals(bd.TransactionStatus.AUT))
-                        lblLCCodeMessage.Text = "This LC is not authorized !";
-                    else if (!string.IsNullOrEmpty(ExLC.AmendStatus) && ExLC.AmendStatus.Equals(bd.TransactionStatus.UNA))
-                        lblLCCodeMessage.Text = "This LC Amend is not authorized !";
-                    else if (!string.IsNullOrEmpty(ExLC.CancelStatus) && !ExLC.CancelStatus.Equals(bd.TransactionStatus.REV))
-                        lblLCCodeMessage.Text = "This LC Close is closed !";
-                    else
                     {
-                        switch (ExLC.ClosedStatus)
+                        lblLCCodeMessage.Text = "This LC is not authorized !";
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        bc.Commont.SetTatusFormControls(this.Controls, false);
+                        return;
+                    }
+                    if (ExLC.ClosedStatus.Equals(bd.TransactionStatus.AUT))
+                    {
+                        lblLCCodeMessage.Text = "This LC is Closed !";
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        bc.Commont.SetTatusFormControls(this.Controls, false);
+                        return;
+                    }
+                    if (!string.IsNullOrEmpty(ExLC.AmendStatus) && ExLC.AmendStatus.Equals(bd.TransactionStatus.UNA))
+                    {
+                        lblLCCodeMessage.Text = "This LC Amend is not authorized !";
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        bc.Commont.SetTatusFormControls(this.Controls, false);
+                        return;
+                    }
+                    if (!string.IsNullOrEmpty(ExLC.CancelStatus) && !ExLC.CancelStatus.Equals(bd.TransactionStatus.REV))
+                    {
+                        lblLCCodeMessage.Text = "This LC Close is canceled !";
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        bc.Commont.SetTatusFormControls(this.Controls, false);
+                        return;
+                    }
+                    if (!string.IsNullOrEmpty(Request.QueryString["lst"]) && Request.QueryString["lst"].Equals("4appr"))
+                    {
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        bc.Commont.SetTatusFormControls(this.Controls, false);
+                        if (!ExLC.ClosedStatus.Equals(bd.TransactionStatus.UNA))
                         {
-                            case bd.TransactionStatus.UNA:
-                            case bd.TransactionStatus.REV:
-                                if (!string.IsNullOrEmpty(Request.QueryString["lst"]) && ExLC.ClosedStatus.Equals(bd.TransactionStatus.UNA))
-                                {
-                                    RadToolBar1.FindItemByValue("btPreview").Enabled = false;
-                                    RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
-                                    RadToolBar1.FindItemByValue("btReverse").Enabled = true;
-                                    RadToolBar1.FindItemByValue("btSearch").Enabled = false;
-                                }
-                                else
-                                {
-                                    RadToolBar1.FindItemByValue("btCommit").Enabled = true;
-                                    RadToolBar1.FindItemByValue("btPreview").Enabled = true;
-                                    RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
-                                    RadToolBar1.FindItemByValue("btReverse").Enabled = false;
-                                    RadToolBar1.FindItemByValue("btSearch").Enabled = true;
-                                    RadToolBar1.FindItemByValue("btPrint").Enabled = false;
-                                }
-                                break;
-                            case bd.TransactionStatus.AUT:
-                                lblLCCodeMessage.Text = "This LC Closed is authorized !";
-                                break;
-                            default:
-                                lblLCCodeMessage.Text = "This LC Closed is wrong status(" + ExLC.ClosedStatus + ") !";
-                                break;
+                            lblLCCodeMessage.Text = "This Code is reversed !";
+                            return;
                         }
+                        //cho phép duyệt
+                        RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
+                        RadToolBar1.FindItemByValue("btReverse").Enabled = true;
+                    }
+                    else//cho phép edit
+                    {
+                        RadToolBar1.FindItemByValue("btCommit").Enabled = true;
+                        RadToolBar1.FindItemByValue("btPreview").Enabled = true;
+                        RadToolBar1.FindItemByValue("btSearch").Enabled = true;
                     }
                 }
+                #endregion
             }
             else
             {
@@ -257,6 +303,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             var toolBarButton = e.Item as RadToolBarButton;
             var ExLC = dbEntities.findExportLC(tbLCCode.Text);
             var commandName = toolBarButton.CommandName.ToLower();
+            #region Register
             if (TabId == ExportLC.Actions.Register)
             {                
                 switch (commandName)
@@ -337,6 +384,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
 
                 return;
             }
+            #endregion
+            #region Cancel
             if (TabId == ExportLC.Actions.Cancel)
             {
                 switch (commandName)
@@ -377,6 +426,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
 
                 return;
             }
+            #endregion
+            #region Close
             if (TabId == ExportLC.Actions.Close)
             {
                 switch (commandName)
@@ -414,6 +465,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
 
                 return;
             }
+            #endregion
         }
         private void saveLC(ref BEXPORT_LC ExLC)
         {
@@ -687,6 +739,43 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             rcbWaiveCharges.SelectedValue = ExLC.WaiveCharges;
             tbChargeRemarks.Text = ExLC.ChargeRemarks;
             tbVatNo.Text = ExLC.VATNo;
+            //
+            if (ExLC.WaiveCharges.Equals(bd.YesNo.NO)) loadCharges();
+        }
+        private void loadCharges()
+        {
+            var lstCharges = dbEntities.BEXPORT_LC_CHARGES.Where(p => p.ExportLCCode.Equals(tbLCCode.Text));
+            if (lstCharges == null || lstCharges.Count() <= 0) return;
+            //
+            foreach (BEXPORT_LC_CHARGES ch in lstCharges)
+            {
+                switch(ch.ChargeCode)
+                {
+                    case "ELC.ADVISE":
+                        loadCharge(ch, ref rcbChargeCode, ref rcbChargeCcy, ref rcbChargeAcct, ref tbChargeAmt, ref rcbPartyCharged, ref rcbAmortCharge, ref rcbChargeStatus, ref lblTaxCode, ref lblTaxAmt);
+                        break;
+                    case "ELC.CONFIRM":
+                        loadCharge(ch, ref rcbChargeCode2, ref rcbChargeCcy2, ref rcbChargeAcct2, ref tbChargeAmt2, ref rcbPartyCharged2, ref rcbAmortCharge2, ref rcbChargeStatus2, ref lblTaxCode2, ref lblTaxAmt2);
+                        break;
+                    case "ELC.OTHER":
+                        loadCharge(ch, ref rcbChargeCode3, ref rcbChargeCcy3, ref rcbChargeAcct3, ref tbChargeAmt3, ref rcbPartyCharged3, ref rcbAmortCharge3, ref rcbChargeStatus3, ref lblTaxCode3, ref lblTaxAmt3);
+                        break;
+                }
+            }
+        }
+        private void loadCharge(BEXPORT_LC_CHARGES ExLCCharge, ref RadComboBox cbChargeCode, ref RadComboBox cbChargeCcy, ref RadComboBox cbChargeAcc, ref RadNumericTextBox txtChargeAmt,
+            ref RadComboBox cbChargeParty, ref RadComboBox cbChargeAmort, ref RadComboBox cbChargeStatus, ref Label lblTaxCode, ref Label lblTaxAmt)
+        {
+            cbChargeCode.SelectedValue = ExLCCharge.ChargeCode;
+            cbChargeCcy.SelectedValue = ExLCCharge.ChargeCcy;
+            cbChargeAcc.SelectedValue = ExLCCharge.ChargeAcc;
+            txtChargeAmt.Value = ExLCCharge.ChargeAmt;
+            cbChargeParty.SelectedValue = ExLCCharge.PartyCharged;
+            cbChargeAmort.SelectedValue = ExLCCharge.AmortCharge;
+            cbChargeStatus.SelectedValue = ExLCCharge.ChargeStatus;
+            lblTaxCode.Text = ExLCCharge.TaxCode;
+            if (ExLCCharge.TaxAmt.HasValue)
+                lblTaxAmt.Text = ExLCCharge.TaxAmt.ToString();
         }
 
         protected void rcbAdvisingBankType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
@@ -785,14 +874,14 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 switch (reportType)
                 {
                     case "ThuThongBao":
-                        reportTemplate = Context.Server.MapPath(reportTemplate + "Mau Thong bao LC va Tu chinh LC.doc");
+                        reportTemplate = Context.Server.MapPath(reportTemplate + "Mau Thong bao LC.doc");
                         reportSaveName = "ThuThongBao" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
                         //
                         var dataThuThongBao = new MauThongBaoVaTuChinhLc()
                         {
-                            Ref = "",
+                            Ref = ExLC.ExportLCCode,
                             Beneficiary = ExLC.BeneficiaryName,
-                            LCCode = "",
+                            LCCode = ExLC.ImportLCCode,
                             DateOfIssue = (ExLC.DateOfIssue.HasValue ? ExLC.DateOfIssue.Value.ToString("dd/MM/yyyy") : ""),
                             DateOfExpiry = (ExLC.DateOfExpiry.HasValue ? ExLC.DateOfExpiry.Value.ToString("dd/MM/yyyy") : ""),
                             IssuingBank = ExLC.IssuingBankName,
@@ -822,8 +911,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         //
                         var dataBiaHs = new MauBiaHsLc()
                         {
-                            Ref = "",
-                            LCCode = "",
+                            Ref = ExLC.ExportLCCode,
+                            LCCode = ExLC.ImportLCCode,
                             DateOfIssue = (ExLC.DateOfIssue.HasValue ? ExLC.DateOfIssue.Value.ToString("dd/MM/yyyy") : ""),
                             Beneficiary = ExLC.BeneficiaryName,
                             Applicant = ExLC.ApplicantName,

@@ -14,6 +14,7 @@ namespace BankProject.Model
         public struct Actions
         {
             public const int Register = 242;
+            public const int Amend = 235;
             public const int Confirm = 236;
             public const int Cancel = 237;
             public const int Close = 265;
@@ -38,6 +39,15 @@ namespace BankProject.Model
         {
             Code = Code.Trim().ToUpper();
             return BIMPORT_NORMAILLC.Where(p => (p.NormalLCCode.Equals(Code) && (p.ActiveRecordFlag == null || p.ActiveRecordFlag.Equals("Yes")))).FirstOrDefault();
+        }
+        public BEXPORT_LC_AMEND findExportLCAmend(string Code)
+        {
+            //Lấy thông tin chi tiết của amend theo code hoặc lấy amend cuối cùng theo code
+            Code = Code.Trim().ToUpper();
+            if (Code.IndexOf(".") > 0)
+                return BEXPORT_LC_AMEND.Where(p => p.AmendNo.Trim().Equals(Code)).FirstOrDefault();
+            
+            return BEXPORT_LC_AMEND.Where(p => p.AmendNo.StartsWith(Code)).OrderByDescending(p => p.NumberOfAmendment).FirstOrDefault();
         }
     }
     public class MauBiaHsLc

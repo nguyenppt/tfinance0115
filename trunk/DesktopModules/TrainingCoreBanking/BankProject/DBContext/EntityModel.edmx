@@ -3069,10 +3069,9 @@
         </EntityType>
         <EntityType Name="BEXPORT_LC_AMEND">
           <Key>
-            <PropertyRef Name="ExportLCCode" />
-            <PropertyRef Name="NumberOfAmendment" />
+            <PropertyRef Name="AmendNo" />
           </Key>
-          <Property Name="ExportLCCode" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="AmendNo" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="ImportLCCode" Type="nvarchar" MaxLength="50" />
           <Property Name="SenderReference" Type="nvarchar" MaxLength="50" />
           <Property Name="ReceiverReference" Type="nvarchar" MaxLength="50" />
@@ -3085,7 +3084,7 @@
           <Property Name="IssuingBankAddr3" Type="nvarchar" MaxLength="200" />
           <Property Name="DateOfIssue" Type="date" />
           <Property Name="DateOfAmendment" Type="date" />
-          <Property Name="NumberOfAmendment" Type="int" Nullable="false" />
+          <Property Name="NumberOfAmendment" Type="int" />
           <Property Name="BeneficiaryNo" Type="nvarchar" MaxLength="50" />
           <Property Name="BeneficiaryName" Type="nvarchar" MaxLength="200" />
           <Property Name="BeneficiaryAddr1" Type="nvarchar" MaxLength="200" />
@@ -8931,10 +8930,9 @@
         </EntityType>
         <EntityType Name="BEXPORT_LC_AMEND">
           <Key>
-            <PropertyRef Name="ExportLCCode" />
-            <PropertyRef Name="NumberOfAmendment" />
+            <PropertyRef Name="AmendNo" />
           </Key>
-          <Property Type="String" Name="ExportLCCode" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="AmendNo" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="ImportLCCode" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="SenderReference" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="ReceiverReference" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -8947,7 +8945,7 @@
           <Property Type="String" Name="IssuingBankAddr3" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Type="DateTime" Name="DateOfIssue" Precision="0" />
           <Property Type="DateTime" Name="DateOfAmendment" Precision="0" />
-          <Property Type="Int32" Name="NumberOfAmendment" Nullable="false" />
+          <Property Type="Int32" Name="NumberOfAmendment" />
           <Property Type="String" Name="BeneficiaryNo" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="BeneficiaryName" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="BeneficiaryAddr1" MaxLength="200" FixedLength="false" Unicode="true" />
@@ -12950,7 +12948,7 @@
                 <ScalarProperty Name="ReceiverReference" ColumnName="ReceiverReference" />
                 <ScalarProperty Name="SenderReference" ColumnName="SenderReference" />
                 <ScalarProperty Name="ImportLCCode" ColumnName="ImportLCCode" />
-                <ScalarProperty Name="ExportLCCode" ColumnName="ExportLCCode" />
+                <ScalarProperty Name="AmendNo" ColumnName="AmendNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
