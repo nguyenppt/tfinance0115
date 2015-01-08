@@ -52,5 +52,6 @@ namespace BankProject.DBContext
         public string AmendStatus { get; set; }
         public string AmendBy { get; set; }
         public Nullable<System.DateTime> AmendDate { get; set; }
+        public string RefAmendNo { get; set; }
     }
 }
