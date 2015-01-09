@@ -77,5 +77,6 @@ namespace BankProject.DBContext
         public Nullable<System.DateTime> RejectDate { get; set; }
         public string AcceptStatus { get; set; }
         public Nullable<System.DateTime> AcceptDate { get; set; }
+        public Nullable<double> PaymentAmount { get; set; }
     }
 }

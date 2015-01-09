@@ -2998,6 +2998,7 @@
           <Property Name="ChargeRemarks" Type="nvarchar" MaxLength="100" />
           <Property Name="VATNo" Type="nvarchar" MaxLength="50" />
           <Property Name="PaymentFull" Type="bit" />
+          <Property Name="PaymentAmount" Type="float" />
           <Property Name="Status" Type="nvarchar" MaxLength="50" />
           <Property Name="CreateBy" Type="nvarchar" MaxLength="50" />
           <Property Name="CreateDate" Type="datetime" />
@@ -3112,6 +3113,7 @@
           <Property Name="AmendBy" Type="nvarchar" MaxLength="50" />
           <Property Name="AmendDate" Type="datetime" />
           <Property Name="RefAmendNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="DocumentaryCreditAmount" Type="float" />
         </EntityType>
         <EntityType Name="BEXPORT_LC_CHARGES">
           <Key>
@@ -3196,6 +3198,7 @@
           <Property Name="RejectDate" Type="datetime" />
           <Property Name="AcceptStatus" Type="nvarchar" MaxLength="50" />
           <Property Name="AcceptDate" Type="datetime" />
+          <Property Name="PaymentAmount" Type="float" />
         </EntityType>
         <EntityType Name="BEXPORT_LC_DOCS_PROCESSING_CHARGES">
           <Key>
@@ -5139,9 +5142,9 @@
           <EntitySet Name="BAdvisingAndNegotiationLCs" EntityType="bisolutions_vvcbModel.BAdvisingAndNegotiationLC" />
           <EntitySet Name="BEXPORT_LC" EntityType="bisolutions_vvcbModel.BEXPORT_LC" />
           <EntitySet Name="BEXPORT_LC_CHARGES" EntityType="bisolutions_vvcbModel.BEXPORT_LC_CHARGES" />
-          <EntitySet Name="BEXPORT_LC_AMEND" EntityType="bisolutions_vvcbModel.BEXPORT_LC_AMEND" />
           <EntitySet Name="BEXPORT_LC_DOCS_PROCESSING_CHARGES" EntityType="bisolutions_vvcbModel.BEXPORT_LC_DOCS_PROCESSING_CHARGES" />
           <EntitySet Name="BEXPORT_LC_DOCS_PROCESSING" EntityType="bisolutions_vvcbModel.BEXPORT_LC_DOCS_PROCESSING" />
+          <EntitySet Name="BEXPORT_LC_AMEND" EntityType="bisolutions_vvcbModel.BEXPORT_LC_AMEND" />
         </EntityContainer>
         <EntityType Name="B_AccountForBuyingTC">
           <Key>
@@ -9000,6 +9003,7 @@
           <Property Type="String" Name="ClosedStatus" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="DateTime" Name="ClosedDate" Precision="3" />
           <Property Type="Boolean" Name="PaymentFull" />
+          <Property Type="Double" Name="PaymentAmount" />
         </EntityType>
         <EntityType Name="BEXPORT_LC_CHARGES">
           <Key>
@@ -9016,50 +9020,6 @@
           <Property Type="String" Name="ChargeStatus" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="TaxCode" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="Double" Name="TaxAmt" />
-        </EntityType>
-        <EntityType Name="BEXPORT_LC_AMEND">
-          <Key>
-            <PropertyRef Name="AmendNo" />
-          </Key>
-          <Property Type="String" Name="AmendNo" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="ImportLCCode" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="SenderReference" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="ReceiverReference" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="IssuingBankReference" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="IssuingBankType" MaxLength="2" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="IssuingBankNo" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="IssuingBankName" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="IssuingBankAddr1" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="IssuingBankAddr2" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="IssuingBankAddr3" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="DateOfIssue" Precision="0" />
-          <Property Type="DateTime" Name="DateOfAmendment" Precision="0" />
-          <Property Type="Int32" Name="NumberOfAmendment" />
-          <Property Type="String" Name="BeneficiaryNo" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="BeneficiaryName" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="BeneficiaryAddr1" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="BeneficiaryAddr2" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="BeneficiaryAddr3" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="NewDateOfExpiry" Precision="0" />
-          <Property Type="Double" Name="IncreaseOfDocumentaryCreditAmount" />
-          <Property Type="Double" Name="DecreaseOfDocumentaryCreditAmount" />
-          <Property Type="Double" Name="NewDocumentaryCreditAmountAfterAmendment" />
-          <Property Type="Double" Name="PercentageCreditAmountTolerance1" />
-          <Property Type="Double" Name="PercentageCreditAmountTolerance2" />
-          <Property Type="String" Name="PlaceOfTakingInCharge" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="PortOfLoading" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="PortOfDischarge" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="PlaceOfFinalDestination" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="LatesDateOfShipment" Precision="0" />
-          <Property Type="String" Name="Narrative" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="SenderToReceiverInformation" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="WaiveCharges" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="ChargeRemarks" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="VATNo" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="AmendStatus" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="AmendBy" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="AmendDate" Precision="3" />
-          <Property Type="String" Name="RefAmendNo" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="BEXPORT_LC_DOCS_PROCESSING_CHARGES">
           <Key>
@@ -9144,6 +9104,52 @@
           <Property Type="DateTime" Name="RejectDate" Precision="3" />
           <Property Type="String" Name="AcceptStatus" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="DateTime" Name="AcceptDate" Precision="3" />
+          <Property Type="Double" Name="PaymentAmount" />
+        </EntityType>
+        <EntityType Name="BEXPORT_LC_AMEND">
+          <Key>
+            <PropertyRef Name="AmendNo" />
+          </Key>
+          <Property Type="String" Name="AmendNo" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ImportLCCode" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SenderReference" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ReceiverReference" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="IssuingBankReference" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="IssuingBankType" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="IssuingBankNo" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="IssuingBankName" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="IssuingBankAddr1" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="IssuingBankAddr2" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="IssuingBankAddr3" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="DateOfIssue" Precision="0" />
+          <Property Type="DateTime" Name="DateOfAmendment" Precision="0" />
+          <Property Type="Int32" Name="NumberOfAmendment" />
+          <Property Type="String" Name="BeneficiaryNo" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="BeneficiaryName" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="BeneficiaryAddr1" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="BeneficiaryAddr2" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="BeneficiaryAddr3" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="NewDateOfExpiry" Precision="0" />
+          <Property Type="Double" Name="IncreaseOfDocumentaryCreditAmount" />
+          <Property Type="Double" Name="DecreaseOfDocumentaryCreditAmount" />
+          <Property Type="Double" Name="NewDocumentaryCreditAmountAfterAmendment" />
+          <Property Type="Double" Name="PercentageCreditAmountTolerance1" />
+          <Property Type="Double" Name="PercentageCreditAmountTolerance2" />
+          <Property Type="String" Name="PlaceOfTakingInCharge" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PortOfLoading" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PortOfDischarge" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PlaceOfFinalDestination" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="LatesDateOfShipment" Precision="0" />
+          <Property Type="String" Name="Narrative" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SenderToReceiverInformation" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="WaiveCharges" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ChargeRemarks" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="VATNo" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="AmendStatus" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="AmendBy" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="AmendDate" Precision="3" />
+          <Property Type="String" Name="RefAmendNo" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="DocumentaryCreditAmount" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -12964,6 +12970,7 @@
           <EntitySetMapping Name="BEXPORT_LC">
             <EntityTypeMapping TypeName="bisolutions_vvcbModel.BEXPORT_LC">
               <MappingFragment StoreEntitySet="BEXPORT_LC">
+                <ScalarProperty Name="PaymentAmount" ColumnName="PaymentAmount" />
                 <ScalarProperty Name="PaymentFull" ColumnName="PaymentFull" />
                 <ScalarProperty Name="ClosedDate" ColumnName="ClosedDate" />
                 <ScalarProperty Name="ClosedStatus" ColumnName="ClosedStatus" />
@@ -13082,51 +13089,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="BEXPORT_LC_AMEND">
-            <EntityTypeMapping TypeName="bisolutions_vvcbModel.BEXPORT_LC_AMEND">
-              <MappingFragment StoreEntitySet="BEXPORT_LC_AMEND">
-                <ScalarProperty Name="RefAmendNo" ColumnName="RefAmendNo" />
-                <ScalarProperty Name="AmendDate" ColumnName="AmendDate" />
-                <ScalarProperty Name="AmendBy" ColumnName="AmendBy" />
-                <ScalarProperty Name="AmendStatus" ColumnName="AmendStatus" />
-                <ScalarProperty Name="VATNo" ColumnName="VATNo" />
-                <ScalarProperty Name="ChargeRemarks" ColumnName="ChargeRemarks" />
-                <ScalarProperty Name="WaiveCharges" ColumnName="WaiveCharges" />
-                <ScalarProperty Name="SenderToReceiverInformation" ColumnName="SenderToReceiverInformation" />
-                <ScalarProperty Name="Narrative" ColumnName="Narrative" />
-                <ScalarProperty Name="LatesDateOfShipment" ColumnName="LatesDateOfShipment" />
-                <ScalarProperty Name="PlaceOfFinalDestination" ColumnName="PlaceOfFinalDestination" />
-                <ScalarProperty Name="PortOfDischarge" ColumnName="PortOfDischarge" />
-                <ScalarProperty Name="PortOfLoading" ColumnName="PortOfLoading" />
-                <ScalarProperty Name="PlaceOfTakingInCharge" ColumnName="PlaceOfTakingInCharge" />
-                <ScalarProperty Name="PercentageCreditAmountTolerance2" ColumnName="PercentageCreditAmountTolerance2" />
-                <ScalarProperty Name="PercentageCreditAmountTolerance1" ColumnName="PercentageCreditAmountTolerance1" />
-                <ScalarProperty Name="NewDocumentaryCreditAmountAfterAmendment" ColumnName="NewDocumentaryCreditAmountAfterAmendment" />
-                <ScalarProperty Name="DecreaseOfDocumentaryCreditAmount" ColumnName="DecreaseOfDocumentaryCreditAmount" />
-                <ScalarProperty Name="IncreaseOfDocumentaryCreditAmount" ColumnName="IncreaseOfDocumentaryCreditAmount" />
-                <ScalarProperty Name="NewDateOfExpiry" ColumnName="NewDateOfExpiry" />
-                <ScalarProperty Name="BeneficiaryAddr3" ColumnName="BeneficiaryAddr3" />
-                <ScalarProperty Name="BeneficiaryAddr2" ColumnName="BeneficiaryAddr2" />
-                <ScalarProperty Name="BeneficiaryAddr1" ColumnName="BeneficiaryAddr1" />
-                <ScalarProperty Name="BeneficiaryName" ColumnName="BeneficiaryName" />
-                <ScalarProperty Name="BeneficiaryNo" ColumnName="BeneficiaryNo" />
-                <ScalarProperty Name="NumberOfAmendment" ColumnName="NumberOfAmendment" />
-                <ScalarProperty Name="DateOfAmendment" ColumnName="DateOfAmendment" />
-                <ScalarProperty Name="DateOfIssue" ColumnName="DateOfIssue" />
-                <ScalarProperty Name="IssuingBankAddr3" ColumnName="IssuingBankAddr3" />
-                <ScalarProperty Name="IssuingBankAddr2" ColumnName="IssuingBankAddr2" />
-                <ScalarProperty Name="IssuingBankAddr1" ColumnName="IssuingBankAddr1" />
-                <ScalarProperty Name="IssuingBankName" ColumnName="IssuingBankName" />
-                <ScalarProperty Name="IssuingBankNo" ColumnName="IssuingBankNo" />
-                <ScalarProperty Name="IssuingBankType" ColumnName="IssuingBankType" />
-                <ScalarProperty Name="IssuingBankReference" ColumnName="IssuingBankReference" />
-                <ScalarProperty Name="ReceiverReference" ColumnName="ReceiverReference" />
-                <ScalarProperty Name="SenderReference" ColumnName="SenderReference" />
-                <ScalarProperty Name="ImportLCCode" ColumnName="ImportLCCode" />
-                <ScalarProperty Name="AmendNo" ColumnName="AmendNo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="BEXPORT_LC_DOCS_PROCESSING_CHARGES">
             <EntityTypeMapping TypeName="bisolutions_vvcbModel.BEXPORT_LC_DOCS_PROCESSING_CHARGES">
               <MappingFragment StoreEntitySet="BEXPORT_LC_DOCS_PROCESSING_CHARGES">
@@ -13146,6 +13108,7 @@
           <EntitySetMapping Name="BEXPORT_LC_DOCS_PROCESSING">
             <EntityTypeMapping TypeName="bisolutions_vvcbModel.BEXPORT_LC_DOCS_PROCESSING">
               <MappingFragment StoreEntitySet="BEXPORT_LC_DOCS_PROCESSING">
+                <ScalarProperty Name="PaymentAmount" ColumnName="PaymentAmount" />
                 <ScalarProperty Name="AcceptDate" ColumnName="AcceptDate" />
                 <ScalarProperty Name="AcceptStatus" ColumnName="AcceptStatus" />
                 <ScalarProperty Name="RejectDate" ColumnName="RejectDate" />
@@ -13209,6 +13172,52 @@
                 <ScalarProperty Name="BeneficiaryAddr1" ColumnName="BeneficiaryAddr1" />
                 <ScalarProperty Name="BeneficiaryName" ColumnName="BeneficiaryName" />
                 <ScalarProperty Name="DocCode" ColumnName="DocCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BEXPORT_LC_AMEND">
+            <EntityTypeMapping TypeName="bisolutions_vvcbModel.BEXPORT_LC_AMEND">
+              <MappingFragment StoreEntitySet="BEXPORT_LC_AMEND">
+                <ScalarProperty Name="DocumentaryCreditAmount" ColumnName="DocumentaryCreditAmount" />
+                <ScalarProperty Name="RefAmendNo" ColumnName="RefAmendNo" />
+                <ScalarProperty Name="AmendDate" ColumnName="AmendDate" />
+                <ScalarProperty Name="AmendBy" ColumnName="AmendBy" />
+                <ScalarProperty Name="AmendStatus" ColumnName="AmendStatus" />
+                <ScalarProperty Name="VATNo" ColumnName="VATNo" />
+                <ScalarProperty Name="ChargeRemarks" ColumnName="ChargeRemarks" />
+                <ScalarProperty Name="WaiveCharges" ColumnName="WaiveCharges" />
+                <ScalarProperty Name="SenderToReceiverInformation" ColumnName="SenderToReceiverInformation" />
+                <ScalarProperty Name="Narrative" ColumnName="Narrative" />
+                <ScalarProperty Name="LatesDateOfShipment" ColumnName="LatesDateOfShipment" />
+                <ScalarProperty Name="PlaceOfFinalDestination" ColumnName="PlaceOfFinalDestination" />
+                <ScalarProperty Name="PortOfDischarge" ColumnName="PortOfDischarge" />
+                <ScalarProperty Name="PortOfLoading" ColumnName="PortOfLoading" />
+                <ScalarProperty Name="PlaceOfTakingInCharge" ColumnName="PlaceOfTakingInCharge" />
+                <ScalarProperty Name="PercentageCreditAmountTolerance2" ColumnName="PercentageCreditAmountTolerance2" />
+                <ScalarProperty Name="PercentageCreditAmountTolerance1" ColumnName="PercentageCreditAmountTolerance1" />
+                <ScalarProperty Name="NewDocumentaryCreditAmountAfterAmendment" ColumnName="NewDocumentaryCreditAmountAfterAmendment" />
+                <ScalarProperty Name="DecreaseOfDocumentaryCreditAmount" ColumnName="DecreaseOfDocumentaryCreditAmount" />
+                <ScalarProperty Name="IncreaseOfDocumentaryCreditAmount" ColumnName="IncreaseOfDocumentaryCreditAmount" />
+                <ScalarProperty Name="NewDateOfExpiry" ColumnName="NewDateOfExpiry" />
+                <ScalarProperty Name="BeneficiaryAddr3" ColumnName="BeneficiaryAddr3" />
+                <ScalarProperty Name="BeneficiaryAddr2" ColumnName="BeneficiaryAddr2" />
+                <ScalarProperty Name="BeneficiaryAddr1" ColumnName="BeneficiaryAddr1" />
+                <ScalarProperty Name="BeneficiaryName" ColumnName="BeneficiaryName" />
+                <ScalarProperty Name="BeneficiaryNo" ColumnName="BeneficiaryNo" />
+                <ScalarProperty Name="NumberOfAmendment" ColumnName="NumberOfAmendment" />
+                <ScalarProperty Name="DateOfAmendment" ColumnName="DateOfAmendment" />
+                <ScalarProperty Name="DateOfIssue" ColumnName="DateOfIssue" />
+                <ScalarProperty Name="IssuingBankAddr3" ColumnName="IssuingBankAddr3" />
+                <ScalarProperty Name="IssuingBankAddr2" ColumnName="IssuingBankAddr2" />
+                <ScalarProperty Name="IssuingBankAddr1" ColumnName="IssuingBankAddr1" />
+                <ScalarProperty Name="IssuingBankName" ColumnName="IssuingBankName" />
+                <ScalarProperty Name="IssuingBankNo" ColumnName="IssuingBankNo" />
+                <ScalarProperty Name="IssuingBankType" ColumnName="IssuingBankType" />
+                <ScalarProperty Name="IssuingBankReference" ColumnName="IssuingBankReference" />
+                <ScalarProperty Name="ReceiverReference" ColumnName="ReceiverReference" />
+                <ScalarProperty Name="SenderReference" ColumnName="SenderReference" />
+                <ScalarProperty Name="ImportLCCode" ColumnName="ImportLCCode" />
+                <ScalarProperty Name="AmendNo" ColumnName="AmendNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
