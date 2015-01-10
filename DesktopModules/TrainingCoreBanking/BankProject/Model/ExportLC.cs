@@ -105,23 +105,26 @@ namespace BankProject.Model
             public const string Courier = "EC.COURIER";
             public const string Other = "EC.OTHER";
         }
+        //
         public BEXPORT_LC_DOCS_PROCESSING findExportLCDoc(string Code)
         {
-            //Code có dạng TFxxx hoặc TFxxx.No hoặc TFxxx.No.AmendNo
-            Code = Code.Trim().ToUpper();
+            return findExportLCDoc(Code, null);
+        }
+        public BEXPORT_LC_DOCS_PROCESSING findExportLCDoc(string Code, bool? isAmendNo)
+        {
             int i = Code.IndexOf(".");
-            if (i < 0)//TFxxx
-                return BEXPORT_LC_DOCS_PROCESSING.Where(p => p.DocCode.StartsWith(Code)).OrderByDescending(p => p.DocCode).FirstOrDefault();
-
-            if (Code.IndexOf(".", i + 1) > 0)//TFxxx.No.AmendNo
+            if (Code.LastIndexOf(".") != i || (isAmendNo.HasValue && isAmendNo.Value))
                 return BEXPORT_LC_DOCS_PROCESSING.Where(p => p.AmendNo.Equals(Code)).FirstOrDefault();
 
-            //TFxxx.No
             return BEXPORT_LC_DOCS_PROCESSING.Where(p => (p.DocCode.Equals(Code) && p.ActiveRecordFlag.Equals("Yes"))).FirstOrDefault();
         }
-        public BEXPORT_LC_DOCS_PROCESSING findExportLCDocLastestAmend(string Code)
+        public BEXPORT_LC_DOCS_PROCESSING findExportLCDocLastestAmend(string DocCode)
         {
-            return BEXPORT_LC_DOCS_PROCESSING.Where(p => p.DocCode.Equals(Code)).OrderByDescending(p => p.AmendNo).FirstOrDefault();
+            return BEXPORT_LC_DOCS_PROCESSING.Where(p => p.DocCode.Equals(DocCode)).OrderByDescending(p => p.AmendNo).FirstOrDefault();
+        }
+        public BEXPORT_LC_DOCS_PROCESSING findExportLCLastestDoc(string LCCode)
+        {
+            return BEXPORT_LC_DOCS_PROCESSING.Where(p => p.DocCode.StartsWith(LCCode)).OrderByDescending(p => p.DocCode).FirstOrDefault();
         }
     }
 }
