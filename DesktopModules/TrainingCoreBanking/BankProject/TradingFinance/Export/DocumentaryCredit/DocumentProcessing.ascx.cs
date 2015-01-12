@@ -658,7 +658,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         }
                         else
                         {
-                            var ExLCDocOld = dbEntities.findExportLCDoc(ExLCDoc.AmendNoOriginal);
+                            var ExLCDocOld = dbEntities.findExportLCDoc(ExLCDoc.AmendNoOriginal, true);
                             ExLCDocOld.ActiveRecordFlag = "No";
                             //
                             ExLCDoc.AmendStatus = bd.TransactionStatus.UNA;
@@ -705,8 +705,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     case bc.Commands.Reverse:
                         if (ExLCDoc != null)
                         {
+                            var ExLCDocOld = dbEntities.findExportLCDoc(ExLCDoc.AmendNoOriginal, true);
                             if (commandName.Equals(bc.Commands.Authorize))
                             {
+                                if (!ExLCDoc.Amount.HasValue) ExLCDoc.Amount = ExLCDocOld.Amount;
+                                if (!string.IsNullOrEmpty(ExLCDoc.Tenor)) ExLCDoc.Tenor = ExLCDocOld.Tenor;
                                 ExLCDoc.AmendStatus = bd.TransactionStatus.AUT;
                                 //
                                 dbEntities.SaveChanges();
@@ -714,7 +717,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             }
                             else
                             {
-                                var ExLCDocOld = dbEntities.findExportLCDoc(ExLCDoc.AmendNoOriginal, true);
                                 ExLCDocOld.ActiveRecordFlag = "Yes";
                                 //
                                 ExLCDoc.AmendStatus = bd.TransactionStatus.REV;
