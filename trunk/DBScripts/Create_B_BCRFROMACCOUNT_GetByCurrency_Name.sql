@@ -9,7 +9,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 
-CREATE PROCEDURE [dbo].[B_BCRFROMACCOUNT_GetByCurrency] 
+CREATE PROCEDURE [dbo].[B_BCRFROMACCOUNT_GetByCurrency_Name] 
 	@Name varchar(50),
 	@Currency varchar(10)
 AS
