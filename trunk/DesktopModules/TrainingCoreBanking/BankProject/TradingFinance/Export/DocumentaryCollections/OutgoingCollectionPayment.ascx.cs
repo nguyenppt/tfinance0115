@@ -245,7 +245,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 outCoPayment.DrawingAmount = numDrawingAmount.Value;
                 outCoPayment.ExchRate = numExchangeRate.Value;
                 outCoPayment.IncreaseMental = 0;
-                outCoPayment.Currency = comboCurrency.SelectedValue;
                 outCoPayment.CreditAccount = comboCreditAcct.SelectedValue;
             }
             _entities.SaveChanges();
