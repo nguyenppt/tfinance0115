@@ -156,6 +156,19 @@
                             </asp:RangeValidator>
                         </td>
                     </tr>
+                    <tr>    
+                    <td class="MyLable">Country Code</td>
+                    <td class="MyContent">
+                        <telerik:RadComboBox Width="355" AppendDataBoundItems="True"
+                            ID="comboCountryCode" Runat="server" 
+                            AutoPostBack="False" 
+                            OnSelectedIndexChanged="comboCountryCode_OnSelectedIndexChanged"
+                            MarkFirstMatch="True"
+                            AllowCustomText="false" >
+                        </telerik:RadComboBox>
+                    </td>
+                    <td><asp:Label ID="lblCountryCodeName" runat="server"  />
+                </tr>
                     <tr>
                         <td class="MyLable">Amount Credited
                         </td>

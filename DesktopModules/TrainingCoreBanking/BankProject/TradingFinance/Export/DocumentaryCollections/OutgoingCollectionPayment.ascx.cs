@@ -226,6 +226,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 outCoPayment.IncreaseMental = 0;
                 outCoPayment.Currency = comboCurrency.SelectedValue;
                 outCoPayment.CreditAccount = comboCreditAcct.SelectedValue;
+                outCoPayment.CountryCode = comboCountryCode.SelectedValue;
                 _entities.BOUTGOINGCOLLECTIONPAYMENTs.Add(outCoPayment);
             }
             else
@@ -243,6 +244,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 outCoPayment.Currency = comboCreditCurrency.SelectedValue;
                 outCoPayment.DrawType = comboDrawType.SelectedValue;
                 outCoPayment.DrawingAmount = numDrawingAmount.Value;
+                outCoPayment.CountryCode = comboCountryCode.SelectedValue;
                 outCoPayment.ExchRate = numExchangeRate.Value;
                 outCoPayment.IncreaseMental = 0;
                 outCoPayment.CreditAccount = comboCreditAcct.SelectedValue;
@@ -412,6 +414,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             lblDrawType.Text = comboDrawType.SelectedItem.Attributes["Description"];
             dtValueDate.SelectedDate = outColPayment.ValueDate;
             numDrawingAmount.Value = outColPayment.DrawingAmount;
+            comboCountryCode.SelectedValue = outColPayment.CountryCode;
             lblCreditAmount.Text = (outColPayment.AmtCredited??0).ToString("#,##0.00");
             comboPaymentMethod.SelectedValue = outColPayment.PaymentMethod;
             comboCreditCurrency.SelectedValue = outColPayment.Currency;
@@ -975,7 +978,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
             LoadDataSourceComboPartyCharged();
             LoadChargeCode();
-
+            bc.Commont.initRadComboBox(ref comboCountryCode, "TenTA", "TenTA", bd.SQLData.B_BCOUNTRY_GetAll());
 
             dteDocsReceivedDate.SelectedDate = DateTime.Now;
             dteTracerDate.SelectedDate = DateTime.Now.AddDays(30);
@@ -1487,6 +1490,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             cbNostroAccount.DataSource = facade.FindSwiftCodeAssociateWithCurrency(currency).ToList();
             cbNostroAccount.DataBind();
             lblNostro.Text = "";
+        }
+
+        protected void comboCountryCode_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            //lblCountryCodeName.Text = comboCountryCode.SelectedValue;
         }
         
     }
