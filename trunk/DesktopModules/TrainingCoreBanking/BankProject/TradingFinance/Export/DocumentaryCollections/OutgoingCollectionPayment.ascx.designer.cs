@@ -112,6 +112,24 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections {
         protected global::System.Web.UI.WebControls.RangeValidator rvDrawingAmount;
         
         /// <summary>
+        /// comboCountryCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox comboCountryCode;
+        
+        /// <summary>
+        /// lblCountryCodeName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCountryCodeName;
+        
+        /// <summary>
         /// lblCreditAmount control.
         /// </summary>
         /// <remarks>
