@@ -170,7 +170,7 @@ namespace BankProject.DBContext
         public DbSet<BEXPORT_LC> BEXPORT_LC { get; set; }
         public DbSet<BEXPORT_LC_CHARGES> BEXPORT_LC_CHARGES { get; set; }
         public DbSet<BEXPORT_LC_DOCS_PROCESSING_CHARGES> BEXPORT_LC_DOCS_PROCESSING_CHARGES { get; set; }
-        public DbSet<BEXPORT_LC_DOCS_PROCESSING> BEXPORT_LC_DOCS_PROCESSING { get; set; }
         public DbSet<BEXPORT_LC_AMEND> BEXPORT_LC_AMEND { get; set; }
+        public DbSet<BEXPORT_LC_DOCS_PROCESSING> BEXPORT_LC_DOCS_PROCESSING { get; set; }
     }
 }

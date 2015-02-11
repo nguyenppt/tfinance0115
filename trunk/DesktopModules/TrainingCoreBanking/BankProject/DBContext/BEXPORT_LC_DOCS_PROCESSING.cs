@@ -15,6 +15,7 @@ namespace BankProject.DBContext
     public partial class BEXPORT_LC_DOCS_PROCESSING
     {
         public string DocCode { get; set; }
+        public string BeneficiaryNo { get; set; }
         public string BeneficiaryName { get; set; }
         public string BeneficiaryAddr1 { get; set; }
         public string BeneficiaryAddr2 { get; set; }
