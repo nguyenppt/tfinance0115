@@ -1,0 +1,2 @@
+ALTER TABLE BEXPORT_LC
+ADD ReceivingLCVia nvarchar(50)
