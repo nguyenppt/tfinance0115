@@ -114,5 +114,6 @@ namespace BankProject.DBContext
         public Nullable<System.DateTime> ClosedDate { get; set; }
         public Nullable<bool> PaymentFull { get; set; }
         public Nullable<double> PaymentAmount { get; set; }
+        public string ReceivingLCVia { get; set; }
     }
 }
