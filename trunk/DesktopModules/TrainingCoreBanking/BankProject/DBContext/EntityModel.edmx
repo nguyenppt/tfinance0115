@@ -3022,6 +3022,7 @@
           <Property Name="CancelRemark" Type="nvarchar" MaxLength="200" />
           <Property Name="ClosedStatus" Type="nvarchar" MaxLength="50" />
           <Property Name="ClosedDate" Type="datetime" />
+          <Property Name="ReceivingLCVia" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="BEXPORT_LC_ADV_NEGO">
           <Key>
@@ -3200,6 +3201,9 @@
           <Property Name="AcceptStatus" Type="nvarchar" MaxLength="50" />
           <Property Name="AcceptDate" Type="datetime" />
           <Property Name="PaymentAmount" Type="float" />
+          <Property Name="OtherDocs1" Type="nvarchar" MaxLength="100" />
+          <Property Name="OtherDocs2" Type="nvarchar" MaxLength="100" />
+          <Property Name="OtherDocs3" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="BEXPORT_LC_DOCS_PROCESSING_CHARGES">
           <Key>
@@ -9005,6 +9009,7 @@
           <Property Type="DateTime" Name="ClosedDate" Precision="3" />
           <Property Type="Boolean" Name="PaymentFull" />
           <Property Type="Double" Name="PaymentAmount" />
+          <Property Type="String" Name="ReceivingLCVia" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="BEXPORT_LC_CHARGES">
           <Key>
@@ -9152,6 +9157,9 @@
           <Property Type="String" Name="AcceptStatus" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="DateTime" Name="AcceptDate" Precision="3" />
           <Property Type="Double" Name="PaymentAmount" />
+          <Property Type="String" Name="OtherDocs1" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="OtherDocs2" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="OtherDocs3" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -12972,6 +12980,7 @@
           <EntitySetMapping Name="BEXPORT_LC">
             <EntityTypeMapping TypeName="bisolutions_vvcbModel.BEXPORT_LC">
               <MappingFragment StoreEntitySet="BEXPORT_LC">
+                <ScalarProperty Name="ReceivingLCVia" ColumnName="ReceivingLCVia" />
                 <ScalarProperty Name="PaymentAmount" ColumnName="PaymentAmount" />
                 <ScalarProperty Name="PaymentFull" ColumnName="PaymentFull" />
                 <ScalarProperty Name="ClosedDate" ColumnName="ClosedDate" />
@@ -13156,6 +13165,9 @@
           <EntitySetMapping Name="BEXPORT_LC_DOCS_PROCESSING">
             <EntityTypeMapping TypeName="bisolutions_vvcbModel.BEXPORT_LC_DOCS_PROCESSING">
               <MappingFragment StoreEntitySet="BEXPORT_LC_DOCS_PROCESSING">
+                <ScalarProperty Name="OtherDocs3" ColumnName="OtherDocs3" />
+                <ScalarProperty Name="OtherDocs2" ColumnName="OtherDocs2" />
+                <ScalarProperty Name="OtherDocs1" ColumnName="OtherDocs1" />
                 <ScalarProperty Name="PaymentAmount" ColumnName="PaymentAmount" />
                 <ScalarProperty Name="AcceptDate" ColumnName="AcceptDate" />
                 <ScalarProperty Name="AcceptStatus" ColumnName="AcceptStatus" />
