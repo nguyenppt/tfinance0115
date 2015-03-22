@@ -669,6 +669,8 @@
           <EntitySet Name="BEXPORT_LC_CHARGES" EntityType="bisolutions_vvcbModel.Store.BEXPORT_LC_CHARGES" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="BEXPORT_LC_DOCS_PROCESSING" EntityType="bisolutions_vvcbModel.Store.BEXPORT_LC_DOCS_PROCESSING" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="BEXPORT_LC_DOCS_PROCESSING_CHARGES" EntityType="bisolutions_vvcbModel.Store.BEXPORT_LC_DOCS_PROCESSING_CHARGES" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="BEXPORT_LC_DOCS_SETTLEMENT" EntityType="bisolutions_vvcbModel.Store.BEXPORT_LC_DOCS_SETTLEMENT" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="BEXPORT_LC_DOCS_SETTLEMENT_CHARGES" EntityType="bisolutions_vvcbModel.Store.BEXPORT_LC_DOCS_SETTLEMENT_CHARGES" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="BEXPORTCOLLECTIONPAYMENT" EntityType="bisolutions_vvcbModel.Store.BEXPORTCOLLECTIONPAYMENT" store:Type="Tables" store:Schema="dbo" store:Name="BEXPORTCOLLECTIONPAYMENT">
             <DefiningQuery>SELECT 
       [BEXPORTCOLLECTIONPAYMENT].[Id] AS [Id], 
@@ -3221,6 +3223,43 @@
           <Property Name="TaxCode" Type="nvarchar" MaxLength="50" />
           <Property Name="TaxAmt" Type="float" />
         </EntityType>
+        <EntityType Name="BEXPORT_LC_DOCS_SETTLEMENT">
+          <Key>
+            <PropertyRef Name="PaymentCode" />
+          </Key>
+          <Property Name="PaymentCode" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="DocsCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="InvoiceAmount" Type="float" />
+          <Property Name="ReceiveAmount" Type="float" />
+          <Property Name="DeductedAmount" Type="float" />
+          <Property Name="ValueDate" Type="date" />
+          <Property Name="WaiveCharges" Type="nvarchar" MaxLength="3" />
+          <Property Name="ChargeRemarks" Type="nvarchar" MaxLength="100" />
+          <Property Name="VATNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="AuthorizedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="AuthorizedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="BEXPORT_LC_DOCS_SETTLEMENT_CHARGES">
+          <Key>
+            <PropertyRef Name="PaymentCode" />
+            <PropertyRef Name="ChargeCode" />
+          </Key>
+          <Property Name="PaymentCode" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="ChargeCode" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="ChargeCcy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ChargeAcc" Type="nvarchar" MaxLength="50" />
+          <Property Name="ChargeAmt" Type="float" />
+          <Property Name="PartyCharged" Type="nvarchar" MaxLength="5" />
+          <Property Name="AmortCharge" Type="nvarchar" MaxLength="5" />
+          <Property Name="ChargeStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="TaxCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="TaxAmt" Type="float" />
+        </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'bisolutions_vvcb.dbo.BEXPORTCOLLECTIONPAYMENT' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
@@ -5150,6 +5189,8 @@
           <EntitySet Name="BEXPORT_LC_DOCS_PROCESSING_CHARGES" EntityType="bisolutions_vvcbModel.BEXPORT_LC_DOCS_PROCESSING_CHARGES" />
           <EntitySet Name="BEXPORT_LC_AMEND" EntityType="bisolutions_vvcbModel.BEXPORT_LC_AMEND" />
           <EntitySet Name="BEXPORT_LC_DOCS_PROCESSING" EntityType="bisolutions_vvcbModel.BEXPORT_LC_DOCS_PROCESSING" />
+          <EntitySet Name="BEXPORT_LC_DOCS_SETTLEMENT" EntityType="bisolutions_vvcbModel.BEXPORT_LC_DOCS_SETTLEMENT" />
+          <EntitySet Name="BEXPORT_LC_DOCS_SETTLEMENT_CHARGES" EntityType="bisolutions_vvcbModel.BEXPORT_LC_DOCS_SETTLEMENT_CHARGES" />
         </EntityContainer>
         <EntityType Name="B_AccountForBuyingTC">
           <Key>
@@ -9160,6 +9201,43 @@
           <Property Type="String" Name="OtherDocs1" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="OtherDocs2" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="OtherDocs3" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="BEXPORT_LC_DOCS_SETTLEMENT">
+          <Key>
+            <PropertyRef Name="PaymentCode" />
+          </Key>
+          <Property Type="String" Name="PaymentCode" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="DocsCode" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="InvoiceAmount" />
+          <Property Type="Double" Name="ReceiveAmount" />
+          <Property Type="Double" Name="DeductedAmount" />
+          <Property Type="DateTime" Name="ValueDate" Precision="0" />
+          <Property Type="String" Name="WaiveCharges" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ChargeRemarks" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="VATNo" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Status" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CreateBy" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreateDate" Precision="3" />
+          <Property Type="String" Name="UpdatedBy" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="UpdateDate" Precision="3" />
+          <Property Type="String" Name="AuthorizedBy" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="AuthorizedDate" Precision="3" />
+        </EntityType>
+        <EntityType Name="BEXPORT_LC_DOCS_SETTLEMENT_CHARGES">
+          <Key>
+            <PropertyRef Name="PaymentCode" />
+            <PropertyRef Name="ChargeCode" />
+          </Key>
+          <Property Type="String" Name="PaymentCode" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ChargeCode" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ChargeCcy" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ChargeAcc" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="ChargeAmt" />
+          <Property Type="String" Name="PartyCharged" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="AmortCharge" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ChargeStatus" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="TaxCode" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="TaxAmt" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -13233,6 +13311,44 @@
                 <ScalarProperty Name="BeneficiaryName" ColumnName="BeneficiaryName" />
                 <ScalarProperty Name="BeneficiaryNo" ColumnName="BeneficiaryNo" />
                 <ScalarProperty Name="DocCode" ColumnName="DocCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BEXPORT_LC_DOCS_SETTLEMENT">
+            <EntityTypeMapping TypeName="bisolutions_vvcbModel.BEXPORT_LC_DOCS_SETTLEMENT">
+              <MappingFragment StoreEntitySet="BEXPORT_LC_DOCS_SETTLEMENT">
+                <ScalarProperty Name="AuthorizedDate" ColumnName="AuthorizedDate" />
+                <ScalarProperty Name="AuthorizedBy" ColumnName="AuthorizedBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="VATNo" ColumnName="VATNo" />
+                <ScalarProperty Name="ChargeRemarks" ColumnName="ChargeRemarks" />
+                <ScalarProperty Name="WaiveCharges" ColumnName="WaiveCharges" />
+                <ScalarProperty Name="ValueDate" ColumnName="ValueDate" />
+                <ScalarProperty Name="DeductedAmount" ColumnName="DeductedAmount" />
+                <ScalarProperty Name="ReceiveAmount" ColumnName="ReceiveAmount" />
+                <ScalarProperty Name="InvoiceAmount" ColumnName="InvoiceAmount" />
+                <ScalarProperty Name="DocsCode" ColumnName="DocsCode" />
+                <ScalarProperty Name="PaymentCode" ColumnName="PaymentCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BEXPORT_LC_DOCS_SETTLEMENT_CHARGES">
+            <EntityTypeMapping TypeName="bisolutions_vvcbModel.BEXPORT_LC_DOCS_SETTLEMENT_CHARGES">
+              <MappingFragment StoreEntitySet="BEXPORT_LC_DOCS_SETTLEMENT_CHARGES">
+                <ScalarProperty Name="TaxAmt" ColumnName="TaxAmt" />
+                <ScalarProperty Name="TaxCode" ColumnName="TaxCode" />
+                <ScalarProperty Name="ChargeStatus" ColumnName="ChargeStatus" />
+                <ScalarProperty Name="AmortCharge" ColumnName="AmortCharge" />
+                <ScalarProperty Name="PartyCharged" ColumnName="PartyCharged" />
+                <ScalarProperty Name="ChargeAmt" ColumnName="ChargeAmt" />
+                <ScalarProperty Name="ChargeAcc" ColumnName="ChargeAcc" />
+                <ScalarProperty Name="ChargeCcy" ColumnName="ChargeCcy" />
+                <ScalarProperty Name="ChargeCode" ColumnName="ChargeCode" />
+                <ScalarProperty Name="PaymentCode" ColumnName="PaymentCode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
