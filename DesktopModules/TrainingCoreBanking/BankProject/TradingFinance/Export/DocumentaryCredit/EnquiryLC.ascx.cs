@@ -47,7 +47,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
 
         protected void radGridReview_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            if (!IsPostBack && !string.IsNullOrEmpty(lstType) && lstType.ToLower().Equals("4appr")) loadData();
+            if (!string.IsNullOrEmpty(lstType) && lstType.ToLower().Equals("4appr")) 
+                loadData();
         }
 
         private void loadData()
@@ -109,10 +110,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         .ToList();
                     return;
                 default:// ExportLC.Actions.Register:
-                    radGridReview.DataSource = enquiry
+                    var data = enquiry
                         .OrderByDescending(p => p.CreateDate)
                         .Select(q => new { Code = q.ExportLCCode, q.ImportLCCode, q.ApplicantName, q.Amount, q.Currency, q.BeneficiaryNo, q.BeneficiaryName, q.DateOfIssue, q.IssuingBankNo, Status = q.Status })
                         .ToList();
+                    radGridReview.DataSource = data;
                     return;
             }
         }
