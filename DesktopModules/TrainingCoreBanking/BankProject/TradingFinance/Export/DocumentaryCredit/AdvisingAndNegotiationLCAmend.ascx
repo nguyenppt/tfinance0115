@@ -494,6 +494,8 @@
                                             <Items>
                                                 <telerik:RadComboBoxItem Value="B" Text="B" />
                                                 <telerik:RadComboBoxItem Value="AC" Text="AC" />
+                                                <telerik:RadComboBoxItem Value="A" Text="AC" />
+                                                <telerik:RadComboBoxItem Value="BC" Text="AC" />
                                             </Items>
                                         </telerik:RadComboBox>
                                     </td>
