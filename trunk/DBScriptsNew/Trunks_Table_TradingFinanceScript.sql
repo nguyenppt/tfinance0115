@@ -31,3 +31,38 @@ CREATE TABLE [dbo].[BDOCUMETARYCOLLECTIONMT412](
 END
 
 GO
+
+---------------------------------------------------------------------------------
+-- 2 July 2015 : Nghia : Add 7 others doc to table [BEXPORT_LC_DOCS_PROCESSING] for internal Bug25
+---------------------------------------------------------------------------------
+print 'Alter BEXPORT_LC_DOCS_PROCESSING'
+
+ALTER TABLE BEXPORT_LC_DOCS_PROCESSING
+ADD [OtherDocs4] [nvarchar](100) NULL;
+GO
+ALTER TABLE BEXPORT_LC_DOCS_PROCESSING
+ADD	[OtherDocs5] [nvarchar](100) NULL;
+GO
+ALTER TABLE BEXPORT_LC_DOCS_PROCESSING
+ADD	[OtherDocs6] [nvarchar](100) NULL;
+GO
+ALTER TABLE BEXPORT_LC_DOCS_PROCESSING
+ADD	[OtherDocs7] [nvarchar](100) NULL;
+GO
+ALTER TABLE BEXPORT_LC_DOCS_PROCESSING
+ADD	[OtherDocs8] [nvarchar](100) NULL;
+GO
+ALTER TABLE BEXPORT_LC_DOCS_PROCESSING
+ADD	[OtherDocs9] [nvarchar](100) NULL;
+GO
+ALTER TABLE BEXPORT_LC_DOCS_PROCESSING
+ADD	[OtherDocs10] [nvarchar](100) NULL;
+GO
+ALTER TABLE BEXPORT_LC_DOCS_PROCESSING
+ADD	[AcceptanceDate] date NULL;
+GO
+ALTER TABLE BEXPORT_LC_DOCS_PROCESSING
+ADD	[MaturityDate] date NULL;
+GO
+
+
