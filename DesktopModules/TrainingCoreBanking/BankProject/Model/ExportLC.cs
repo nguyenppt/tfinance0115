@@ -101,7 +101,7 @@ namespace BankProject.Model
         public new struct Charges
         {
             public const string Service = "EC.AMEND";
-            public const string Commission = "EC.CABLE";
+            public const string Commission = "EC.HANDLE";
             public const string Courier = "EC.COURIER";
             public const string Other = "EC.OTHER";
         }
