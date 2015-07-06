@@ -377,3 +377,56 @@ BEGIN
 	where DocCollectCode = @DocsCode
 END
 GO
+
+/***
+---------------------------------------------------------------------------------
+-- 6 July 2015 : Nghia : Alter [P_BEXPORT_DOCUMETARYCOLLECTION_COVER_Report] for Bug38		"Export - Documentary Collections - Register
+Format lai Cover"
+
+---------------------------------------------------------------------------------
+***/
+IF EXISTS(SELECT * FROM sys.procedures WHERE NAME = 'P_BEXPORT_DOCUMETARYCOLLECTION_COVER_Report')
+BEGIN
+DROP PROCEDURE [dbo].[P_BEXPORT_DOCUMETARYCOLLECTION_COVER_Report]
+END
+GO
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[P_BEXPORT_DOCUMETARYCOLLECTION_COVER_Report]
+	@Code varchar(50),
+	@UserNameLogin  nvarchar(500)
+AS
+BEGIN
+	declare @newLine nvarchar(50)
+	set @newLine = char(10)--'\f'--'\r\n'
+	---
+	select CONVERT(VARCHAR(10),GETDATE(),101) CurrentDate,
+		CollectingBankNo + @newLine + CollectingBankName CollectingBankDetail,	
+		CollectingBankName  + @newLine + CollectingBankAddr1  + @newLine + CollectingBankAddr2  CollectingBankDetail2,		
+		doc.DocCollectCode CollectionNo,
+		DrawerCusName + @newLine + DrawerAddr1 + @newLine + DrawerAddr2 + @newLine + DrawerAddr3 DrawerInfo,
+		DraweeCusName + @newLine + DraweeAddr1 + @newLine + DraweeAddr2 + @newLine + DraweeAddr3 DraweeInfo,
+		--cast(Amount as nvarchar) + ' ' + doc.Currency Amount,
+		case when doc.Currency = 'JPY' OR doc.Currency = 'VND' 
+				then (REPLACE(CONVERT(varchar, CONVERT(money, cast(Amount as decimal(18,0))), 1),'.00','') + ' ' + doc.Currency)
+				else (CONVERT(varchar, CONVERT(money, cast(Amount as decimal(18,2))), 1) + ' ' + doc.Currency) end as Amount,
+		Tenor,
+		case when isnull(DocsCode1,'') <> '' then '+ ' + DocsCode1 + ' : ' + cast(NoOfOriginals1 as varchar) + ' + ' + cast(NoOfCopies1 as varchar) + ' C' + @newLine else '' end +
+		case when isnull(DocsCode2,'') <> '' then '+ ' + DocsCode2 + ' : ' + cast(NoOfOriginals2 as varchar) + ' + ' + cast(NoOfCopies2 as varchar) + ' C' + @newLine else '' end +
+		case when isnull(DocsCode3,'') <> '' then '+ ' + DocsCode3 + ' : ' + cast(NoOfOriginals3 as varchar) + ' + ' + cast(NoOfCopies3 as varchar) + ' C' else '' end
+		DocsCode,
+		case when isnull(OtherDocs,'') <> '' then '+ ' + OtherDocs else '' end OtherDocs,
+		case isnull(CollectionType,'') when 'DP' then 'X' else '' end CollectionTypeDP,
+		case isnull(CollectionType,'') when 'DA' then 'X' else '' end CollectionTypeDA,
+		NostroCusNo,
+		sw.Description NostroCusNoDesc,
+		Remarks
+	from dbo.BEXPORT_DOCUMETARYCOLLECTION doc left join BSWIFTCODE sw on sw.Code = NostroCusNo
+	where doc.DocCollectCode = @Code
+END
+GO
