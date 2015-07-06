@@ -1162,6 +1162,9 @@ namespace BankProject.DataProvider
                                                                  , string NoOfCopies3
                                                                  , string OtherDocs
                                                                  , string Remarks
+                                                                , string Remarks1
+                                                                , string Remarks2
+                                                                , string Remarks3
                                                                  , string CurrentUserId
                                                                  , string CollectionType
                                                                  , string CancelDate
@@ -1213,6 +1216,9 @@ namespace BankProject.DataProvider
                                        , NoOfCopies3
                                        , OtherDocs
                                        , Remarks
+                                       , Remarks1
+                                       , Remarks2
+                                       , Remarks3
                                        , CurrentUserId
                                        , CollectionType
                                        , CancelDate

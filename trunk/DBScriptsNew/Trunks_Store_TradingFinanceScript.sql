@@ -1,4 +1,4 @@
-SET ANSI_NULLS ON
+﻿SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
@@ -425,8 +425,322 @@ BEGIN
 		case isnull(CollectionType,'') when 'DA' then 'X' else '' end CollectionTypeDA,
 		NostroCusNo,
 		sw.Description NostroCusNoDesc,
-		Remarks
+		isnull(Remarks,'') + @newLine + isnull(Remarks1,'')  + @newLine + isnull(Remarks2,'')  + @newLine + isnull(Remarks3,'')  as [Remarks]
 	from dbo.BEXPORT_DOCUMETARYCOLLECTION doc left join BSWIFTCODE sw on sw.Code = NostroCusNo
 	where doc.DocCollectCode = @Code
+END
+GO
+
+/***
+---------------------------------------------------------------------------------
+-- 6 July 2015 : Nghia : Alter [[B_BEXPORT_DOCUMETARYCOLLECTION_Insert]] for Bug40		"Export - Documentary Collections - Register
+Field18:
+Cho thêm 3 trường nữa để nhập liệu"
+
+
+---------------------------------------------------------------------------------
+***/
+IF EXISTS(SELECT * FROM sys.procedures WHERE NAME = 'B_BEXPORT_DOCUMETARYCOLLECTION_Insert')
+BEGIN
+DROP PROCEDURE [dbo].[B_BEXPORT_DOCUMETARYCOLLECTION_Insert]
+END
+GO
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[B_BEXPORT_DOCUMETARYCOLLECTION_Insert]
+	  @DocCollectCode varchar(50) 
+	, @DrawerCusNo varchar(50) 
+	, @DrawerCusName nvarchar(500) 
+	, @DrawerAddr1 nvarchar(500) 
+	, @DrawerAddr2 nvarchar(500) 
+	, @DrawerAddr3 nvarchar(500) 
+	, @DrawerRefNo nvarchar(500) 
+	, @CollectingBankNo nvarchar(500) 
+	, @CollectingBankName varchar(50) 
+	, @CollectingBankAddr1 nvarchar(500) 
+	, @CollectingBankAddr2 nvarchar(500) 
+	, @CollectingBankAddr3 nvarchar(500) 
+	, @CollectingBankAcct varchar(50) 
+	, @DraweeCusNo varchar(50) 
+	, @DraweeCusName nvarchar(500) 
+	, @DraweeAddr1 nvarchar(500) 
+	, @DraweeAddr2 nvarchar(500) 
+	, @DraweeAddr3 nvarchar(500) 
+	, @NostroCusNo nvarchar(500) 
+	, @Currency varchar(50) 
+	, @Amount varchar(50)  
+	, @DocsReceivedDate varchar(50)  
+	, @MaturityDate varchar(50)  
+	, @Tenor nvarchar(250) 
+	, @Days varchar(50)  
+	, @TracerDate varchar(50)  
+	, @ReminderDays varchar(50)  
+	, @Commodity nvarchar(250) 
+	, @DocsCode1 nvarchar(250) 
+	, @NoOfOriginals1 varchar(50)  
+	, @NoOfCopies1 varchar(50)  
+	, @DocsCode2 nvarchar(250) 
+	, @NoOfOriginals2 varchar(50)  
+	, @NoOfCopies2 varchar(50)  
+	, @DocsCode3 nvarchar(250) 
+	, @NoOfOriginals3 varchar(50)  
+	, @NoOfCopies3 varchar(50) 
+	, @OtherDocs nvarchar(4000) 
+	, @Remarks nvarchar(500) 
+	, @Remarks1 nvarchar(100) 
+	, @Remarks2 nvarchar(100) 
+	, @Remarks3 nvarchar(100) 
+	, @CurrentUserId varchar(50) 
+	, @CollectionType varchar(50)
+	, @CancelDate varchar(50)
+	, @ContingentExpiryDate varchar(50)
+	, @CancelRemark varchar(500)
+	, @Accountofficer varchar(50)
+	, @DocsType nvarchar(50)
+	, @AcceptedlDate varchar(50)
+	, @AcceptedRemark varchar(500)
+	, @ScreenType varchar(50)
+	
+AS
+BEGIN
+	if not exists(select DocCollectCode from dbo.BEXPORT_DOCUMETARYCOLLECTION where DocCollectCode = @DocCollectCode)
+	begin
+		INSERT INTO [dbo].[BEXPORT_DOCUMETARYCOLLECTION]
+			   ([DocCollectCode]
+			   ,[DrawerCusNo]
+			   ,[DrawerCusName]
+			   ,[DrawerAddr1]
+			   ,[DrawerAddr2]
+			   ,[DrawerAddr3]
+			   ,[DrawerRefNo]
+			   ,[CollectingBankNo]
+			   ,[CollectingBankName]
+			   ,[CollectingBankAddr1]
+			   ,[CollectingBankAddr2]
+			   ,[CollectingBankAddr3]
+			   ,[CollectingBankAcct]
+			   ,[DraweeCusNo]
+			   ,[DraweeCusName]
+			   ,[DraweeAddr1]
+			   ,[DraweeAddr2]
+			   ,[DraweeAddr3]
+			   ,[NostroCusNo]
+			   ,[Currency]
+			   ,[Amount]
+			   ,[AmountNew]
+			   ,[DocsReceivedDate]
+			   ,[MaturityDate]
+			   ,[Tenor]
+			   ,[Days]
+			   ,[TracerDate]
+			   ,[ReminderDays]
+			   ,[Commodity]
+			   ,[DocsCode1]
+			   ,[NoOfOriginals1]
+			   ,[NoOfCopies1]
+			   ,[DocsCode2]
+			   ,[NoOfOriginals2]
+			   ,[NoOfCopies2]
+			   ,[DocsCode3]
+			   ,[NoOfOriginals3]
+			   ,[NoOfCopies3]
+			   ,[OtherDocs]
+			   ,[Remarks]
+			   ,[Remarks1]
+			   ,[Remarks2]
+			   ,[Remarks3]
+			   ,[Status]
+			   ,[CreateDate]
+			   ,[CreateBy]
+			   ,CollectionType
+			   ,CancelDate
+			   ,ContingentExpiryDate
+			   ,CancelRemark
+			   ,Accountofficer
+			   ,DocsType
+			   )
+		 VALUES
+			   (@DocCollectCode
+				, @DrawerCusNo
+				, @DrawerCusName
+				, @DrawerAddr1
+				, @DrawerAddr2 
+				, @DrawerAddr3 
+				, @DrawerRefNo
+				, @CollectingBankNo
+				, @CollectingBankName
+				, @CollectingBankAddr1
+				, @CollectingBankAddr2
+				, @CollectingBankAddr3
+				, @CollectingBankAcct 
+				, @DraweeCusNo
+				, @DraweeCusName
+				, @DraweeAddr1
+				, @DraweeAddr2
+				, @DraweeAddr3 
+				, @NostroCusNo
+				, @Currency
+				, @Amount
+				, @Amount
+				, @DocsReceivedDate 
+				, @MaturityDate
+				, @Tenor
+				, @Days
+				, @TracerDate
+				, @ReminderDays
+				, @Commodity
+				, @DocsCode1
+				, @NoOfOriginals1 
+				, @NoOfCopies1
+				, @DocsCode2 
+				, @NoOfOriginals2
+				, @NoOfCopies2
+				, @DocsCode3
+				, @NoOfOriginals3
+				, @NoOfCopies3
+				, @OtherDocs 
+				, @Remarks
+				, @Remarks1
+				, @Remarks2
+				, @Remarks3
+				, 'UNA'
+				, getdate()
+				, @CurrentUserId   
+				, @CollectionType
+			    , @CancelDate
+			    , @ContingentExpiryDate
+			    , @CancelRemark
+			    , @Accountofficer
+			    , case when ltrim(isnull(@DocsType,''))='' then null else @DocsType end
+			)
+	end
+	else 
+	begin
+		-- get old values
+		declare @Amount_old float;
+		declare @Tenor_old nvarchar(250);
+		declare @TracerDate_old date;
+		
+		select 
+			@Amount_old = isnull(Amount, 0),
+			@Tenor_old = Tenor,
+			@TracerDate_old = TracerDate
+		from [BEXPORT_DOCUMETARYCOLLECTION]
+		where DocCollectCode = @DocCollectCode
+		and isnull(ActiveRecordFlag,'YES')='YES'
+		if @Tenor_old <> @Tenor
+		begin
+			UPDATE [dbo].[BEXPORT_DOCUMETARYCOLLECTION]
+				set Tenor_New = @Tenor_old
+			where DocCollectCode = @DocCollectCode
+			and isnull(ActiveRecordFlag,'YES')='YES'
+		end
+		
+		if CAST(@TracerDate_old AS DATE) <> CAST(@TracerDate AS DATE)
+		begin
+			UPDATE [dbo].[BEXPORT_DOCUMETARYCOLLECTION]
+				set TracerDate_New = @TracerDate_old
+			where DocCollectCode = @DocCollectCode
+			and isnull(ActiveRecordFlag,'YES')='YES'
+		end		
+		--- update new Values
+		UPDATE [dbo].[BEXPORT_DOCUMETARYCOLLECTION]
+		   SET [DrawerCusNo] = @DrawerCusNo  
+			  ,[DrawerCusName] = @DrawerCusName  
+			  ,[DrawerAddr1] = @DrawerAddr1  
+			  ,[DrawerAddr2] = @DrawerAddr2  
+			  ,[DrawerAddr3] = @DrawerAddr3  
+			  ,[DrawerRefNo] = @DrawerRefNo  
+			  ,[CollectingBankNo] = @CollectingBankNo  
+			  ,[CollectingBankName] = @CollectingBankName  
+			  ,[CollectingBankAddr1] = @CollectingBankAddr1  
+			  ,[CollectingBankAddr2] = @CollectingBankAddr2  
+			  ,[CollectingBankAddr3] = @CollectingBankAddr3  
+			  ,[CollectingBankAcct] = @CollectingBankAcct  
+			  ,[DraweeCusNo] = @DraweeCusNo  
+			  ,[DraweeCusName] = @DraweeCusName  
+			  ,[DraweeAddr1] = @DraweeAddr1  
+			  ,[DraweeAddr2] = @DraweeAddr2  
+			  ,[DraweeAddr3] = @DraweeAddr3  
+			  ,[NostroCusNo] = @NostroCusNo  
+			  ,[Currency] = @Currency  
+			  ,[DocsReceivedDate] = @DocsReceivedDate  
+			  ,[MaturityDate] = @MaturityDate  
+			  ,[Tenor] = @Tenor  
+			  ,[Days] = @Days
+			  ,[TracerDate] = @TracerDate  
+			  ,[ReminderDays] = @ReminderDays 
+			  ,[Commodity] = @Commodity  
+			  ,[DocsCode1] = @DocsCode1  
+			  ,[NoOfOriginals1] = @NoOfOriginals1
+			  ,[NoOfCopies1] = @NoOfCopies1
+			  ,[DocsCode2] = @DocsCode2  
+			  ,[NoOfOriginals2] = @NoOfOriginals2 
+			  ,[NoOfCopies2] = @NoOfCopies2 
+			  ,[DocsCode3] = @DocsCode3  
+			  ,[NoOfOriginals3] = @NoOfOriginals3
+			  ,[NoOfCopies3] = @NoOfCopies3
+			  ,[OtherDocs] = @OtherDocs 
+			  ,[Remarks] = @Remarks  
+			  ,[Remarks1] = @Remarks1  
+			  ,[Remarks2] = @Remarks2  
+			  ,[Remarks3] = @Remarks3  
+			  ,[UpdatedDate] = getdate()  
+			  ,[UpdatedBy] = @CurrentUserId 
+			  , CollectionType = @CollectionType
+			  , CancelDate = @CancelDate
+			  , ContingentExpiryDate =  @ContingentExpiryDate
+			  , CancelRemark = @CancelRemark
+			  , Accountofficer=@Accountofficer
+			  , AcceptedDate = @AcceptedlDate
+			  , AcceptedRemarks = @AcceptedRemark
+		 WHERE DocCollectCode = @DocCollectCode
+		and isnull(ActiveRecordFlag,'YES')='YES';
+		 if @ScreenType = 'Amend' -- Incoming Collection Amendments
+		begin
+			UPDATE [dbo].[BEXPORT_DOCUMETARYCOLLECTION]
+			SET 
+			  Amend_Status = 'UNA',
+			  --AmountAut = @Amount,
+			  AmountNew = @Amount
+			  --Amount = 0
+			WHERE DocCollectCode = @DocCollectCode
+			and isnull(ActiveRecordFlag,'YES')='YES'
+		end
+		else if @ScreenType = 'Cancel'
+		begin
+			UPDATE [dbo].[BEXPORT_DOCUMETARYCOLLECTION]
+			SET 
+			  Cancel_Status = 'UNA'
+			  --[Amount] = @Amount
+			WHERE DocCollectCode = @DocCollectCode
+			and isnull(ActiveRecordFlag,'YES')='YES'
+		end
+		else if @ScreenType = 'Acception'
+		begin
+			UPDATE [dbo].[BEXPORT_DOCUMETARYCOLLECTION]
+			SET 
+			  AcceptStatus = 'UNA'
+			  --[Amount] = @Amount
+			WHERE DocCollectCode = @DocCollectCode
+			and isnull(ActiveRecordFlag,'YES')='YES'
+		end
+		else -- Register Documetary Collection
+		begin
+			UPDATE [dbo].[BEXPORT_DOCUMETARYCOLLECTION]
+			SET 
+			  [Status] = 'UNA',
+			  [Amount] = @Amount,
+			  AmountNew = @Amount,
+			  AmountOld = 0
+			WHERE DocCollectCode = @DocCollectCode
+			and isnull(ActiveRecordFlag,'YES')='YES'
+		end
+
+	end
 END
 GO

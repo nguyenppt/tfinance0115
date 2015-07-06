@@ -65,4 +65,17 @@ ALTER TABLE BEXPORT_LC_DOCS_PROCESSING
 ADD	[MaturityDate] date NULL;
 GO
 
+---------------------------------------------------------------------------------
+-- 6 July 2015 : Nghia : Add 3 remarks Bug40
+---------------------------------------------------------------------------------
+print 'Alter BEXPORT_DOCUMETARYCOLLECTION'
 
+ALTER TABLE BEXPORT_DOCUMETARYCOLLECTION
+ADD	[Remarks1] [nvarchar](100) NULL;
+GO
+ALTER TABLE BEXPORT_DOCUMETARYCOLLECTION
+ADD	[Remarks2] [nvarchar](100) NULL;
+GO
+ALTER TABLE BEXPORT_DOCUMETARYCOLLECTION
+ADD	[Remarks3] [nvarchar](100) NULL;
+GO
