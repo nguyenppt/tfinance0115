@@ -407,10 +407,10 @@ BEGIN
 	---
 	select CONVERT(VARCHAR(10),GETDATE(),101) CurrentDate,
 		CollectingBankNo + @newLine + CollectingBankName CollectingBankDetail,	
-		CollectingBankName  + @newLine + CollectingBankAddr1  + @newLine + CollectingBankAddr2  CollectingBankDetail2,		
+		CollectingBankName  + @newLine + CollectingBankAddr1  + @newLine + CollectingBankAddr2 + @newLine + CollectingBankAddr3  CollectingBankDetail2,		
 		doc.DocCollectCode CollectionNo,
 		DrawerCusName + @newLine + DrawerAddr1 + @newLine + DrawerAddr2 + @newLine + DrawerAddr3 DrawerInfo,
-		DraweeCusName + @newLine + DraweeAddr1 + @newLine + DraweeAddr2 + @newLine + DraweeAddr3 DraweeInfo,
+		DraweeCusName + @newLine + DraweeAddr1 + @newLine + DraweeAddr2 + @newLine + DraweeAddr3 + @newLine + DraweeAddr4 DraweeInfo,
 		--cast(Amount as nvarchar) + ' ' + doc.Currency Amount,
 		case when doc.Currency = 'JPY' OR doc.Currency = 'VND' 
 				then (REPLACE(CONVERT(varchar, CONVERT(money, cast(Amount as decimal(18,0))), 1),'.00','') + ' ' + doc.Currency)
@@ -470,6 +470,7 @@ CREATE PROCEDURE [dbo].[B_BEXPORT_DOCUMETARYCOLLECTION_Insert]
 	, @DraweeAddr1 nvarchar(500) 
 	, @DraweeAddr2 nvarchar(500) 
 	, @DraweeAddr3 nvarchar(500) 
+	, @DraweeAddr4 nvarchar(500) 
 	, @NostroCusNo nvarchar(500) 
 	, @Currency varchar(50) 
 	, @Amount varchar(50)  
@@ -528,6 +529,7 @@ BEGIN
 			   ,[DraweeAddr1]
 			   ,[DraweeAddr2]
 			   ,[DraweeAddr3]
+			   ,[DraweeAddr4]
 			   ,[NostroCusNo]
 			   ,[Currency]
 			   ,[Amount]
@@ -569,7 +571,7 @@ BEGIN
 				, @DrawerCusName
 				, @DrawerAddr1
 				, @DrawerAddr2 
-				, @DrawerAddr3 
+				, @DrawerAddr3
 				, @DrawerRefNo
 				, @CollectingBankNo
 				, @CollectingBankName
@@ -581,7 +583,8 @@ BEGIN
 				, @DraweeCusName
 				, @DraweeAddr1
 				, @DraweeAddr2
-				, @DraweeAddr3 
+				, @DraweeAddr3
+				, @DraweeAddr4 
 				, @NostroCusNo
 				, @Currency
 				, @Amount
@@ -665,7 +668,8 @@ BEGIN
 			  ,[DraweeCusName] = @DraweeCusName  
 			  ,[DraweeAddr1] = @DraweeAddr1  
 			  ,[DraweeAddr2] = @DraweeAddr2  
-			  ,[DraweeAddr3] = @DraweeAddr3  
+			  ,[DraweeAddr3] = @DraweeAddr3 
+			  ,[DraweeAddr4] = @DraweeAddr4 
 			  ,[NostroCusNo] = @NostroCusNo  
 			  ,[Currency] = @Currency  
 			  ,[DocsReceivedDate] = @DocsReceivedDate  
