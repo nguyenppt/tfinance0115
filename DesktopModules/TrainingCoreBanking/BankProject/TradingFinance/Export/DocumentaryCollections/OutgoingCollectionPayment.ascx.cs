@@ -604,6 +604,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             var lstCharges =
                 _entities.BOUTGOINGCOLLECTIONPAYMENTCHARGES.Where(q => q.CollectionPaymentCode == txtCode.Text);
             #region tab Charge
+
+            
+
             if (lstCharges.Any(q=>q.Rowchages == "1"))
             {
                 var charge = lstCharges.FirstOrDefault(q => q.Rowchages == "1");
@@ -643,6 +646,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 //tbExcheRate.Text = string.Empty;
                 tbChargeAmt.Text = string.Empty;
                 rcbPartyCharged.SelectedValue = "A";
+                
                 lblPartyCharged.Text = rcbPartyCharged.SelectedItem.Attributes["Description"];
                 rcbOmortCharge.SelectedValue = string.Empty;
                 rcbChargeStatus.SelectedValue = string.Empty;
@@ -1219,6 +1223,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             tbChargeCode5.Enabled = false;
             tbChargeCode6.SelectedValue = "EC.OVERSEASMINUS";
             tbChargeCode6.Enabled = false;
+
+            rcbPartyCharged.Enabled = false;
+            rcbPartyCharged2.Enabled = false;
+            rcbPartyCharged3.Enabled = false;
+            rcbPartyCharged4.Enabled = false;
+            rcbPartyCharged5.Enabled = false;
 
             var curList = _entities.BCURRENCies.ToList();
             bc.Commont.initRadComboBox(ref comboCreditCurrency, "Code", "Code", curList);
