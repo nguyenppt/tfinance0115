@@ -1229,6 +1229,10 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             rcbPartyCharged3.Enabled = false;
             rcbPartyCharged4.Enabled = false;
             rcbPartyCharged5.Enabled = false;
+            rcbPartyCharged6.Enabled = false;
+
+            rcbChargeAcct5.Enabled = false;
+            rcbChargeAcct6.Enabled = false;
 
             var curList = _entities.BCURRENCies.ToList();
             bc.Commont.initRadComboBox(ref comboCreditCurrency, "Code", "Code", curList);
@@ -1405,12 +1409,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
         protected void rcbChargeCcy5_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            LoadChargeAcct5();
+            //LoadChargeAcct5();
         }
 
         protected void rcbChargeCcy6_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            LoadChargeAcct6();
+            //LoadChargeAcct6();
         }
 
         protected void rcbChargeAcct_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
