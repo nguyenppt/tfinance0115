@@ -166,6 +166,33 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit {
         protected global::Telerik.Web.UI.RadDatePicker txtCreatedDate;
         
         /// <summary>
+        /// RequiredFieldValidator21 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator21;
+        
+        /// <summary>
+        /// rcbLCType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox rcbLCType;
+        
+        /// <summary>
+        /// lblLCType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblLCType;
+        
+        /// <summary>
         /// RequiredFieldValidator20 control.
         /// </summary>
         /// <remarks>

@@ -302,7 +302,7 @@ namespace BankProject.DataProvider
                 return null;
             }
         }
-        public static DataSet B_BLCTYPES_GetAll()
+        public static DataSet B_BLCTYPES_GetAll(String type)
         {
             DataSet dsInfo = new DataSet();
             try
@@ -312,6 +312,7 @@ namespace BankProject.DataProvider
                     conn.Open();
                     SqlCommand cmd = new SqlCommand("B_BLCTYPES_GetAll", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Type", type);
                     //cmd.Parameters.AddWithValue("@CVID", cvid);
                     SqlDataAdapter adapt = new SqlDataAdapter(cmd);
                     adapt.Fill(dsInfo);

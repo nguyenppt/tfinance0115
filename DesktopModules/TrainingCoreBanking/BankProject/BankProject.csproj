@@ -19,10 +19,14 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
     <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -55,10 +59,7 @@
       <HintPath>..\..\..\bin\DotNetNuke.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.6.1.1\lib\net40\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.1.1\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ApplicationBlocks.Data, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -91,24 +92,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-<<<<<<< .mine
-    <Content Include="bin\Aspose.Words.dll" />
-    <Content Include="bin\BankProject.dll" />
-    <Content Include="bin\BankProject.pdb" />
-    <Content Include="bin\ClientDependency.Core.dll" />
-    <Content Include="bin\CountryListBox.dll" />
-    <Content Include="bin\DotNetNuke.dll" />
-    <Content Include="bin\DotNetNuke.Instrumentation.dll" />
-    <Content Include="bin\dotnetnuke.log4net.dll" />
-    <Content Include="bin\DotNetNuke.Services.Syndication.dll" />
-    <Content Include="bin\DotNetNuke.Web.Client.dll" />
-    <Content Include="bin\DotNetNuke.WebControls.dll" />
-    <Content Include="bin\DotNetNuke.WebUtility.dll" />
-    <Content Include="bin\EntityFramework.dll" />
-    <Content Include="bin\SharpZipLib.dll" />
-    <Content Include="bin\System.Web.Mvc.dll" />
-    <Content Include="bin\Telerik.Web.UI.dll" />
-=======
     <Content Include="bin\Aspose.Words.dll" />
     <Content Include="bin\BankProject.dll" />
     <Content Include="bin\BankProject.pdb" />
@@ -126,17 +109,24 @@
     <Content Include="bin\SharpZipLib.dll" />
     <Content Include="bin\System.Web.Mvc.dll" />
     <Content Include="bin\Telerik.Web.UI.dll" />
->>>>>>> .r201
+    <Content Include="CancelLC.ascx" />
     <Content Include="Controls\DynamicControls.ascx" />
     <Content Include="Controls\MultiTextBox.ascx" />
     <Content Include="Controls\PaymentMethodControl.ascx" />
+    <Content Include="Helper\CURRENCY_LIST.xml" />
     <Content Include="OpenCorpCustomer.ascx" />
     <Content Include="OpenCustomerAccountList.ascx" />
+    <Content Include="OverseasTransfers\Enquiry.ascx" />
+    <Content Include="OverseasTransfers\OverseasTransfer.ascx" />
+    <Content Include="PhayHanhLC.ascx" />
+    <Content Include="Scripts\Common.js" />
     <Content Include="SessionManagment\Default.ascx" />
     <Content Include="SessionManagment\EditAccountPeriod.ascx" />
     <Content Include="SessionManagment\SessionHistory.ascx" />
     <Content Include="SessionManagment\ShiftManage.ascx" />
     <Content Include="TellerApplication\AccountManagement\SavingsAC\Open\ListDiscounted.ascx" />
+    <Content Include="test.ascx" />
+    <Content Include="TestAjax.ascx" />
     <Content Include="TradingFinance\BasicTools.xml" />
     <Content Include="Controls\ThongTinChiNhanh.ascx" />
     <Content Include="Controls\VVComboBox.ascx" />
@@ -171,7 +161,8 @@
     <Content Include="TellerApplication\AccountManagement\SavingsAC\Open\Periodic.ascx" />
     <Content Include="TellerApplication\AccountManagement\SavingsAC\Open\PeriodicInput.ascx" />
     <Content Include="TellerApplication\AccountManagement\SavingsAC\Open\PeriodicNewDeposit.ascx" />
-    <Content Include="TradingFinance\EnquiryOverseasFundsTransfer.ascx" />
+    <Content Include="TradingFinance\CollectCharges.ascx" />
+    <Content Include="TradingFinance\CollectChargesList.ascx" />
     <Content Include="TradingFinance\Export\AdvisingAndNegotiationLC.ascx" />
     <Content Include="Amendment.ascx" />
     <Content Include="HomeRedirect.ascx" />
@@ -179,18 +170,30 @@
     <Content Include="NormalCLControls\ReviewList.ascx" />
     <Content Include="OpenCustomerAccount.ascx" />
     <Content Include="OpenDepositAcctForTF.ascx" />
-    <Content Include="OverseasTransfer.ascx" />
     <Content Include="OverseasTransfers\ListReview.ascx" />
     <Content Include="TradingFinance\Export\AdvisingReviewList.ascx" />
     <Content Include="TellerApplication\AccountManagement\BlockAccount.ascx" />
     <Content Include="TellerApplication\AccountManagement\CloseAccount.ascx" />
     <Content Include="TopMenu.ascx" />
     <Content Include="TradingFinance\Export\AdvisingAmendmentList.ascx" />
+    <Content Include="TradingFinance\Export\DocumentaryCollections\ExportDocumentaryCollection.ascx" />
+    <Content Include="TradingFinance\Export\DocumentaryCollections\ReviewExport_DocumentCollection.ascx" />
     <Content Include="TradingFinance\Export\DocumentaryCollections\ReviewOutgoingCollectionPayment.ascx" />
     <Content Include="TradingFinance\Export\DocumentaryCollections\OutgoingCollectionPayment.ascx" />
-    <Content Include="TradingFinance\Export\DocumentaryCollections\ExportDocumentaryCollection.ascx" />
     <Content Include="TradingFinance\Export\DocumentaryCollections\ExportEnquiryDocumentaryCollection.ascx" />
-    <Content Include="TradingFinance\Export\DocumentaryCollections\ReviewExport_DocumentCollection.ascx" />
+    <Content Include="TradingFinance\Export\DocumentaryCredit\AdvisingAndNegotiationLC.ascx" />
+    <Content Include="TradingFinance\Export\DocumentaryCredit\AdvisingAndNegotiationLCAmend.ascx" />
+    <Content Include="TradingFinance\Export\DocumentaryCredit\AdvisingReviewList.ascx" />
+    <Content Include="TradingFinance\Export\DocumentaryCredit\DocumentProcessing.ascx" />
+    <Content Include="TradingFinance\Export\DocumentaryCredit\EnquiryDocumentProcessing.ascx" />
+    <Content Include="TradingFinance\Export\DocumentaryCredit\EnquiryLC.ascx" />
+    <Content Include="TradingFinance\Export\DocumentaryCredit\EnquiryLCAmend.ascx" />
+    <Content Include="TradingFinance\Export\DocumentaryCredit\EnquirySettlement.ascx" />
+    <Content Include="TradingFinance\Export\DocumentaryCredit\ExportDocWithNoDiscre.ascx" />
+    <Content Include="TradingFinance\Export\DocumentaryCredit\ExportPayment.ascx" />
+    <Content Include="TradingFinance\Export\DocumentaryCredit\ListCreditExportProcessing.ascx" />
+    <Content Include="TradingFinance\Export\DocumentaryCredit\ListExportPayment.ascx" />
+    <Content Include="TradingFinance\Export\DocumentaryCredit\Settlement.ascx" />
     <Content Include="TradingFinance\ForeignExchangeTrade.ascx" />
     <Content Include="TradingFinance\ForeignExchangeTradePreviewList.ascx" />
     <Content Include="TradingFinance\Import\DocumentaryCollections\DocumentaryCollectionCancel.ascx" />
@@ -219,18 +222,9 @@
     <Content Include="Views\CustomerManagement\OpenInvidualCustomer\Index.ascx" />
     <Content Include="Views\CustomerManagement\OpenInvidualCustomer\Index_ListReview.ascx" />
     <Content Include="Views\TellerApplication\CalculatedInterestedAmountManual.ascx" />
-    <Content Include="Views\TellerApplication\BlockAccount.ascx" />
     <Content Include="Views\TellerApplication\BlockAccountList.ascx" />
     <Content Include="Views\TellerApplication\CancelStopCheque.ascx" />
     <Content Include="Views\TellerApplication\CancelStopPayment.ascx" />
-    <Content Include="Views\TellerApplication\CashDepositePreviewList.ascx" />
-    <Content Include="Views\TellerApplication\CashDeposits.ascx" />
-    <Content Include="Views\TellerApplication\CashRepayment.ascx" />
-    <Content Include="Views\TellerApplication\CashRepayment_PL.ascx" />
-    <Content Include="Views\TellerApplication\CashWithdrawal.ascx" />
-    <Content Include="Views\TellerApplication\CashWithdrawalPreviewList.ascx" />
-    <Content Include="Views\TellerApplication\CashWithdrawalsBuying.ascx" />
-    <Content Include="Views\TellerApplication\CashWithdrawalsBuyingPreviewList.ascx" />
     <Content Include="Views\TellerApplication\ChequeCancleStop.ascx" />
     <Content Include="Views\TellerApplication\ChequeCancleStop_PL.ascx" />
     <Content Include="Views\TellerApplication\ChequeIssue.ascx" />
@@ -282,6 +276,14 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CancelLC.ascx.cs">
+      <DependentUpon>CancelLC.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CancelLC.ascx.designer.cs">
+      <DependentUpon>CancelLC.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Common\Util.cs" />
     <Compile Include="Controls\Commands.cs" />
     <Compile Include="Controls\MultiTextBox.ascx.cs">
       <DependentUpon>MultiTextBox.ascx</DependentUpon>
@@ -356,784 +358,478 @@
     <Compile Include="DataProvider\ThanhLP.cs" />
     <Compile Include="DataProvider\TransactionStatus.cs" />
     <Compile Include="DataProvider\TriTT.cs" />
-<<<<<<< .mine
+    <Compile Include="DataProvider\YesNo.cs" />
     <Compile Include="DBContext\BACCOUNT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BACCOUNTOFFICER.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BADVISINGANDNEGOTIATION.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BAdvisingAndNegotiationLC.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BAdvisingAndNegotiationLCCharge.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BADVISINGANDNEGOTIATION_CHARGES.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BBANKCODE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BBANKING.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BBANKSWIFTCODE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BBANK_BRANCH.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BBENEFICIARYBANK.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BCASHDEPOSIT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BCASHWITHRAWAL.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BCASH_REPAYMENT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BCATEGORY.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BCATEGORY_COPY.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BCHARGECODE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BCHEQUEISSUE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BCHEQUESTATU.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BCHEQUETYPE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BCOLLATERAL.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BCOLLATERALCONTINGENT_ENTRY.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BCOLLATERALRIGHT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BCOLLATERAL_INFOMATION.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BCOLLATERAL_STATUS.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BCOLLECTCHARGESBYCASH.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BCOLLECTCHARGESFROMACCOUNT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BCOLLECTION_FOR_CRE_CARD_PAYM.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BCOMMITMENT_CONTRACT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BCOMMODITY.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BCONFIG.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BCONTINGENTACCOUNT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BCOUNTRY.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BCRFROMACCOUNT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BCURRENCY.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BCUSTOMER.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BCUSTOMER_INFO.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BCUSTOMER_LIMIT_MAIN.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BCUSTOMER_LIMIT_SUB.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BDEPOSITACCT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BDOCUMETARYCOLLECTION.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BDOCUMETARYCOLLECTIONCHARGE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BDOCUMETARYCOLLECTIONMT410.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BDRAWTYPE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BDRFROMACCOUNT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BDYNAMICCONTROL.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BDYNAMICDATA.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BENCOM.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BENQUIRYCHECK.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\BEXPORTCOLLECTIONPAYMENT.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\BEXPORT_DOCUMENTPROCESSING.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\BEXPORT_DOCUMENTPROCESSINGCHARGE.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BEXPORT_DOCUMETARYCOLLECTION.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BEXPORT_DOCUMETARYCOLLECTIONCHARGES.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\BEXPORT_LC.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BEXPORT_LC_ADV_NEGO.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\BEXPORT_LC_AMEND.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\BEXPORT_LC_CHARGES.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\BEXPORT_LC_DOCS_PROCESSING.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\BEXPORT_LC_DOCS_PROCESSING_CHARGES.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\BEXPORT_LC_DOCS_SETTLEMENT.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\BEXPORT_LC_DOCS_SETTLEMENT_CHARGES.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BFOREIGNEXCHANGE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BFREETEXTMESSAGE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BIMPORT_DOCUMENTPROCESSING.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BIMPORT_DOCUMENTPROCESSING_CHARGE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BIMPORT_DOCUMENTPROCESSING_MT734.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BIMPORT_NORMAILLC.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BIMPORT_NORMAILLC_CHARGE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BIMPORT_NORMAILLC_MT700.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BIMPORT_NORMAILLC_MT707.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BIMPORT_NORMAILLC_MT740.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BIMPORT_NORMAILLC_MT747.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BINCOMINGCOLLECTIONPAYMENT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BINCOMINGCOLLECTIONPAYMENTCHARGE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\BINCOMINGCOLLECTIONPAYMENTMT103.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BINCOMINGCOLLECTIONPAYMENTMT202.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BINCOMINGCOLLECTIONPAYMENTMT400.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BINDUSTRY.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BINTEREST_RATE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BINTEREST_TERM.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BINTERNALBANKACCOUNT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BINTERNALBANKPAYMENTACCOUNT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DBContext\BISolutionsVVCBModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BISolutionsVVCBModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BISolutionsVVCBModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BISolutionsVVCBModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BISolutionsVVCBModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BISolutionsVVCBModel1.Designer.cs" />
     <Compile Include="DBContext\BLCTYPE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BLDACCOUNT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BLOANGROUP.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BLOANINTEREST_KEY.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BLOANPURPOSE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BLOANWORKINGACCOUNT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BMACODE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BMENUTOP.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BNewLoanControl.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BNEWNORMALLOAN.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BOPENACCOUNT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BOPENACCOUNT_COPY.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BOPENACCOUNT_INTEREST.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BOUTGOINGCOLLECTIONPAYMENT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BOUTGOINGCOLLECTIONPAYMENTCHARGE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BOUTGOINGCOLLECTIONPAYMENTMT910.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BOVERSEASTRANSFER.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BOVERSEASTRANSFERCHARGECOMMISSION.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BOVERSEASTRANSFERMT103.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BPaymentFrequenceControl.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BPAYMENTMETHOD.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BPLACCOUNT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BPRODUCTLINE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BPRODUCTLINE_COPY.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BPRODUCTTYPE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BPROVINCE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BRELATIONCODE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BRESTRICT_TXN.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BRPODCATEGORY.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BSalaryPaymentFrequency.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BSalaryPaymentFrequencyDetail.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BSalaryPaymentFrequencyTerm.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BSalaryPaymentMethod.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BSAVING_ACC_ARREAR.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BSAVING_ACC_DISCOUNTED.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BSAVING_ACC_INTEREST.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BSAVING_ACC_PERIODIC.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BSECTOR.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BSWIFTCODE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BTRANSFERWITHDRAWAL.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BTRANSFER_4_CRE_CARD_PAYMENT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\B_AccountForBuyingTC.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\B_AddConfirmInfo.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\B_BATCH_MAINTENANCE.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\B_BuyTravellersCheque.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\B_CashWithrawalForBuyingTC.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\B_CheckBatchRunning.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\B_CollectCharges.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\B_CustomerSignature.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\B_DEBUG.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\B_Denomination.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\B_ExchangeBanknotesManyDeno.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DBContext\B_ExchangeRates.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    <Compile Include="DBContext\B_ExportLCPayment.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\B_ExportLCPaymentCharge.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\B_ExportLCPaymentMT202.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\B_ExportLCPaymentMT756.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\B_ForeignExchange.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\B_ImportLCPayment.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\B_ImportLCPaymentCharge.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\B_ImportLCPaymentMT202.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\B_ImportLCPaymentMT756.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\B_LOAN_CREDIT_SCORING.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\B_LOAN_DISBURSAL_SCHEDULE.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\B_LOAN_PROCESS_PAYMENT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DBContext\B_NORMALLOAN_INTERESTING_PAYMENT_SCHEDULE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\B_NORMALLOAN_PRINCIPLE_PAYMENT_SCHEDULE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    <Compile Include="DBContext\B_NORMALLOAN_PAYMENT_SCHEDULE.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\B_SellTravellersCheque.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\B_WUXOOMCashAdvance.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\EntityModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntityModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\EntityModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\EntityModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntityModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="DBContext\PROVISIONTRANSFER_DC.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\Sochu.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\sysdiagram.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-=======
-    <Compile Include="DBContext\BACCOUNT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BACCOUNTOFFICER.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BADVISINGANDNEGOTIATION.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BADVISINGANDNEGOTIATION_CHARGES.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BBANKCODE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BBANKING.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BBANKSWIFTCODE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BBANK_BRANCH.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BBENEFICIARYBANK.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BCASHDEPOSIT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BCASHWITHRAWAL.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BCATEGORY.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BCHARGECODE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BCHEQUEISSUE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BCHEQUESTATU.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BCHEQUETYPE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BCOLLATERAL.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BCOLLATERALCONTINGENT_ENTRY.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BCOLLATERALRIGHT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BCOLLATERAL_INFOMATION.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BCOLLATERAL_STATUS.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BCOLLECTCHARGESBYCASH.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BCOLLECTCHARGESFROMACCOUNT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BCOMMITMENT_CONTRACT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BCOMMODITY.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BCONFIG.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BCONTINGENTACCOUNT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BCOUNTRY.cs">
-      <SubType>Code</SubType>
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BCRFROMACCOUNT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BCURRENCY.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BCUSTOMER.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BCUSTOMER_INFO.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BCUSTOMER_LIMIT_MAIN.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BCUSTOMER_LIMIT_SUB.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BDEPOSITACCT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BDOCUMETARYCOLLECTION.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BDOCUMETARYCOLLECTIONCHARGE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BDOCUMETARYCOLLECTIONMT410.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BDRAWTYPE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BDRFROMACCOUNT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BDYNAMICCONTROL.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BDYNAMICDATA.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BENCOM.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BENQUIRYCHECK.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BEXPORT_DOCUMETARYCOLLECTION.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BEXPORT_DOCUMETARYCOLLECTIONCHARGES.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BEXPORT_LC_ADV_NEGO.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BFOREIGNEXCHANGE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BFREETEXTMESSAGE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BIMPORT_DOCUMENTPROCESSING.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BIMPORT_DOCUMENTPROCESSING_CHARGE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BIMPORT_DOCUMENTPROCESSING_MT734.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BIMPORT_NORMAILLC.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BIMPORT_NORMAILLC_CHARGE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BIMPORT_NORMAILLC_MT700.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BIMPORT_NORMAILLC_MT707.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BIMPORT_NORMAILLC_MT740.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BIMPORT_NORMAILLC_MT747.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BINCOMINGCOLLECTIONPAYMENT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BINCOMINGCOLLECTIONPAYMENTCHARGE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BINCOMINGCOLLECTIONPAYMENTMT202.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BINCOMINGCOLLECTIONPAYMENTMT400.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BINDUSTRY.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BINTEREST_RATE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BINTEREST_TERM.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BINTERNALBANKACCOUNT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BINTERNALBANKPAYMENTACCOUNT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BISolutionsVVCBModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BISolutionsVVCBModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BISolutionsVVCBModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BISolutionsVVCBModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BISolutionsVVCBModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BLCTYPE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BLDACCOUNT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BLOANGROUP.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BLOANPURPOSE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BLOANWORKINGACCOUNT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BMACODE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BMENUTOP.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BNewLoanControl.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BNEWNORMALLOAN.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BOPENACCOUNT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BOPENACCOUNT_COPY.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BOPENACCOUNT_INTEREST.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BOUTGOINGCOLLECTIONPAYMENT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BOUTGOINGCOLLECTIONPAYMENTCHARGE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BOUTGOINGCOLLECTIONPAYMENTMT910.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BOVERSEASTRANSFER.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BOVERSEASTRANSFERCHARGECOMMISSION.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BOVERSEASTRANSFERMT103.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BPaymentFrequenceControl.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BPAYMENTMETHOD.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BPLACCOUNT.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BPRODUCTLINE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BPRODUCTTYPE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BPROVINCE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BRELATIONCODE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BRESTRICT_TXN.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BRPODCATEGORY.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BSalaryPaymentFrequency.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BSalaryPaymentFrequencyDetail.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BSalaryPaymentFrequencyTerm.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BSalaryPaymentMethod.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BSAVING_ACC_ARREAR.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BSAVING_ACC_DISCOUNTED.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BSAVING_ACC_INTEREST.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BSAVING_ACC_PERIODIC.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BSECTOR.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BSWIFTCODE.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\BTRANSFERWITHDRAWAL.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\B_AccountForBuyingTC.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\B_CashWithrawalForBuyingTC.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\B_CustomerSignature.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\B_DEBUG.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\B_ExchangeRates.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\B_ImportLCPayment.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\B_ImportLCPaymentCharge.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\B_SellTravellersCheque.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\PROVISIONTRANSFER_DC.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\Sochu.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\sysdiagram.cs">
-      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
-    </Compile>
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBRespository\AccountOfficerRepository.cs" />
+    <Compile Include="DBRespository\BaseRepository.cs" />
+    <Compile Include="DBRespository\CurrencyRepository.cs" />
+    <Compile Include="DBRespository\DBContextBase.cs" />
+    <Compile Include="DBRespository\IRepositoryDB.cs" />
+    <Compile Include="DBRespository\NewLoanControlRepository.cs" />
+    <Compile Include="DBRespository\ProduceLineRepository.cs" />
+    <Compile Include="DBRespository\StoreProRepository.cs" />
+    <Compile Include="DBRespository\SwiftCodeRepository.cs" />
     <Compile Include="Entity\Administration\AccountPeriod.cs" />
     <Compile Include="Entity\Administration\AccountSession.cs" />
     <Compile Include="Entity\Administration\SessionHistory.cs" />
@@ -1142,7 +838,6 @@
     <Compile Include="Entity\Administration\Shift.cs" />
     <Compile Include="Entity\Administration\WorkingDay.cs" />
     <Compile Include="Entity\Administration\WorkingDayExtensions.cs" />
->>>>>>> .r201
     <Compile Include="Entity\Category.cs" />
     <Compile Include="Entity\AccountOpen.cs" />
     <Compile Include="Entity\InternalBankAccount.cs" />
@@ -1203,6 +898,8 @@
     <Compile Include="FTTeller\OutwardTransferByCash.ascx.designer.cs">
       <DependentUpon>OutwardTransferByCash.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Helper\CurrencyList.cs" />
+    <Compile Include="Helper\Utils.cs" />
     <Compile Include="HttpModules\SessionManagmentModule.cs" />
     <Compile Include="InputCollateralInformation.ascx.cs">
       <DependentUpon>InputCollateralInformation.ascx</DependentUpon>
@@ -1218,6 +915,9 @@
     <Compile Include="InputCollateralInformation_PL.ascx.designer.cs">
       <DependentUpon>InputCollateralInformation_PL.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Model\CollectCharges.cs" />
+    <Compile Include="Model\ExportLC.cs" />
+    <Compile Include="Model\Reports\ExportLC.cs" />
     <Compile Include="NormalCLControls\ProvisionTransfer.ascx.cs">
       <DependentUpon>ProvisionTransfer.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1225,6 +925,12 @@
     <Compile Include="NormalCLControls\ProvisionTransfer.ascx.designer.cs">
       <DependentUpon>ProvisionTransfer.ascx</DependentUpon>
     </Compile>
+    <Compile Include="NormalLCCodes\BaseNormalLCChargeTabs.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NormalLCCodes\Enums.cs" />
+    <Compile Include="NormalLCCodes\LCDataProvider.cs" />
+    <Compile Include="NormalLCCodes\Utils\Helpers.cs" />
     <Compile Include="OpenCorpCustomer.ascx.cs">
       <DependentUpon>OpenCorpCustomer.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1239,8 +945,27 @@
     <Compile Include="OpenCustomerAccountList.ascx.designer.cs">
       <DependentUpon>OpenCustomerAccountList.ascx</DependentUpon>
     </Compile>
-<<<<<<< .mine
-=======
+    <Compile Include="OverseasTransfers\Enquiry.ascx.cs">
+      <DependentUpon>Enquiry.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OverseasTransfers\Enquiry.ascx.designer.cs">
+      <DependentUpon>Enquiry.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="OverseasTransfers\OverseasTransfer.ascx.cs">
+      <DependentUpon>OverseasTransfer.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OverseasTransfers\OverseasTransfer.ascx.designer.cs">
+      <DependentUpon>OverseasTransfer.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="PhayHanhLC.ascx.cs">
+      <DependentUpon>PhayHanhLC.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PhayHanhLC.ascx.designer.cs">
+      <DependentUpon>PhayHanhLC.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\BankProjectBootstrapper.cs" />
     <Compile Include="Repository\AccountPeriodRepository.cs" />
     <Compile Include="Repository\BlockedAccountRepository.cs" />
@@ -1261,7 +986,6 @@
       <DependentUpon>EditAccountPeriod.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
->>>>>>> .r201
     <Compile Include="SessionManagment\EditAccountPeriod.ascx.designer.cs">
       <DependentUpon>EditAccountPeriod.ascx</DependentUpon>
     </Compile>
@@ -1413,12 +1137,33 @@
     <Compile Include="TellerApplication\AccountManagement\SavingsAC\Open\PeriodicNewDeposit.ascx.designer.cs">
       <DependentUpon>PeriodicNewDeposit.ascx</DependentUpon>
     </Compile>
-    <Compile Include="TradingFinance\EnquiryOverseasFundsTransfer.ascx.cs">
-      <DependentUpon>EnquiryOverseasFundsTransfer.ascx</DependentUpon>
+    <Compile Include="test.ascx.cs">
+      <DependentUpon>test.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="TradingFinance\EnquiryOverseasFundsTransfer.ascx.designer.cs">
-      <DependentUpon>EnquiryOverseasFundsTransfer.ascx</DependentUpon>
+    <Compile Include="test.ascx.designer.cs">
+      <DependentUpon>test.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TestAjax.ascx.cs">
+      <DependentUpon>TestAjax.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestAjax.ascx.designer.cs">
+      <DependentUpon>TestAjax.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\CollectCharges.ascx.cs">
+      <DependentUpon>CollectCharges.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\CollectCharges.ascx.designer.cs">
+      <DependentUpon>CollectCharges.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\CollectChargesList.ascx.cs">
+      <DependentUpon>CollectChargesList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\CollectChargesList.ascx.designer.cs">
+      <DependentUpon>CollectChargesList.ascx</DependentUpon>
     </Compile>
     <Compile Include="TradingFinance\Export\AdvisingAndNegotiationLC.ascx.cs">
       <DependentUpon>AdvisingAndNegotiationLC.ascx</DependentUpon>
@@ -1495,13 +1240,6 @@
     <Compile Include="OpenDepositAcctForTF.ascx.designer.cs">
       <DependentUpon>OpenDepositAcctForTF.ascx</DependentUpon>
     </Compile>
-    <Compile Include="OverseasTransfer.ascx.cs">
-      <DependentUpon>OverseasTransfer.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="OverseasTransfer.ascx.designer.cs">
-      <DependentUpon>OverseasTransfer.ascx</DependentUpon>
-    </Compile>
     <Compile Include="OverseasTransfers\ListReview.ascx.cs">
       <DependentUpon>ListReview.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1560,6 +1298,20 @@
     <Compile Include="TradingFinance\Export\AdvisingAmendmentList.ascx.designer.cs">
       <DependentUpon>AdvisingAmendmentList.ascx</DependentUpon>
     </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCollections\ExportDocumentaryCollection.ascx.cs">
+      <DependentUpon>ExportDocumentaryCollection.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCollections\ExportDocumentaryCollection.ascx.designer.cs">
+      <DependentUpon>ExportDocumentaryCollection.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCollections\ReviewExport_DocumentCollection.ascx.cs">
+      <DependentUpon>ReviewExport_DocumentCollection.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCollections\ReviewExport_DocumentCollection.ascx.designer.cs">
+      <DependentUpon>ReviewExport_DocumentCollection.ascx</DependentUpon>
+    </Compile>
     <Compile Include="TradingFinance\Export\DocumentaryCollections\ReviewOutgoingCollectionPayment.ascx.cs">
       <DependentUpon>ReviewOutgoingCollectionPayment.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1574,13 +1326,6 @@
     <Compile Include="TradingFinance\Export\DocumentaryCollections\OutgoingCollectionPayment.ascx.designer.cs">
       <DependentUpon>OutgoingCollectionPayment.ascx</DependentUpon>
     </Compile>
-    <Compile Include="TradingFinance\Export\DocumentaryCollections\ExportDocumentaryCollection.ascx.cs">
-      <DependentUpon>ExportDocumentaryCollection.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="TradingFinance\Export\DocumentaryCollections\ExportDocumentaryCollection.ascx.designer.cs">
-      <DependentUpon>ExportDocumentaryCollection.ascx</DependentUpon>
-    </Compile>
     <Compile Include="TradingFinance\Export\DocumentaryCollections\ExportEnquiryDocumentaryCollection.ascx.cs">
       <DependentUpon>ExportEnquiryDocumentaryCollection.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1588,12 +1333,96 @@
     <Compile Include="TradingFinance\Export\DocumentaryCollections\ExportEnquiryDocumentaryCollection.ascx.designer.cs">
       <DependentUpon>ExportEnquiryDocumentaryCollection.ascx</DependentUpon>
     </Compile>
-    <Compile Include="TradingFinance\Export\DocumentaryCollections\ReviewExport_DocumentCollection.ascx.cs">
-      <DependentUpon>ReviewExport_DocumentCollection.ascx</DependentUpon>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\AdvisingAndNegotiationLC.ascx.cs">
+      <DependentUpon>AdvisingAndNegotiationLC.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="TradingFinance\Export\DocumentaryCollections\ReviewExport_DocumentCollection.ascx.designer.cs">
-      <DependentUpon>ReviewExport_DocumentCollection.ascx</DependentUpon>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\AdvisingAndNegotiationLC.ascx.designer.cs">
+      <DependentUpon>AdvisingAndNegotiationLC.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\AdvisingAndNegotiationLCAmend.ascx.cs">
+      <DependentUpon>AdvisingAndNegotiationLCAmend.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\AdvisingAndNegotiationLCAmend.ascx.designer.cs">
+      <DependentUpon>AdvisingAndNegotiationLCAmend.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\AdvisingReviewList.ascx.cs">
+      <DependentUpon>AdvisingReviewList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\AdvisingReviewList.ascx.designer.cs">
+      <DependentUpon>AdvisingReviewList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\DocumentProcessing.ascx.cs">
+      <DependentUpon>DocumentProcessing.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\DocumentProcessing.ascx.designer.cs">
+      <DependentUpon>DocumentProcessing.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\EnquiryDocumentProcessing.ascx.cs">
+      <DependentUpon>EnquiryDocumentProcessing.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\EnquiryDocumentProcessing.ascx.designer.cs">
+      <DependentUpon>EnquiryDocumentProcessing.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\EnquiryLC.ascx.cs">
+      <DependentUpon>EnquiryLC.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\EnquiryLC.ascx.designer.cs">
+      <DependentUpon>EnquiryLC.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\EnquiryLCAmend.ascx.cs">
+      <DependentUpon>EnquiryLCAmend.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\EnquiryLCAmend.ascx.designer.cs">
+      <DependentUpon>EnquiryLCAmend.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\EnquirySettlement.ascx.cs">
+      <DependentUpon>EnquirySettlement.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\EnquirySettlement.ascx.designer.cs">
+      <DependentUpon>EnquirySettlement.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\ExportDocWithNoDiscre.ascx.cs">
+      <DependentUpon>ExportDocWithNoDiscre.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\ExportDocWithNoDiscre.ascx.designer.cs">
+      <DependentUpon>ExportDocWithNoDiscre.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\ExportPayment.ascx.cs">
+      <DependentUpon>ExportPayment.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\ExportPayment.ascx.designer.cs">
+      <DependentUpon>ExportPayment.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\ListCreditExportProcessing.ascx.cs">
+      <DependentUpon>ListCreditExportProcessing.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\ListCreditExportProcessing.ascx.designer.cs">
+      <DependentUpon>ListCreditExportProcessing.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\ListExportPayment.ascx.cs">
+      <DependentUpon>ListExportPayment.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\ListExportPayment.ascx.designer.cs">
+      <DependentUpon>ListExportPayment.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\Settlement.ascx.cs">
+      <DependentUpon>Settlement.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\Settlement.ascx.designer.cs">
+      <DependentUpon>Settlement.ascx</DependentUpon>
     </Compile>
     <Compile Include="TradingFinance\ForeignExchangeTrade.ascx.cs">
       <DependentUpon>ForeignExchangeTrade.ascx</DependentUpon>
@@ -1792,13 +1621,6 @@
     <Compile Include="Views\TellerApplication\CalculatedInterestedAmountManual.ascx.designer.cs">
       <DependentUpon>CalculatedInterestedAmountManual.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Views\TellerApplication\BlockAccount.ascx.cs">
-      <DependentUpon>BlockAccount.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Views\TellerApplication\BlockAccount.ascx.designer.cs">
-      <DependentUpon>BlockAccount.ascx</DependentUpon>
-    </Compile>
     <Compile Include="Views\TellerApplication\BlockAccountList.ascx.cs">
       <DependentUpon>BlockAccountList.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1819,62 +1641,6 @@
     </Compile>
     <Compile Include="Views\TellerApplication\CancelStopPayment.ascx.designer.cs">
       <DependentUpon>CancelStopPayment.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TellerApplication\CashDepositePreviewList.ascx.cs">
-      <DependentUpon>CashDepositePreviewList.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Views\TellerApplication\CashDepositePreviewList.ascx.designer.cs">
-      <DependentUpon>CashDepositePreviewList.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TellerApplication\CashDeposits.ascx.cs">
-      <DependentUpon>CashDeposits.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Views\TellerApplication\CashDeposits.ascx.designer.cs">
-      <DependentUpon>CashDeposits.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TellerApplication\CashRepayment.ascx.cs">
-      <DependentUpon>CashRepayment.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Views\TellerApplication\CashRepayment.ascx.designer.cs">
-      <DependentUpon>CashRepayment.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TellerApplication\CashRepayment_PL.ascx.cs">
-      <DependentUpon>CashRepayment_PL.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Views\TellerApplication\CashRepayment_PL.ascx.designer.cs">
-      <DependentUpon>CashRepayment_PL.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TellerApplication\CashWithdrawal.ascx.cs">
-      <DependentUpon>CashWithdrawal.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Views\TellerApplication\CashWithdrawal.ascx.designer.cs">
-      <DependentUpon>CashWithdrawal.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TellerApplication\CashWithdrawalPreviewList.ascx.cs">
-      <DependentUpon>CashWithdrawalPreviewList.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Views\TellerApplication\CashWithdrawalPreviewList.ascx.designer.cs">
-      <DependentUpon>CashWithdrawalPreviewList.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TellerApplication\CashWithdrawalsBuying.ascx.cs">
-      <DependentUpon>CashWithdrawalsBuying.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Views\TellerApplication\CashWithdrawalsBuying.ascx.designer.cs">
-      <DependentUpon>CashWithdrawalsBuying.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TellerApplication\CashWithdrawalsBuyingPreviewList.ascx.cs">
-      <DependentUpon>CashWithdrawalsBuyingPreviewList.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Views\TellerApplication\CashWithdrawalsBuyingPreviewList.ascx.designer.cs">
-      <DependentUpon>CashWithdrawalsBuyingPreviewList.ascx</DependentUpon>
     </Compile>
     <Compile Include="Views\TellerApplication\ChequeCancleStop.ascx.cs">
       <DependentUpon>ChequeCancleStop.ascx</DependentUpon>
@@ -2165,22 +1931,22 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="DBContext\BISolutionsVVCBModel.edmx">
+    <EntityDeploy Include="DBContext\EntityModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>BISolutionsVVCBModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>EntityModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="DBContext\BISolutionsVVCBModel.Context.tt">
+    <Content Include="DBContext\EntityModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>BISolutionsVVCBModel.edmx</DependentUpon>
-      <LastGenOutput>BISolutionsVVCBModel.Context.cs</LastGenOutput>
+      <DependentUpon>EntityModel.edmx</DependentUpon>
+      <LastGenOutput>EntityModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="DBContext\BISolutionsVVCBModel.edmx.diagram">
-      <DependentUpon>BISolutionsVVCBModel.edmx</DependentUpon>
+    <Content Include="DBContext\EntityModel.edmx.diagram">
+      <DependentUpon>EntityModel.edmx</DependentUpon>
     </Content>
-    <Content Include="DBContext\BISolutionsVVCBModel.tt">
+    <Content Include="DBContext\EntityModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>BISolutionsVVCBModel.edmx</DependentUpon>
-      <LastGenOutput>BISolutionsVVCBModel.cs</LastGenOutput>
+      <DependentUpon>EntityModel.edmx</DependentUpon>
+      <LastGenOutput>EntityModel.cs</LastGenOutput>
     </Content>
     <None Include="Entity\BankProjectModels.dbml.layout">
       <DependentUpon>BankProjectModels.dbml</DependentUpon>
@@ -2194,7 +1960,6 @@
     <Content Include="Report\Template\DocumentaryCollection\IncomingCollectionPaymentMT202.doc" />
     <Content Include="Report\Template\DocumentaryCollection\IncomingCollectionPaymentMT400.doc" />
     <Content Include="Report\Template\OverseasTransfer\PHIEUCHUYENKHOAN.doc" />
-    <Content Include="Report\Template\OverseasTransfer\OverseasTransferMT103.doc" />
     <Content Include="Report\Template\OverseasTransfer\OverseasTransferVAT.doc" />
     <Content Include="Report\Template\SavingAcc\SavingAccount.docx" />
     <Content Include="Report\Template\NormalLC\IssueLC_MT700.doc" />
@@ -2232,19 +1997,51 @@
     <Content Include="Report\Template\DocumentaryCollection\RegisterDocumentaryCollectionMT410.doc" />
     <Content Include="Report\Template\DocumentaryCollection\RegisterDocumentaryCollectionPHIEUNHAPNGOAIBANG.doc" />
     <Content Include="Report\Template\DocumentaryCollection\RegisterDocumentaryCollectionVAT.doc" />
+    <Content Include="Report\Template\CollectCharges\MT103.doc" />
+    <Content Include="Report\Template\CollectCharges\PhieuChuyenKhoan.doc" />
+    <Content Include="Report\Template\CollectCharges\VAT.doc" />
+    <Content Include="Report\Template\CollectCharge\CollectChargeVAT.doc" />
+    <Content Include="Report\Template\CollectCharge\CollectChargeVAT1.doc" />
+    <Content Include="Report\Template\CollectCharge\credit_card_payment_cash.doc" />
+    <Content Include="Report\Template\CollectCharge\credit_card_payment_transfer.doc" />
+    <Content Include="Report\Template\Export\8. BM - TTQT.LCXK.08_THU GOI CHUNG TU %28LC CHO PHEP DOI TIEN BANG THU NHPH, BCT HOP LE%29%281%29.doc" />
+    <Content Include="Report\Template\Export\AmendLC_VAT.doc" />
+    <Content Include="Report\Template\Export\BM_TTQT_LCXK_01A.doc" />
+    <Content Include="Report\Template\Export\BM_TTQT_LCXK_02A.doc" />
+    <Content Include="Report\Template\Export\Export_PhieuXuatNgoaiBang.doc" />
+    <Content Include="Report\Template\Export\Mau Bia hs lc.doc" />
+    <Content Include="Report\Template\Export\Mau Thong bao LC.doc" />
+    <Content Include="Report\Template\Export\Mau Thong bao Tu chinh LC.doc" />
+    <Content Include="Report\Template\Export\RegisterDocumentaryCollectionVAT.doc" />
+    <Content Include="Report\Template\Export\ThuThongBaoBoChungTu.doc" />
+    <Content Include="Report\Template\Export\VAT.doc" />
+    <Content Include="Report\Template\FXPHIEUCHUYENKHOAN.doc" />
+    <Content Include="Report\Template\FX_VAT.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\Export\COVER NHO THU XK - Copy.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\Export\COVER NHO THU XK.doc" />
     <Content Include="Report\Template\DocumentaryCollection\Export\DocumentaryCollectionCancelPHIEUXUATNGOAIBANG.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\Export\PaymentPhieuChuyenKhoan.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\Export\PaymentVAT.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\Export\RegisterDocumentaryCleanCollectionPHIEUNHAPNGOAIBANG1.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\Export\RegisterDocumentaryCleanCollectionPHIEUNHAPNGOAIBANG2.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\Export\RegisterDocumentaryCleanCollectionPHIEUXUATNGOAIBANG1.doc" />
     <Content Include="Report\Template\DocumentaryCollection\Export\RegisterDocumentaryCollectionPHIEUNHAPNGOAIBANG1.doc" />
     <Content Include="Report\Template\DocumentaryCollection\Export\RegisterDocumentaryCollectionPHIEUNHAPNGOAIBANG2.doc" />
     <Content Include="Report\Template\DocumentaryCollection\Export\RegisterDocumentaryCollectionPHIEUXUATNGOAIBANG1.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\Export\RegisterDocumentaryCollectionVAT.doc" />
     <Content Include="Report\Template\DocumentaryCollection\Export\RegisterDocumentaryCollection_Amend_PHIEUNHAPNGOAIBANG.doc" />
     <Content Include="Report\Template\DocumentaryCollection\Export\RegisterDocumentaryCollection_Amend_PHIEUXUATNGOAIBANG.doc" />
+    <Content Include="Report\Template\OverseasTransfer\OverseasTransferMT103.docx" />
+    <Content Include="Report\Template\Export\DocumentProcessing\Settlement\VAT.doc" />
+    <Content Include="Report\Template\Export\DocumentProcessing\VAT.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\Export\PaymentPHIEUXUATNGOAIBANG.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\Export\RegisterVAT.doc" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Common\" />
     <Folder Include="Report\Export\" />
     <Folder Include="TellerApplication\AccountManagement\SavingsAC\Enquiry\" />
   </ItemGroup>
@@ -2260,11 +2057,12 @@
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
+          <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>11167</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl>http://localhost/tradingf</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost/tradingf</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
