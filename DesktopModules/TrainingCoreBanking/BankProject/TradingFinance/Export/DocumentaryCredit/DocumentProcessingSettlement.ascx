@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="OutgoingCollectionPayment.ascx.cs" Inherits="BankProject.TradingFinance.Export.DocumentaryCollections.OutgoingCollectionPayment" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DocumentProcessingSettlement.ascx.cs" Inherits="BankProject.TradingFinance.Export.DocumentaryCredit.DocumentProcessingSettlement" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <telerik:radwindowmanager id="RadWindowManager1" runat="server" enableshadow="true" />
 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit" />
@@ -373,7 +373,7 @@
         </fieldset>
         <fieldset>
             <legend>
-                <div style="font-weight: bold; text-transform: uppercase;">Drawer Information</div>
+                <div style="font-weight: bold; text-transform: uppercase;">Beneficiary Information</div>
             </legend>
 
 
@@ -381,46 +381,47 @@
             <div id="divCollectionType" runat="server">
                 <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
-                        <td class="MyLable">2.1 Collection Type<span class="Required"> (*)</span></td>
-                        <td style="width: 150px" class="MyContent">
-                            <telerik:radcombobox width="355" dropdowncssclass="KDDL" appenddatabounditems="True"
-                                id="comboCollectionType" runat="server"
-                                markfirstmatch="True"
-                                enabled="false"
-                                onitemdatabound="commom_ItemDataBound"
-                                allowcustomtext="false">
-                            <HeaderTemplate>
-                                <table cellpadding="0" cellspacing="0">
-                                    <tr>
-                                        <td style="width: 100px;">Id
-                                        </td>
-                                        <td>Description
-                                        </td>
-                                    </tr>
-                                </table>
-                            </HeaderTemplate>
-                            <ItemTemplate>
-                                <table cellpadding="0" cellspacing="0">
-                                    <tr>
-                                        <td style="width: 100px;">
-                                            <%# DataBinder.Eval(Container.DataItem, "Id")%> 
-                                        </td>
-                                        <td>
-                                            <%# DataBinder.Eval(Container.DataItem, "Description")%> 
-                                        </td>
-                                    </tr>
-                                </table>
-                            </ItemTemplate>
-                        </telerik:radcombobox>
-                            <asp:RequiredFieldValidator
-                                runat="server" Display="None"
-                                ID="RequiredFieldValidator1"
-                                ControlToValidate="comboCollectionType"
-                                ValidationGroup="Commit"
-                                InitialValue=""
-                                Enabled="false"
-                                ErrorMessage="Collection Type is required" ForeColor="Red">
-                            </asp:RequiredFieldValidator>
+                        <td class="MyLable">2.1 LC Type<span class="Required"> (*)</span></td>
+                        <td class="MyContent" style="width: 200px;">
+                            <telerik:RadComboBox
+                                AppendDataBoundItems="True"
+                                DropDownCssClass="KDDL"
+                                ID="comboCollectionType" runat="server" Width="355"
+                                MarkFirstMatch="True"
+                                OnItemDataBound="rcbLCType_ItemDataBound"
+                                AutoPostBack="true"
+                                OnSelectedIndexChanged="rcbLCType_SelectIndexChange"
+                                AllowCustomText="false">
+                                <ExpandAnimation Type="None" />
+                                <CollapseAnimation Type="None" />
+                                <HeaderTemplate>
+                                    <table style="width: 305px" cellpadding="0" cellspacing="0">
+                                        <tr>
+                                            <td style="width: 60px;">LC Type 
+                                            </td>
+                                            <td style="width: 200px;">Description
+                                            </td>
+                                            <td>Category
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </HeaderTemplate>
+                                <ItemTemplate>
+                                    <table style="width: 305px" cellpadding="0" cellspacing="0">
+                                        <tr>
+                                            <td style="width: 60px;">
+                                                <%# DataBinder.Eval(Container.DataItem, "LCTYPE")%> 
+                                            </td>
+                                            <td style="width: 200px;">
+                                                <%# DataBinder.Eval(Container.DataItem, "Description")%> 
+                                            </td>
+                                            <td>
+                                                <%# DataBinder.Eval(Container.DataItem, "Category")%> 
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </ItemTemplate>
+                            </telerik:RadComboBox>
                         </td>
                         <td>
                             <asp:Label ID="lblCollectionTypeName" runat="server" Text="" />
@@ -430,7 +431,7 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">2.2 Drawer Cus No.</td>
+                    <td class="MyLable">2.2 Customer No.</td>
                     <td class="MyContent">
                         <telerik:radcombobox width="355" dropdowncssclass="KDDL"
                             appenddatabounditems="True" autopostback="true"
@@ -468,7 +469,7 @@
                 </tr>
 
                 <tr>
-                    <td class="MyLable">2.3 Drawer Cus Name</td>
+                    <td class="MyLable">2.3 Customer Name</td>
                     <td class="MyContent">
                         <telerik:radtextbox id="txtDrawerCusName" runat="server" width="355" enabled="false" />
                     </td>
@@ -477,7 +478,7 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">2.4 Drawer Addr.</td>
+                    <td class="MyLable">2.4 Address</td>
                     <td class="MyContent">
                         <telerik:radtextbox id="txtDrawerAddr1" runat="server" width="355" enabled="false" />
                     </td>
@@ -498,7 +499,7 @@
                 </tr>
 
                 <tr style="display: none">
-                    <td class="MyLable">2.4 Drawer Ref No.</td>
+                    <td class="MyLable">2.4 Reference No.</td>
                     <td class="MyContent">
                         <telerik:radtextbox id="txtDrawerRefNo" runat="server" width="355" enabled="false" />
                     </td>
@@ -509,7 +510,7 @@
 
         <fieldset>
             <legend>
-                <div style="font-weight: bold; text-transform: uppercase;">Collecting Bank Details</div>
+                <div style="font-weight: bold; text-transform: uppercase;">Presenting Bank Details</div>
             </legend>
 
             <table width="100%" cellpadding="0" cellspacing="0">
@@ -588,13 +589,13 @@
         </fieldset>
         <fieldset>
             <legend>
-                <div style="font-weight: bold; text-transform: uppercase;">Drawee/Reimbursement Detail</div>
+                <div style="font-weight: bold; text-transform: uppercase;">Applicant Details</div>
             </legend>
 
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr style="display: none">
-                    <td class="MyLable">4.1 Drawee Cus No</td>
+                    <td class="MyLable">4.1 Customer No.</td>
                     <td class="MyContent">
                         <telerik:radtextbox id="txtDraweeCusNo" runat="server"
                             autopostback="True" width="355" enabled="False" />
@@ -605,13 +606,13 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">4.2 Drawee Cus Name</td>
+                    <td class="MyLable">4.2 Customer Name</td>
                     <td class="MyContent">
                         <telerik:radtextbox id="txtDraweeCusName" runat="server" width="355" enabled="False" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">4.3 Drawee Addr.</td>
+                    <td class="MyLable">4.3 Address</td>
                     <td class="MyContent">
                         <telerik:radtextbox id="txtDraweeAddr1" runat="server" width="355" enabled="False" />
                     </td>
@@ -675,7 +676,7 @@
         </fieldset>
         <fieldset>
             <legend>
-                <div style="font-weight: bold; text-transform: uppercase;">Collection Information</div>
+                <div style="font-weight: bold; text-transform: uppercase;">Setttlement Information</div>
             </legend>
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
