@@ -895,6 +895,12 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
+IF EXISTS(SELECT * FROM sys.procedures WHERE NAME = 'P_ExportLCSettlementReport')
+BEGIN
+DROP PROCEDURE [dbo].[P_ExportLCSettlementReport]
+END
+
+GO
 
 CREATE PROCEDURE [dbo].[P_ExportLCSettlementReport](
 	@ReportType smallint,--1 : PhieuChuyenKhoan, 2 : VAT
