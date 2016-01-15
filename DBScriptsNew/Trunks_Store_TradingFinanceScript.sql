@@ -789,7 +789,7 @@ begin
 		(SELECT top 1 @OverseasMinus = ChargeAmt FROM BOUTGOINGCOLLECTIONPAYMENTCHARGES WHERE CollectionPaymentCode = @PaymentId and Chargecode = 'EC.OVERSEASMINUS')
 		(SELECT top 1 @OverseasPlus = ChargeAmt FROM BOUTGOINGCOLLECTIONPAYMENTCHARGES WHERE CollectionPaymentCode = @PaymentId and Chargecode = 'EC.OVERSEASPLUS')
 
-		set @TaiKhoanNo = (select  top 1  NostroAccount from BOUTGOINGCOLLECTIONPAYMENTMT910 where PaymentId = @PaymentId)
+		set @TaiKhoanNo = (select  top 1  PresentorCusNo from BOUTGOINGCOLLECTIONPAYMENT where PaymentId = @PaymentId)
 		set @TenTaiKhoanNo = (select  top 1  [Description] from BSWIFTCODE where AccountNo = @TaiKhoanNo)
 		--set @TenTaiKhoanCo = (select  top 1  DrawerCusName + ' - ' + DrawerAddr1 + ' ' + DrawerAddr2 + ' ' + DrawerAddr3 from BEXPORT_DOCUMETARYCOLLECTION where DocCollectCode = @LCCode)
 		(select  top 1  @TenTaiKhoanCo = DrawerCusName, @CollectionType = CollectionType from BEXPORT_DOCUMETARYCOLLECTION where DocCollectCode = @LCCode)
@@ -800,20 +800,20 @@ begin
 			@TaiKhoanNo SoTaiKhoanNo, @TenTaiKhoanNo TenTaiKhoanNo,
 			--Currency + cast(DrawingAmount AS VARCHAR) SoTienTaiKhoanNo, 
 			case when Currency = 'JPY' OR Currency = 'VND' 
-				then (REPLACE(CONVERT(varchar, CONVERT(money, cast((DrawingAmount + @OverseasPlus - @OverseasMinus) as decimal(18,0))), 1),'.00','') + ' ' + Currency)
-				else (CONVERT(varchar, CONVERT(money, cast((DrawingAmount + @OverseasPlus - @OverseasMinus) as decimal(18,2))), 1) + ' ' + Currency) end as SoTienTaiKhoanNo,
+				then (REPLACE(CONVERT(varchar, CONVERT(money, cast((DrawingAmount) as decimal(18,0))), 1),'.00','') + ' ' + Currency)
+				else (CONVERT(varchar, CONVERT(money, cast((DrawingAmount) as decimal(18,2))), 1) + ' ' + Currency) end as SoTienTaiKhoanNo,
 
 			--REPLACE(CONVERT(varchar, CONVERT(money, cast(isnull(DrawingAmount,0) as decimal(18,2))), 1) , '.00', '')+ ' ' + Currency AS SoTienTaiKhoanNo,
-			dbo.f_CurrencyToTextVn((DrawingAmount + @OverseasPlus - @OverseasMinus), Currency) SoTienTaiKhoanNoBangChu,
+			dbo.f_CurrencyToTextVn((DrawingAmount), Currency) SoTienTaiKhoanNoBangChu,
 			--Currency + cast(DrawingAmount AS VARCHAR) SoTienTaiKhoanCo, 
 			
 			case when Currency = 'JPY' OR Currency = 'VND' 
-				then (REPLACE(CONVERT(varchar, CONVERT(money, cast((DrawingAmount + @OverseasPlus - @OverseasMinus) as decimal(18,0))), 1),'.00','') + ' ' + Currency)
-				else (CONVERT(varchar, CONVERT(money, cast((DrawingAmount + @OverseasPlus - @OverseasMinus) as decimal(18,2))), 1) + ' ' + Currency) end as SoTienTaiKhoanCo,
+				then (REPLACE(CONVERT(varchar, CONVERT(money, cast((DrawingAmount) as decimal(18,0))), 1),'.00','') + ' ' + Currency)
+				else (CONVERT(varchar, CONVERT(money, cast((DrawingAmount) as decimal(18,2))), 1) + ' ' + Currency) end as SoTienTaiKhoanCo,
 			
 			--REPLACE(CONVERT(varchar, CONVERT(money, cast(isnull(DrawingAmount,0) as decimal(18,2))), 1), '.00', '') + ' ' + Currency AS SoTienTaiKhoanCo,
 
-			dbo.f_CurrencyToTextVn((DrawingAmount + @OverseasPlus - @OverseasMinus), Currency) SoTienTaiKhoanCoBangChu,
+			dbo.f_CurrencyToTextVn((DrawingAmount), Currency) SoTienTaiKhoanCoBangChu,
 			CreditAccount SoTaiKhoanCo, @TenTaiKhoanCo TenTaiKhoanCo, @CollectionType CollectionType
 		from BOUTGOINGCOLLECTIONPAYMENT where PaymentId = @PaymentId
 		
@@ -824,8 +824,8 @@ begin
 	begin
 		Declare @TaiKhoanCo nvarchar(50);
 		Declare @collType nvarchar(10);
-		set @TaiKhoanCo = (select  top 1  CreditAccount from BOUTGOINGCOLLECTIONPAYMENT where PaymentId = @PaymentId) 
-		set @TaiKhoanNo = (select  top 1  NostroAccount from BOUTGOINGCOLLECTIONPAYMENTMT910 where PaymentId = @PaymentId)
+		(select  top 1 @TaiKhoanCo = CreditAccount, @TaiKhoanNo =PresentorCusNo from BOUTGOINGCOLLECTIONPAYMENT where PaymentId = @PaymentId) 
+		--set @TaiKhoanNo = (select  top 1  PresentorCusNo from BOUTGOINGCOLLECTIONPAYMENT where PaymentId = @PaymentId)
 		set @TenTaiKhoanNo = (select  top 1  [Description] from BSWIFTCODE where AccountNo = @TaiKhoanNo)
 		--set @TenTaiKhoanCo = (select  top 1  DrawerCusName + ' - ' + DrawerAddr1 + ' ' + DrawerAddr2 + ' ' + DrawerAddr3 from BEXPORT_DOCUMETARYCOLLECTION where DocCollectCode = @LCCode)
 		
@@ -865,10 +865,10 @@ begin
 			, b3.ChargeName ChargeName_3, b3.ChargeCcy + ' ' + CONVERT(varchar, CONVERT(money, (b3.ChargeAmt )), 1) + ' ' + b3.PLAccount ChargeInfo_3
 			, b4.ChargeName ChargeName_4, b4.ChargeCcy + ' ' + CONVERT(varchar, CONVERT(money, (b4.ChargeAmt )), 1) + ' ' + b4.PLAccount ChargeInfo_4
 		from #tblPayment a
-			left join #tblCharge b1 on a.Id = b1.PaymentId and b1.ChargeTab = 'EC.CABLE' and b1.rowchages = 1--'EC.RECEIVE'
+			left join #tblCharge b1 on a.Id = b1.PaymentId and b1.ChargeTab = 'EC.PAYMENT' and b1.rowchages = 4--'EC.RECEIVE'
 			left join #tblCharge b2 on a.Id = b2.PaymentId and b2.ChargeTab = 'EC.CABLE' and b2.rowchages = 2--'EC.COURIER'
-			left join #tblCharge b3 on a.Id = b3.PaymentId and b3.ChargeTab = 'EC.OTHER'
-			left join #tblCharge b4 on a.Id = b4.PaymentId and b4.ChargeTab = 'EC.PAYMENT'
+			left join #tblCharge b3 on a.Id = b3.PaymentId and b3.ChargeTab = 'EC.HANDLING'
+			left join #tblCharge b4 on a.Id = b4.PaymentId and b4.ChargeTab = 'EC.OTHER'
 		
 		return
 	END
@@ -1087,7 +1087,8 @@ GO
 CREATE PROCEDURE [dbo].[P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Report]
 	@Code varchar(50),
 	@UserNameLogin  nvarchar(500),
-	@Currency nvarchar(10)
+	@Currency nvarchar(10),
+	@TabID nvarchar(10)
 AS
 BEGIN
 	declare @CurrentDate varchar(12)
@@ -1103,12 +1104,14 @@ BEGIN
 	)
 	insert into @TabCus
 	select CustomerName,IdentityNo, [Address],City, Country from BCUSTOMERS
-	where CustomerID = (select DrawerCusNo from BEXPORT_DOCUMETARYCOLLECTION where DocCollectCode = @Code and Currency = @Currency)
+	where CustomerID = (select DrawerCusNo from BEXPORT_DOCUMETARYCOLLECTION where DocCollectCode = @Code and Currency = @Currency
+								and ActiveRecordFlag = 'YES'
+						)
 	--------------------------------------------
 	declare @TongSoTienThanhToan decimal(20,2)
 	set @TongSoTienThanhToan = (select  sum(ChargeAmt)
 		from dbo.BEXPORT_DOCUMETARYCOLLECTIONCHARGES 
-		where DocCollectCode = @Code and ChargeCcy = @Currency and Chargecode IN ('EC.ACCEPT', 'EC.CABLE', 'EC.OTHER'))
+		where DocCollectCode = @Code and ChargeCcy = @Currency and TabId = @TabID and Chargecode IN ('EC.ACCEPT', 'EC.CABLE', 'EC.OTHER'))
 			
 	declare @VAT float
 	set @VAT = (@TongSoTienThanhToan * 0.1)
@@ -1137,7 +1140,7 @@ BEGIN
 		[VATNo],
 		[ChargeAcct]
 	from dbo.BEXPORT_DOCUMETARYCOLLECTIONCHARGES
-	where DocCollectCode = @Code and ChargeCcy = @Currency;
+	where DocCollectCode = @Code and ChargeCcy = @Currency and TabId = @TabID;
 	------------------------------------------------------
 	
 	declare @Cot9_1 float	
@@ -1216,7 +1219,7 @@ BEGIN
 		
 		
 	from dbo.BEXPORT_DOCUMETARYCOLLECTION doc
-	where doc.DocCollectCode = @Code and Currency = @Currency
+	where doc.DocCollectCode = @Code and Currency = @Currency and ActiveRecordFlag = 'YES'
 END
 GO
 
@@ -1336,7 +1339,579 @@ BEGIN
 	--------------------------------------------
 	declare @TongSoTienThanhToan float, @TongVAT float
 	select @TongSoTienThanhToan =  sum(cast(isnull(ChargeAmt,'0') as float) + cast(isnull(TaxAmt,'0') as float)), @TongVAT = sum(cast(isnull(TaxAmt,'0') as float))
-	from dbo.BEXPORT_DOCUMETARYCOLLECTIONCHARGES where DocCollectCode = @code and Chargecode IN ('EC.CABLE', 'EC.ACCEPT', 'EC.OTHER')
+	from dbo.BEXPORT_DOCUMETARYCOLLECTIONCHARGES where DocCollectCode = @code and Chargecode IN ('EC.CABLE', 'EC.COURIER', 'EC.OTHER')
+	
+	declare @Currency varchar(10)
+	if isnull(@ChargeInfo_1_ChargeCcy, '') != ''
+	begin
+		set @Currency = @ChargeInfo_1_ChargeCcy
+	end
+	else if isnull(@ChargeInfo_2_ChargeCcy, '') != ''
+	begin
+		set @Currency = @ChargeInfo_2_ChargeCcy
+	end
+	else if isnull(@ChargeInfo_3_ChargeCcy, '') != ''
+	begin
+		set @Currency = @ChargeInfo_3_ChargeCcy
+	end
+
+	--------------------------------------------
+	select @CurrentDate as CurrentDate
+	select
+		DATEPART(m, GETDATE()) as [Month],
+	    DATEPART(d, GETDATE()) as [Day],
+	    DATEPART(yy, GETDATE()) as [Year],
+		doc.DocCollectCode as LCCode,
+		(select top 1 VATNo from @Table_CHARGE) as VATNo,
+		(select top 1 ChargeAcct from @Table_CHARGE) as  ChargeAcct,
+		(select top 1 ChargeRemarks from @Table_CHARGE) as ChargeRemarks,
+		
+		@UserNameLogin as CurrentUserLogin,
+		doc.DrawerCusName as CustomerName,
+		doc.DrawerAddr1 + ', ' +doc.DrawerAddr2 + ', ' + doc.DrawerAddr3 as [Address],
+		(select IdentityNo from @TabCus) as IdentityNo,
+		(select BankAccount from @TabCus) as BankAccount,		
+		doc.DrawerCusNo as CustomerID,				
+		dbo.f_CurrencyToTextVn(cast(@TongSoTienThanhToan as nvarchar),@Currency) as SoTienBangChu,
+		CONVERT(varchar, CONVERT(money,@TongSoTienThanhToan), 1) as TongSoTienThanhToan,
+		doc.Currency Currency,
+		doc.DrawerCusNo as DebitAccount,	
+		doc.NostroCusNo as CreaditAccount,
+		CONVERT(varchar, CONVERT(money, @TongVAT), 1) + ' ' + @Currency + ' PL90304' as VAT,
+		case when isnull(@ChargeInfo_1, 0) > 0 then CONVERT(varchar, CONVERT(money, @ChargeInfo_1), 1) + ' ' + @ChargeInfo_1_ChargeCcy + ' PL737869' else '' end as ChargeInfo_1,
+		case when isnull(@ChargeInfo_2, 0) > 0 then CONVERT(varchar, CONVERT(money, @ChargeInfo_2), 1) + ' ' + @ChargeInfo_2_ChargeCcy + ' PL837870' else '' end as ChargeInfo_2,
+		case when isnull(@ChargeInfo_3, 0) > 0 then CONVERT(varchar, CONVERT(money, @ChargeInfo_3), 1) + ' ' + @ChargeInfo_3_ChargeCcy + ' PL837304' else '' end as ChargeInfo_3,
+		
+		case when isnull(@ChargeInfo_1, 0) > 0 then @ChargeInfo_1Name else '' end as ChargeName_1,
+		case when isnull(@ChargeInfo_2, 0) > 0 then @ChargeInfo_2Name else '' end as ChargeName_2,
+		case when isnull(@ChargeInfo_3, 0) > 0 then @ChargeInfo_3Name else '' end as ChargeName_3	
+		
+		
+	from dbo.BEXPORT_DOCUMETARYCOLLECTION doc
+	where doc.DocCollectCode = @Code
+END
+GO
+
+/***
+---------------------------------------------------------------------------------
+-- 15 Jan 2015 : Hien : Add Script for [B_BMACODE_GetNewID]
+---------------------------------------------------------------------------------
+***/
+
+IF EXISTS(SELECT * FROM sys.procedures WHERE NAME = 'B_BMACODE_GetNewID')
+BEGIN
+DROP PROCEDURE [dbo].[B_BMACODE_GetNewID]
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[B_BMACODE_GetNewID]    Script Date: 15/01/2015 2:06:15 SA ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[B_BMACODE_GetNewID]
+	@MaCode varchar(50),
+	@Refix varchar(10) = null,
+	@Flat varchar(2) = null 
+AS
+BEGIN
+
+if @Refix is null
+begin
+set @Refix = 'TF'
+end
+
+if @Refix is null
+begin
+set @Flat = '-'
+end
+
+if not exists(select MaCode from BMACODE where MaCode= @MaCode)
+begin
+	insert into BMACODE(MaCode, SoTT)
+	values(@MaCode, 0)
+end
+
+DECLARE @MAXValue VARCHAR(10),@NEWValue VARCHAR(10),@NEW_ID VARCHAR(10);
+
+SELECT @MAXValue=(select SoTT from BMACODE where MaCode= @MaCode )
+update BMACODE set SoTT = SoTT + 1 where MaCode = @MaCode
+
+SET @NEWValue= REPLACE(@MaxValue,'03.','')+1
+SET @NEW_ID = ''+
+    CASE
+       WHEN LEN(@NEWValue)<5
+          THEN REPLICATE('0',5-LEN(@newValue))
+          ELSE ''
+       END +
+       @NEWValue
+
+DECLARE @NumberOfDay int
+--day is counted from 0 hence after getting day from system, add "1" to returned value
+SET @NumberOfDay = DATEDIFF(Day,CONVERT(datetime,'1/1/' + convert(nvarchar,YEAR(getdate()),103)),getdate()) + 1;
+DECLARE @NumberOfDayStr nvarchar(3)
+SET @NumberOfDayStr = replicate('0', 3 - len(@NumberOfDay)) + cast (@NumberOfDay as varchar)
+
+select @Refix + @Flat + CONVERT(nvarchar,right(YEAR(getdate()),2))+ @NumberOfDayStr + @Flat + @NEW_ID as Code
+--select @Refix + @Flat + CONVERT(nvarchar,right(YEAR(getdate()),2))+CONVERT(nvarchar,DATEDIFF(Day,CONVERT(datetime,'1/1/' + convert(nvarchar,YEAR(getdate()),103)),getdate())) + @Flat + @NEW_ID as Code
+END
+GO
+
+/***
+---------------------------------------------------------------------------------
+-- 15 Jan 2015 : Hien : Add Script for [P_BEXPORTDOCUMETARYCOLLECTION_AMEND_PHIEUNHAPNGOAIBANG_Report]
+---------------------------------------------------------------------------------
+***/
+
+IF EXISTS(SELECT * FROM sys.procedures WHERE NAME = 'P_BEXPORTDOCUMETARYCOLLECTION_AMEND_PHIEUNHAPNGOAIBANG_Report')
+BEGIN
+DROP PROCEDURE [dbo].[P_BEXPORTDOCUMETARYCOLLECTION_AMEND_PHIEUNHAPNGOAIBANG_Report]
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[P_BEXPORTDOCUMETARYCOLLECTION_AMEND_PHIEUNHAPNGOAIBANG_Report]    Script Date: 15/01/2015 2:06:15 SA ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[P_BEXPORTDOCUMETARYCOLLECTION_AMEND_PHIEUNHAPNGOAIBANG_Report]
+	@Code varchar(50),
+	@CurrentUserLogin nvarchar(250)
+AS
+BEGIN
+
+	
+	declare @CurrentDate varchar(12)
+	set @CurrentDate = CONVERT(VARCHAR(10),GETDATE(),101);	
+	select @CurrentDate as CurrentDate
+	select e.DocCollectCode,
+		@CurrentUserLogin CurrentUserLogin,
+		c.CustomerName,
+		c.IdentityNo,
+		c.[Address],
+		c.City,
+		c.Country,
+		e.DrawerCusNo,
+		e.DraweeCusName,
+		e.Currency,
+		dbo.f_CurrencyToText(cast(case when Amend_Status = 'AUT' then abs(Amount - isnull(OldAmount,0))
+		else  abs(isnull(OldAmount,0) - Amount) end as nvarchar(4000)),cc.Code)  SoTienVietBangChu,
+		CONVERT(varchar, CONVERT(money,case when Amend_Status = 'AUT' then abs(Amount - isnull(OldAmount,0))
+		else  abs(isnull(OldAmount,0) - Amount) end), 1) Amount,
+	    cc.Vietnamese,
+	    DATEPART(m, GETDATE()) as [Month],
+	    DATEPART(d, GETDATE()) as [Day],
+	    DATEPART(yy, GETDATE()) as [Year]
+	from BEXPORT_DOCUMETARYCOLLECTION e
+		left join BCUSTOMERS c on e.DrawerCusNo = c.CustomerID
+		left Join BCURRENCY cc on cc.Code = Currency
+	where (DocCollectCode = @Code Or AmendNo=@Code)
+	AND (ActiveRecordFlag is null OR ActiveRecordFlag='YES')
+END
+GO
+
+/***
+---------------------------------------------------------------------------------
+-- 15 Jan 2015 : Hien : Add Script for [B_BEXPORT_DOCUMETARYCOLLECTION_GetByAmendmentt]
+---------------------------------------------------------------------------------
+***/
+
+IF EXISTS(SELECT * FROM sys.procedures WHERE NAME = 'B_BEXPORT_DOCUMETARYCOLLECTION_GetByAmendment')
+BEGIN
+DROP PROCEDURE [dbo].[B_BEXPORT_DOCUMETARYCOLLECTION_GetByAmendment]
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[B_BEXPORT_DOCUMETARYCOLLECTION_GetByAmendment]    Script Date: 15/01/2015 2:06:15 SA ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[B_BEXPORT_DOCUMETARYCOLLECTION_GetByAmendment]
+	@DocCollectCode varchar(50),
+	@Drawee varchar(250),
+	@DraweeAddr nvarchar(500),
+	@Drawer varchar(250),
+	@DraweerAddr nvarchar(500),
+	@Amend_Status varchar(50),
+	@currentUserId varchar(50)
+AS
+BEGIN
+	select 
+		Id, 
+		DocCollectCode, 
+		CollectionType, 
+		Currency, 
+		CONVERT(varchar, CONVERT(money, Amount), 1) as Amount, 
+		[Status]
+		 
+	from dbo.BEXPORT_DOCUMETARYCOLLECTION
+	where 
+		CreateBy = @currentUserId
+		AND (isnull(@DocCollectCode,'') = '' or DocCollectCode like  '%' + @DocCollectCode  + '%')
+		AND (isnull(@Drawee,'') = '' or DraweeCusName like  '%' + @Drawee  + '%')
+		AND (isnull(@Drawee,'') = '' or DraweeCusName like  '%' + @Drawee  + '%')
+		AND (isnull(@DraweeAddr,'') = '' or 
+			(DraweeAddr1 like  '%' + @DraweeAddr  + '%'
+			or DraweeAddr2 like  '%' + @DraweeAddr  + '%'
+			or DraweeAddr3 like  '%' + @DraweeAddr  + '%')
+		)
+		AND (isnull(@Drawer,'') = '' or DrawerCusNo like  '%' + @Drawer  + '%')
+		AND (isnull(@DraweerAddr,'') = '' or 
+			(DrawerAddr1 like  '%' + @DraweerAddr  + '%'
+			or DrawerAddr2 like  '%' + @DraweerAddr  + '%'
+			or DrawerAddr3 like  '%' + @DraweerAddr  + '%')
+		)
+		AND (UpdatedDate in (select max(UpdatedDate)
+							 FROM dbo.BEXPORT_DOCUMETARYCOLLECTION GROUP BY DocCollectCode
+							 )
+		)
+		
+END
+GO
+
+/***
+---------------------------------------------------------------------------------
+-- 15 Jan 2015 : Hien : Add Script for [B_BCRFROMACCOUNT_GetByCurrency_Name]
+---------------------------------------------------------------------------------
+***/
+
+IF EXISTS(SELECT * FROM sys.procedures WHERE NAME = 'B_BCRFROMACCOUNT_GetByCurrency_Name')
+BEGIN
+DROP PROCEDURE [dbo].[B_BCRFROMACCOUNT_GetByCurrency_Name]
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[B_BCRFROMACCOUNT_GetByCurrency_Name]    Script Date: 15/01/2015 2:06:15 SA ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE  PROCEDURE [dbo].[B_BCRFROMACCOUNT_GetByCurrency_Name] 
+	@Name varchar(50),
+	@Currency varchar(10)
+AS
+BEGIN
+	select Id, name,  Currency + ' - ' + Id + ' - ' + Name as Display
+	from dbo.BCRFROMACCOUNT
+	where [Currency] = @Currency and Name = @Name
+	Union
+	Select [ThuChiHoAccount] as Id, [Currency] + ' - ' + [ThuChiHoAccount] AS Name, [Currency] + ' - ' + [ThuChiHoAccount] AS Display
+	FROM [BINTERNALBANKACCOUNT]
+	WHERE /*[Currency] Not In ('VND','EUR','USD') 
+    AND*/ [Currency] = @Currency
+
+END
+GO
+
+/***
+---------------------------------------------------------------------------------
+-- 15 Jan 2015 : Hien : Add Script for [P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Amend_Report]
+---------------------------------------------------------------------------------
+***/
+
+IF EXISTS(SELECT * FROM sys.procedures WHERE NAME = 'P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Amend_Report')
+BEGIN
+DROP PROCEDURE [dbo].[P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Amend_Report]
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Amend_Report]    Script Date: 15/01/2015 2:06:15 SA ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE  PROCEDURE [dbo].[P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Amend_Report] 
+	-- Add the parameters for the stored procedure here
+	@Code varchar(50),
+	@UserNameLogin  nvarchar(500)
+AS
+BEGIN
+	declare @CurrentDate varchar(12)
+	set @CurrentDate = CONVERT(VARCHAR(10),GETDATE(),101);	
+	
+	declare @TabCus  as table
+	(
+		CustomerName nvarchar(500),
+		IdentityNo nvarchar(20),
+		[Address] nvarchar(500),
+		BankAccount nvarchar(50),
+		City nvarchar(500),
+		Country nvarchar(500)
+	)
+	insert into @TabCus
+	select CustomerName,IdentityNo, [Address], BankAccount, City, Country from BCUSTOMERS
+	where CustomerID = (select DrawerCusNo from BEXPORT_DOCUMETARYCOLLECTION where AmendNo = @Code)
+	
+	-----------------------------------------------------------------------
+	declare @Table_CHARGE as table 
+	(
+		DocCollectCode [nvarchar](50),
+		[ChargeAmt] [float],
+		[ChargeCcy] [nvarchar](5),
+		[Chargecode] [nvarchar](50),
+		[Rowchages] [nvarchar](3),
+		[ChargeRemarks] [nvarchar](500) ,
+		[VATNo] [nvarchar](20) ,
+		[ChargeAcct] [nvarchar](20) 
+	)
+	insert into @Table_CHARGE
+	select
+		DocCollectCode ,
+		[ChargeAmt] ,
+		[ChargeCcy] ,
+		[Chargecode],
+		[Rowchages] ,
+		ChargeRemarks,
+		[VATNo],
+		[ChargeAcct]
+	from dbo.BEXPORT_DOCUMETARYCOLLECTIONCHARGES
+	where AmendNo = @code;
+	------------------------------------------------------
+	
+	declare @ChargeInfo_1 float	
+	declare @ChargeInfo_2 float
+	declare @ChargeInfo_3 float
+	declare @ChargeInfo_4 float
+	
+	declare @ChargeInfo_1_ChargeCcy varchar(10)	
+	declare @ChargeInfo_2_ChargeCcy varchar(10)	
+	declare @ChargeInfo_3_ChargeCcy varchar(10)
+	declare @ChargeInfo_4_ChargeCcy varchar(10)
+		
+	declare @ChargeInfo_1Name nvarchar(500)	
+	declare @ChargeInfo_2Name nvarchar(500)	
+	declare @ChargeInfo_3Name nvarchar(500)	
+	declare @ChargeInfo_4Name nvarchar(500)	
+	
+	select 
+		@ChargeInfo_1 = ChargeAmt,
+		@ChargeInfo_1_ChargeCcy = ChargeCcy,
+		@ChargeInfo_1Name = Chargecode
+	 from @Table_CHARGE
+	 where Chargecode = 'EC.AMEND'
+	
+	if isnull(@ChargeInfo_1Name, '') != ''
+	begin
+		set @ChargeInfo_1Name = (select Name_VN from dbo.BCHARGECODE where Code = @ChargeInfo_1Name)
+	end 	
+	------------
+	select 
+		@ChargeInfo_2 = ChargeAmt,
+		@ChargeInfo_2_ChargeCcy = ChargeCcy,
+		@ChargeInfo_2Name = Chargecode
+	 from @Table_CHARGE
+	 where Chargecode = 'EC.CABLE'
+	
+	if isnull(@ChargeInfo_2Name, '') != ''
+	begin
+		set @ChargeInfo_2Name = (select Name_VN from dbo.BCHARGECODE where Code = @ChargeInfo_2Name)
+	end
+	------------
+	select 
+		@ChargeInfo_3 = ChargeAmt,
+		@ChargeInfo_3_ChargeCcy = ChargeCcy,
+		@ChargeInfo_3Name = Chargecode
+	 from @Table_CHARGE
+	 where Chargecode = 'EC.COURIER'	 
+	
+	if isnull(@ChargeInfo_3Name, '') != ''
+	begin
+		set @ChargeInfo_3Name = (select Name_VN from dbo.BCHARGECODE where Code = @ChargeInfo_3Name)
+	end 
+	
+	------------
+	select 
+		@ChargeInfo_4 = ChargeAmt,
+		@ChargeInfo_4_ChargeCcy = ChargeCcy,
+		@ChargeInfo_4Name = Chargecode
+	 from @Table_CHARGE
+	 where Chargecode = 'EC.OTHER'	 
+	
+	if isnull(@ChargeInfo_4Name, '') != ''
+	begin
+		set @ChargeInfo_4Name = (select Name_VN from dbo.BCHARGECODE where Code = @ChargeInfo_4Name)
+	end 
+	--------------------------------------------
+	declare @TongSoTienThanhToan float, @TongVAT float
+	select @TongSoTienThanhToan =  sum(cast(isnull(ChargeAmt,'0') as float) + cast(isnull(TaxAmt,'0') as float)), @TongVAT = sum(cast(isnull(TaxAmt,'0') as float))
+	from dbo.BEXPORT_DOCUMETARYCOLLECTIONCHARGES where AmendNo = @code and Chargecode IN ('EC.AMEND', 'EC.CABLE', 'EC.COURIER', 'EC.OTHER')
+	
+	declare @Currency varchar(10)
+	if isnull(@ChargeInfo_1_ChargeCcy, '') != ''
+	begin
+		set @Currency = @ChargeInfo_1_ChargeCcy
+	end
+	else if isnull(@ChargeInfo_2_ChargeCcy, '') != ''
+	begin
+		set @Currency = @ChargeInfo_2_ChargeCcy
+	end
+	else if isnull(@ChargeInfo_3_ChargeCcy, '') != ''
+	begin
+		set @Currency = @ChargeInfo_3_ChargeCcy
+	end
+	else if isnull(@ChargeInfo_4_ChargeCcy, '') != ''
+	begin
+		set @Currency = @ChargeInfo_4_ChargeCcy
+	end
+
+	--------------------------------------------
+	select @CurrentDate as CurrentDate
+	select
+		DATEPART(m, GETDATE()) as [Month],
+	    DATEPART(d, GETDATE()) as [Day],
+	    DATEPART(yy, GETDATE()) as [Year],
+		doc.DocCollectCode as LCCode,
+		(select top 1 VATNo from @Table_CHARGE) as VATNo,
+		(select top 1 ChargeAcct from @Table_CHARGE) as  ChargeAcct,
+		(select top 1 ChargeRemarks from @Table_CHARGE) as ChargeRemarks,
+		
+		@UserNameLogin as CurrentUserLogin,
+		doc.DrawerCusName as CustomerName,
+		doc.DrawerAddr1 + ', ' +doc.DrawerAddr2 + ', ' + doc.DrawerAddr3 as [Address],
+		(select IdentityNo from @TabCus) as IdentityNo,
+		(select BankAccount from @TabCus) as BankAccount,		
+		doc.DrawerCusNo as CustomerID,				
+		dbo.f_CurrencyToTextVn(cast(@TongSoTienThanhToan as nvarchar),@Currency) as SoTienBangChu,
+		CONVERT(varchar, CONVERT(money,@TongSoTienThanhToan), 1) as TongSoTienThanhToan,
+		doc.Currency Currency,
+		doc.DrawerCusNo as DebitAccount,	
+		doc.NostroCusNo as CreaditAccount,
+		CONVERT(varchar, CONVERT(money, @TongVAT), 1) + ' ' + @Currency + ' PL90304' as VAT,
+		case when isnull(@ChargeInfo_1, 0) > 0 then CONVERT(varchar, CONVERT(money, @ChargeInfo_1), 1) + ' ' + @ChargeInfo_1_ChargeCcy + ' PL737869' else '' end as ChargeInfo_1,
+		case when isnull(@ChargeInfo_2, 0) > 0 then CONVERT(varchar, CONVERT(money, @ChargeInfo_2), 1) + ' ' + @ChargeInfo_2_ChargeCcy + ' PL837870' else '' end as ChargeInfo_2,
+		case when isnull(@ChargeInfo_3, 0) > 0 then CONVERT(varchar, CONVERT(money, @ChargeInfo_3), 1) + ' ' + @ChargeInfo_3_ChargeCcy + ' PL837304' else '' end as ChargeInfo_3,
+		case when isnull(@ChargeInfo_4, 0) > 0 then CONVERT(varchar, CONVERT(money, @ChargeInfo_4), 1) + ' ' + @ChargeInfo_4_ChargeCcy + ' PL837304' else '' end as ChargeInfo_4,
+		
+		case when isnull(@ChargeInfo_1, 0) > 0 then @ChargeInfo_1Name else '' end as ChargeName_1,
+		case when isnull(@ChargeInfo_2, 0) > 0 then @ChargeInfo_2Name else '' end as ChargeName_2,
+		case when isnull(@ChargeInfo_3, 0) > 0 then @ChargeInfo_3Name else '' end as ChargeName_3,	
+		case when isnull(@ChargeInfo_4, 0) > 0 then @ChargeInfo_4Name else '' end as ChargeName_4	
+		
+		
+	from dbo.BEXPORT_DOCUMETARYCOLLECTION doc
+	where doc.AmendNo = @Code
+END
+GO
+
+
+/***
+---------------------------------------------------------------------------------
+-- 15 Jan 2015 : Hien : Add Script for [P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Cancel_Report]
+---------------------------------------------------------------------------------
+***/
+
+IF EXISTS(SELECT * FROM sys.procedures WHERE NAME = 'P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Cancel_Report')
+BEGIN
+DROP PROCEDURE [dbo].[P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Cancel_Report]
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Cancel_Report]    Script Date: 15/01/2015 2:06:15 SA ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Cancel_Report] 
+	-- Add the parameters for the stored procedure here
+	@Code varchar(50),
+	@UserNameLogin  nvarchar(500)
+AS
+BEGIN
+	declare @CurrentDate varchar(12)
+	set @CurrentDate = CONVERT(VARCHAR(10),GETDATE(),101);	
+	
+	declare @TabCus  as table
+	(
+		CustomerName nvarchar(500),
+		IdentityNo nvarchar(20),
+		[Address] nvarchar(500),
+		BankAccount nvarchar(50),
+		City nvarchar(500),
+		Country nvarchar(500)
+	)
+	insert into @TabCus
+	select CustomerName,IdentityNo, [Address], BankAccount, City, Country from BCUSTOMERS
+	where CustomerID = (select DrawerCusNo from BEXPORT_DOCUMETARYCOLLECTION where DocCollectCode = @Code)
+	
+	-----------------------------------------------------------------------
+	declare @Table_CHARGE as table 
+	(
+		DocCollectCode [nvarchar](50),
+		[ChargeAmt] [float],
+		[ChargeCcy] [nvarchar](5),
+		[Chargecode] [nvarchar](50),
+		[Rowchages] [nvarchar](3),
+		[ChargeRemarks] [nvarchar](500) ,
+		[VATNo] [nvarchar](20) ,
+		[ChargeAcct] [nvarchar](20) 
+	)
+	insert into @Table_CHARGE
+	select
+		DocCollectCode ,
+		[ChargeAmt] ,
+		[ChargeCcy] ,
+		[Chargecode],
+		[Rowchages] ,
+		ChargeRemarks,
+		[VATNo],
+		[ChargeAcct]
+	from dbo.BEXPORT_DOCUMETARYCOLLECTIONCHARGES
+	where DocCollectCode = @code;
+	------------------------------------------------------
+	
+	declare @ChargeInfo_1 float	
+	declare @ChargeInfo_2 float
+	declare @ChargeInfo_3 float
+	
+	declare @ChargeInfo_1_ChargeCcy varchar(10)	
+	declare @ChargeInfo_2_ChargeCcy varchar(10)	
+	declare @ChargeInfo_3_ChargeCcy varchar(10)
+		
+	declare @ChargeInfo_1Name nvarchar(500)	
+	declare @ChargeInfo_2Name nvarchar(500)	
+	declare @ChargeInfo_3Name nvarchar(500)	
+	
+	select 
+		@ChargeInfo_1 = ChargeAmt,
+		@ChargeInfo_1_ChargeCcy = ChargeCcy,
+		@ChargeInfo_1Name = Chargecode
+	 from @Table_CHARGE
+	 where Chargecode = 'EC.CABLE'
+	
+	if isnull(@ChargeInfo_1Name, '') != ''
+	begin
+		set @ChargeInfo_1Name = (select Name_VN from dbo.BCHARGECODE where Code = @ChargeInfo_1Name)
+	end 	
+	------------
+	select 
+		@ChargeInfo_2 = ChargeAmt,
+		@ChargeInfo_2_ChargeCcy = ChargeCcy,
+		@ChargeInfo_2Name = Chargecode
+	 from @Table_CHARGE
+	 where Chargecode = 'EC.CANCEL'
+	
+	if isnull(@ChargeInfo_2Name, '') != ''
+	begin
+		set @ChargeInfo_2Name = (select Name_VN from dbo.BCHARGECODE where Code = @ChargeInfo_2Name)
+	end
+	------------
+	select 
+		@ChargeInfo_3 = ChargeAmt,
+		@ChargeInfo_3_ChargeCcy = ChargeCcy,
+		@ChargeInfo_3Name = Chargecode
+	 from @Table_CHARGE
+	 where Chargecode = 'EC.OTHER'	 
+	
+	if isnull(@ChargeInfo_3Name, '') != ''
+	begin
+		set @ChargeInfo_3Name = (select Name_VN from dbo.BCHARGECODE where Code = @ChargeInfo_3Name)
+	end 
+	
+	--------------------------------------------
+	declare @TongSoTienThanhToan float, @TongVAT float
+	select @TongSoTienThanhToan =  sum(cast(isnull(ChargeAmt,'0') as float) + cast(isnull(TaxAmt,'0') as float)), @TongVAT = sum(cast(isnull(TaxAmt,'0') as float))
+	from dbo.BEXPORT_DOCUMETARYCOLLECTIONCHARGES where DocCollectCode = @code and Chargecode IN ('EC.CABLE', 'EC.CANCEL', 'EC.OTHER')
 	
 	declare @Currency varchar(10)
 	if isnull(@ChargeInfo_1_ChargeCcy, '') != ''
