@@ -255,3 +255,58 @@ CREATE TABLE [dbo].[BEXPORT_DOCS_PROCESSING_SETTLEMENT_MT910](
 ) ON [PRIMARY]
 END
 GO
+
+---------------------------------------------------------------------------------
+-- 23 Jan 2015 : Hien : Add TabId column into BEXPORT_LC_CHARGES table
+---------------------------------------------------------------------------------
+if(Not exists(Select COLUMN_NAME  FROM  INFORMATION_SCHEMA.COLUMNS  WHERE  TABLE_NAME = 'BEXPORT_LC_CHARGES' and COLUMN_NAME= 'TabId'))
+BEGIN
+ALTER TABLE BEXPORT_LC_CHARGES
+ADD	[TabId] [int] NULL;
+END
+GO
+
+---------------------------------------------------------------------------------
+-- 23 Jan 2015 : Hien : Add ELC.HANDLE row into BCHARGECODE table
+---------------------------------------------------------------------------------
+if(Not exists(Select Code  FROM BCHARGECODE where Code= 'ELC.HANDLE'))
+BEGIN
+INSERT INTO [dbo].[BCHARGECODE]
+           ([Code]
+           ,[Name_EN]
+           ,[Name_VN]
+           ,[PLAccount]
+           ,[IssueLC]
+           ,[AmmendC]
+           ,[CancelLC]
+           ,[AcceptLC]
+           ,[PaymentLC]
+           ,[InformIC]
+           ,[AmmendIC]
+           ,[CancelIC]
+           ,[AcceptIC]
+           ,[PaymentIC]
+           ,[AdviseELC]
+           ,[AmendELC]
+           ,[ConfirmELC]
+           ,[CancelELC]
+           ,[RejectELC]
+           ,[SettlementELC]
+           ,[RegisterEC]
+           ,[CancelEC]
+           ,[PaymentEC]
+           ,[DocWithDisc]
+           ,[DocWithNoDisc]
+           ,[RejectedDoc]
+           ,[AmendEC]
+           ,[AcceptEC])
+     VALUES
+           ('ELC.HANDLE',
+            'HANDLING CHARGE FOR EXPORT LC',
+            'Phí xử lý BCT nhờ thu xuất',
+            'PL70042',
+			null, null, null, null, null, null, null, null,
+            null, null, null, null, null, null, null, null,
+            null, null, null, null, null, null, null, null)
+End
+GO
