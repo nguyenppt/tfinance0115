@@ -557,6 +557,7 @@ BEGIN
 			   ,[Remarks3]
 			   ,[Status]
 			   ,[CreateDate]
+			   ,[UpdatedDate]
 			   ,[CreateBy]
 			   ,CollectionType
 			   ,CancelDate
@@ -611,6 +612,7 @@ BEGIN
 				, @Remarks2
 				, @Remarks3
 				, 'UNA'
+				, getdate()
 				, getdate()
 				, @CurrentUserId   
 				, @CollectionType
@@ -1243,7 +1245,8 @@ GO
 CREATE PROCEDURE [dbo].[P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Register_Report] 
 	-- Add the parameters for the stored procedure here
 	@Code varchar(50),
-	@UserNameLogin  nvarchar(500)
+	@UserNameLogin  nvarchar(500),
+	@TabID nvarchar(10)
 AS
 BEGIN
 	declare @CurrentDate varchar(12)
@@ -1285,7 +1288,7 @@ BEGIN
 		[VATNo],
 		[ChargeAcct]
 	from dbo.BEXPORT_DOCUMETARYCOLLECTIONCHARGES
-	where DocCollectCode = @code;
+	where DocCollectCode = @code  and TabId = @TabID;
 	------------------------------------------------------
 	
 	declare @ChargeInfo_1 float	
@@ -1337,10 +1340,13 @@ BEGIN
 	end 
 	
 	--------------------------------------------
-	declare @TongSoTienThanhToan float, @TongVAT float
-	select @TongSoTienThanhToan =  sum(cast(isnull(ChargeAmt,'0') as float) + cast(isnull(TaxAmt,'0') as float)), @TongVAT = sum(cast(isnull(TaxAmt,'0') as float))
-	from dbo.BEXPORT_DOCUMETARYCOLLECTIONCHARGES where DocCollectCode = @code and Chargecode IN ('EC.CABLE', 'EC.COURIER', 'EC.OTHER')
+	declare @TongSoTienThanhToan decimal(20,2), @TongVAT float
+	select @TongSoTienThanhToan =  sum(cast(isnull(ChargeAmt,'0') as float))
+	from dbo.BEXPORT_DOCUMETARYCOLLECTIONCHARGES where DocCollectCode = @code and Chargecode IN ('EC.CABLE', 'EC.COURIER', 'EC.OTHER')  and TabId = @TabID
 	
+	set @TongVAT = @TongSoTienThanhToan * 0.1
+	set @TongSoTienThanhToan += @TongVAT
+
 	declare @Currency varchar(10)
 	if isnull(@ChargeInfo_1_ChargeCcy, '') != ''
 	begin
@@ -1494,8 +1500,8 @@ BEGIN
 		e.DrawerCusNo,
 		e.DraweeCusName,
 		e.Currency,
-		dbo.f_CurrencyToText(cast(case when Amend_Status = 'AUT' then abs(Amount - isnull(OldAmount,0))
-		else  abs(isnull(OldAmount,0) - Amount) end as nvarchar(4000)),cc.Code)  SoTienVietBangChu,
+		dbo.f_CurrencyToText(cast(case when Amend_Status = 'AUT' then convert(numeric(30,0), abs(Amount - isnull(OldAmount,0)))
+		else  convert(numeric(30,0),abs(isnull(OldAmount,0) - Amount)) end as nvarchar(4000)),cc.Code)  SoTienVietBangChu,
 		CONVERT(varchar, CONVERT(money,case when Amend_Status = 'AUT' then abs(Amount - isnull(OldAmount,0))
 		else  abs(isnull(OldAmount,0) - Amount) end), 1) Amount,
 	    cc.Vietnamese,
@@ -1624,7 +1630,8 @@ GO
 CREATE  PROCEDURE [dbo].[P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Amend_Report] 
 	-- Add the parameters for the stored procedure here
 	@Code varchar(50),
-	@UserNameLogin  nvarchar(500)
+	@UserNameLogin  nvarchar(500),
+	@TabID nvarchar(10)
 AS
 BEGIN
 	declare @CurrentDate varchar(12)
@@ -1666,7 +1673,7 @@ BEGIN
 		[VATNo],
 		[ChargeAcct]
 	from dbo.BEXPORT_DOCUMETARYCOLLECTIONCHARGES
-	where AmendNo = @code;
+	where AmendNo = @code and TabId = @TabID;
 	------------------------------------------------------
 	
 	declare @ChargeInfo_1 float	
@@ -1733,10 +1740,13 @@ BEGIN
 		set @ChargeInfo_4Name = (select Name_VN from dbo.BCHARGECODE where Code = @ChargeInfo_4Name)
 	end 
 	--------------------------------------------
-	declare @TongSoTienThanhToan float, @TongVAT float
-	select @TongSoTienThanhToan =  sum(cast(isnull(ChargeAmt,'0') as float) + cast(isnull(TaxAmt,'0') as float)), @TongVAT = sum(cast(isnull(TaxAmt,'0') as float))
-	from dbo.BEXPORT_DOCUMETARYCOLLECTIONCHARGES where AmendNo = @code and Chargecode IN ('EC.AMEND', 'EC.CABLE', 'EC.COURIER', 'EC.OTHER')
+	declare @TongSoTienThanhToan decimal(20,2), @TongVAT float
+	select @TongSoTienThanhToan =  sum(cast(isnull(ChargeAmt,'0') as float))
+	from dbo.BEXPORT_DOCUMETARYCOLLECTIONCHARGES where AmendNo = @code and Chargecode IN ('EC.AMEND', 'EC.CABLE', 'EC.COURIER', 'EC.OTHER') and TabId = @TabID
 	
+	set @TongVAT = @TongSoTienThanhToan * 0.1
+	set @TongSoTienThanhToan += @TongVAT
+
 	declare @Currency varchar(10)
 	if isnull(@ChargeInfo_1_ChargeCcy, '') != ''
 	begin
@@ -1815,7 +1825,8 @@ GO
 CREATE PROCEDURE [dbo].[P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Cancel_Report] 
 	-- Add the parameters for the stored procedure here
 	@Code varchar(50),
-	@UserNameLogin  nvarchar(500)
+	@UserNameLogin  nvarchar(500),
+	@TabID nvarchar(10)
 AS
 BEGIN
 	declare @CurrentDate varchar(12)
@@ -1832,7 +1843,7 @@ BEGIN
 	)
 	insert into @TabCus
 	select CustomerName,IdentityNo, [Address], BankAccount, City, Country from BCUSTOMERS
-	where CustomerID = (select DrawerCusNo from BEXPORT_DOCUMETARYCOLLECTION where DocCollectCode = @Code)
+	where CustomerID = (select DrawerCusNo from BEXPORT_DOCUMETARYCOLLECTION where DocCollectCode = @Code and ActiveRecordFlag = 'YES')
 	
 	-----------------------------------------------------------------------
 	declare @Table_CHARGE as table 
@@ -1857,7 +1868,7 @@ BEGIN
 		[VATNo],
 		[ChargeAcct]
 	from dbo.BEXPORT_DOCUMETARYCOLLECTIONCHARGES
-	where DocCollectCode = @code;
+	where DocCollectCode = @code and TabId = @TabID;
 	------------------------------------------------------
 	
 	declare @ChargeInfo_1 float	
@@ -1909,10 +1920,13 @@ BEGIN
 	end 
 	
 	--------------------------------------------
-	declare @TongSoTienThanhToan float, @TongVAT float
-	select @TongSoTienThanhToan =  sum(cast(isnull(ChargeAmt,'0') as float) + cast(isnull(TaxAmt,'0') as float)), @TongVAT = sum(cast(isnull(TaxAmt,'0') as float))
-	from dbo.BEXPORT_DOCUMETARYCOLLECTIONCHARGES where DocCollectCode = @code and Chargecode IN ('EC.CABLE', 'EC.CANCEL', 'EC.OTHER')
+	declare @TongSoTienThanhToan decimal(20,2), @TongVAT float
+	select @TongSoTienThanhToan =  sum(cast(isnull(ChargeAmt,'0') as float))
+	from dbo.BEXPORT_DOCUMETARYCOLLECTIONCHARGES where DocCollectCode = @code and Chargecode IN ('EC.CABLE', 'EC.CANCEL', 'EC.OTHER')  and TabId = @TabID
 	
+	set @TongVAT = @TongSoTienThanhToan * 0.1
+	set @TongSoTienThanhToan += @TongVAT
+
 	declare @Currency varchar(10)
 	if isnull(@ChargeInfo_1_ChargeCcy, '') != ''
 	begin
@@ -1960,7 +1974,7 @@ BEGIN
 		
 		
 	from dbo.BEXPORT_DOCUMETARYCOLLECTION doc
-	where doc.DocCollectCode = @Code
+	where doc.DocCollectCode = @Code and ActiveRecordFlag ='YES'
 END
 GO
 
@@ -2001,4 +2015,274 @@ DECLARE @NumberOfDayStr nvarchar(3)
 SET @NumberOfDayStr = replicate('0', 3 - len(@NumberOfDay)) + cast (@NumberOfDay as varchar)
 --select 'TF-'+CONVERT(nvarchar,right(YEAR(getdate()),2))+CONVERT(nvarchar,DATEDIFF(Day,CONVERT(datetime,'1/1/' + convert(nvarchar,YEAR(getdate()),103)),getdate())) +'-' + @NEW_ID as Code
 select 'TF-'+CONVERT(nvarchar,right(YEAR(getdate()),2))+@NumberOfDayStr +'-' + @NEW_ID as Code
+GO
+
+
+/***
+---------------------------------------------------------------------------------
+-- 15 Jan 2015 : Hien : Add Script for [P_BEXPORTDOCUMETARYCOLLECTION_AMEND_PHIEUXUATNGOAIBANG_Report]
+---------------------------------------------------------------------------------
+***/
+
+IF EXISTS(SELECT * FROM sys.procedures WHERE NAME = 'P_BEXPORTDOCUMETARYCOLLECTION_AMEND_PHIEUXUATNGOAIBANG_Report')
+BEGIN
+DROP PROCEDURE [dbo].[P_BEXPORTDOCUMETARYCOLLECTION_AMEND_PHIEUXUATNGOAIBANG_Report]
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[P_BEXPORTDOCUMETARYCOLLECTION_AMEND_PHIEUXUATNGOAIBANG_Report]    Script Date: 15/01/2015 2:06:15 SA ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[P_BEXPORTDOCUMETARYCOLLECTION_AMEND_PHIEUXUATNGOAIBANG_Report]
+	@Code varchar(50),
+	@CurrentUserLogin nvarchar(250)
+AS
+BEGIN
+--[P_BEXPORTDOCUMETARYCOLLECTION_AMEND_PHIEUXUATNGOAIBANG_Report] 'TF-14245-00110', 'a'
+	
+	declare @CurrentDate varchar(12)
+	set @CurrentDate = CONVERT(VARCHAR(10),GETDATE(),101);	
+	select @CurrentDate as CurrentDate
+	select e.DocCollectCode,
+		@CurrentUserLogin CurrentUserLogin,
+		c.CustomerName,
+		c.IdentityNo,
+		c.[Address],
+		c.City,
+		c.Country,
+		e.DrawerCusNo,
+		e.DraweeCusName,
+		e.Currency,
+		dbo.f_CurrencyToText(cast(
+								case when Amend_Status = 'AUT' 
+									then convert(numeric(30,0), abs(Amount - isnull(OldAmount,0)))
+								else  
+									convert(numeric(30,0), abs(isnull(OldAmount,0) - Amount))
+								 end 
+									as nvarchar(4000)),cc.Code)  SoTienVietBangChu,
+
+		CONVERT(varchar, CONVERT(money,
+										case when Amend_Status = 'AUT' 
+											then convert(numeric(30,0), abs(Amount - isnull(OldAmount,0)))
+										else  convert(numeric(30,0), abs(isnull(OldAmount,0) - Amount)) end), 1) Amount,
+		
+		CONVERT(VARCHAR(10),GETDATE(),101) CurrentDate,
+	    cc.Vietnamese,
+	    DATEPART(m, GETDATE()) as [Month],
+	    DATEPART(d, GETDATE()) as [Day],
+	    DATEPART(yy, GETDATE()) as [Year]
+	from BEXPORT_DOCUMETARYCOLLECTION e
+		left join BCUSTOMERS c on e.DrawerCusNo = c.CustomerID
+		left Join BCURRENCY cc on cc.Code = Currency
+	where (DocCollectCode = @Code OR AmendNo=@Code)
+	AND (ActiveRecordFlag is null OR ActiveRecordFlag='YES')
+END
+GO
+
+/***
+---------------------------------------------------------------------------------
+-- 15 Jan 2015 : Hien : Add Script for [P_BEXPORTDOCUMETARYCOLLECTION_PHIEUNHAPNGOAIBANG1_Report]
+---------------------------------------------------------------------------------
+***/
+
+IF EXISTS(SELECT * FROM sys.procedures WHERE NAME = 'P_BEXPORTDOCUMETARYCOLLECTION_PHIEUNHAPNGOAIBANG1_Report')
+BEGIN
+DROP PROCEDURE [dbo].[P_BEXPORTDOCUMETARYCOLLECTION_PHIEUNHAPNGOAIBANG1_Report]
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[P_BEXPORTDOCUMETARYCOLLECTION_PHIEUNHAPNGOAIBANG1_Report]    Script Date: 15/01/2015 2:06:15 SA ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[P_BEXPORTDOCUMETARYCOLLECTION_PHIEUNHAPNGOAIBANG1_Report]
+	@Code varchar(50),
+	@CurrentUserLogin nvarchar(250)
+AS
+BEGIN
+	declare @CurrentDate varchar(12)
+	set @CurrentDate = CONVERT(VARCHAR(10),GETDATE(),101);	
+	select @CurrentDate as CurrentDate
+	select e.DocCollectCode,
+		@CurrentUserLogin CurrentUserLogin,
+		c.CustomerName,
+		c.IdentityNo,
+		c.[Address],
+		c.City,
+		c.Country,
+		e.DrawerCusNo,
+		e.DraweeCusName,
+		e.Currency,
+		dbo.f_CurrencyToText(convert(numeric(30,0), Amount),cc.Code) as SoTienVietBangChu,		
+		CONVERT(VARCHAR(10),GETDATE(),101) CurrentDate,
+		CONVERT(varchar, CONVERT(money,Amount), 1) Amount,		
+	    cc.Vietnamese,
+	    DATEPART(m, GETDATE()) as [Month],
+	    DATEPART(d, GETDATE()) as [Day],
+	    DATEPART(yy, GETDATE()) as [Year]
+	from BEXPORT_DOCUMETARYCOLLECTION e
+		left join BCUSTOMERS c on e.DrawerCusNo = c.CustomerID
+		left Join BCURRENCY cc on cc.Code = Currency
+	where DocCollectCode = @Code
+	AND (ActiveRecordFlag is null OR ActiveRecordFlag='YES')
+	
+END
+GO
+
+/***
+---------------------------------------------------------------------------------
+-- 15 Jan 2015 : Hien : Add Script for [P_BEXPORTDOCUMETARYCOLLECTION_CANCEL_PHIEUXUATNGOAIBANG_Report]
+---------------------------------------------------------------------------------
+***/
+
+IF EXISTS(SELECT * FROM sys.procedures WHERE NAME = 'P_BEXPORTDOCUMETARYCOLLECTION_CANCEL_PHIEUXUATNGOAIBANG_Report')
+BEGIN
+DROP PROCEDURE [dbo].[P_BEXPORTDOCUMETARYCOLLECTION_CANCEL_PHIEUXUATNGOAIBANG_Report]
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[P_BEXPORTDOCUMETARYCOLLECTION_CANCEL_PHIEUXUATNGOAIBANG_Report]    Script Date: 15/01/2015 2:06:15 SA ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[P_BEXPORTDOCUMETARYCOLLECTION_CANCEL_PHIEUXUATNGOAIBANG_Report]
+	@Code varchar(50),
+	@CurrentUserLogin nvarchar(250)
+AS
+BEGIN
+	
+
+	declare @CurrentDate varchar(12)
+	set @CurrentDate = CONVERT(VARCHAR(10),GETDATE(),101);	
+	select @CurrentDate as CurrentDate
+	select e.DocCollectCode,
+		@CurrentUserLogin CurrentUserLogin,
+		c.CustomerName,
+		c.IdentityNo,
+		c.[Address],
+		c.City,
+		c.Country,
+		e.DrawerCusNo,
+		e.DraweeCusName,
+		e.Currency,
+		dbo.f_CurrencyToText(convert(numeric(30,0), Amount),cc.Code) as SoTienVietBangChu,			
+		CONVERT(VARCHAR(10),GETDATE(),101) CurrentDate,
+		CONVERT(varchar, CONVERT(money,Amount), 1) Amount,			
+	    cc.Vietnamese,
+	    DATEPART(m, GETDATE()) as [Month],
+	    DATEPART(d, GETDATE()) as [Day],
+	    DATEPART(yy, GETDATE()) as [Year]
+	from BEXPORT_DOCUMETARYCOLLECTION e
+		left join BCUSTOMERS c on e.DrawerCusNo = c.CustomerID
+		left Join BCURRENCY cc on cc.Code = Currency
+	where DocCollectCode = @Code
+	AND (ActiveRecordFlag is null OR ActiveRecordFlag='YES')
+END
+GO
+
+/***
+---------------------------------------------------------------------------------
+-- 15 Jan 2015 : Hien : Add Script for [P_BEXPORTDOCUMETARYCOLLECTION_PHIEUNHAPNGOAIBANG2_Report]
+---------------------------------------------------------------------------------
+***/
+
+IF EXISTS(SELECT * FROM sys.procedures WHERE NAME = 'P_BEXPORTDOCUMETARYCOLLECTION_PHIEUNHAPNGOAIBANG2_Report')
+BEGIN
+DROP PROCEDURE [dbo].[P_BEXPORTDOCUMETARYCOLLECTION_PHIEUNHAPNGOAIBANG2_Report]
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[P_BEXPORTDOCUMETARYCOLLECTION_PHIEUNHAPNGOAIBANG2_Report]    Script Date: 15/01/2015 2:06:15 SA ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[P_BEXPORTDOCUMETARYCOLLECTION_PHIEUNHAPNGOAIBANG2_Report]
+	@Code varchar(50),
+	@CurrentUserLogin nvarchar(250)
+AS
+BEGIN
+	declare @CurrentDate varchar(12)
+	set @CurrentDate = CONVERT(VARCHAR(10),GETDATE(),101);	
+	select @CurrentDate as CurrentDate
+	select e.DocCollectCode,
+		@CurrentUserLogin CurrentUserLogin,
+		c.CustomerName,
+		c.IdentityNo,
+		c.[Address],
+		c.City,
+		c.Country,
+		e.DrawerCusNo,
+		e.DraweeCusName,
+		e.Currency,
+		dbo.f_CurrencyToText(convert(numeric(30,0), Amount),cc.Code) as SoTienVietBangChu,	
+		CONVERT(VARCHAR(10),GETDATE(),101) CurrentDate,
+		CONVERT(varchar, CONVERT(money,Amount), 1) Amount,		
+	    cc.Vietnamese,
+		cc.Description CurrencyName,
+	    DATEPART(m, GETDATE()) as [Month],
+	    DATEPART(d, GETDATE()) as [Day],
+	    DATEPART(yy, GETDATE()) as [Year]
+	from BEXPORT_DOCUMETARYCOLLECTION e
+		left join BCUSTOMERS c on e.DrawerCusNo = c.CustomerID
+		left Join BCURRENCY cc on cc.Code = Currency
+	where DocCollectCode = @Code
+	AND (ActiveRecordFlag is null OR ActiveRecordFlag='YES')
+	
+END
+GO
+
+/***
+---------------------------------------------------------------------------------
+-- 15 Jan 2015 : Hien : Add Script for [P_BEXPORTDOCUMETARYCOLLECTION_PHIEUXUATNGOAIBANG1_Report]
+---------------------------------------------------------------------------------
+***/
+
+IF EXISTS(SELECT * FROM sys.procedures WHERE NAME = 'P_BEXPORTDOCUMETARYCOLLECTION_PHIEUXUATNGOAIBANG1_Report')
+BEGIN
+DROP PROCEDURE [dbo].[P_BEXPORTDOCUMETARYCOLLECTION_PHIEUXUATNGOAIBANG1_Report]
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[P_BEXPORTDOCUMETARYCOLLECTION_PHIEUXUATNGOAIBANG1_Report]    Script Date: 15/01/2015 2:06:15 SA ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[P_BEXPORTDOCUMETARYCOLLECTION_PHIEUXUATNGOAIBANG1_Report]
+	@Code varchar(50),
+	@CurrentUserLogin nvarchar(250)
+AS
+BEGIN
+	declare @CurrentDate varchar(12)
+	set @CurrentDate = CONVERT(VARCHAR(10),GETDATE(),101);	
+	select @CurrentDate as CurrentDate
+	select e.DocCollectCode,
+		@CurrentUserLogin CurrentUserLogin,
+		c.CustomerName,
+		c.IdentityNo,
+		c.[Address],
+		c.City,
+		c.Country,
+		e.DrawerCusNo,
+		e.DraweeCusName,
+		e.Currency,
+		dbo.f_CurrencyToText(convert(numeric(30,0), Amount),cc.Code) as SoTienVietBangChu,	
+		CONVERT(VARCHAR(10),GETDATE(),101) CurrentDate,
+		CONVERT(varchar, CONVERT(money,Amount), 1) Amount,		
+	    cc.Vietnamese,
+	    DATEPART(m, GETDATE()) as [Month],
+	    DATEPART(d, GETDATE()) as [Day],
+	    DATEPART(yy, GETDATE()) as [Year]
+	from BEXPORT_DOCUMETARYCOLLECTION e
+		left join BCUSTOMERS c on e.DrawerCusNo = c.CustomerID
+		left Join BCURRENCY cc on cc.Code = Currency
+	where DocCollectCode = @Code
+	AND (ActiveRecordFlag is null OR ActiveRecordFlag='YES')
+	
+END
 GO

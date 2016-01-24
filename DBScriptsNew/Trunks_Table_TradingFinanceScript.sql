@@ -310,3 +310,48 @@ INSERT INTO [dbo].[BCHARGECODE]
             null, null, null, null, null, null, null, null)
 End
 GO
+
+---------------------------------------------------------------------------------
+-- 23 Jan 2015 : Hien : Add ELC.AMEND row into BCHARGECODE table
+---------------------------------------------------------------------------------
+if(Not exists(Select Code  FROM BCHARGECODE where Code= 'ELC.AMEND'))
+BEGIN
+INSERT INTO [dbo].[BCHARGECODE]
+           ([Code]
+           ,[Name_EN]
+           ,[Name_VN]
+           ,[PLAccount]
+           ,[IssueLC]
+           ,[AmmendC]
+           ,[CancelLC]
+           ,[AcceptLC]
+           ,[PaymentLC]
+           ,[InformIC]
+           ,[AmmendIC]
+           ,[CancelIC]
+           ,[AcceptIC]
+           ,[PaymentIC]
+           ,[AdviseELC]
+           ,[AmendELC]
+           ,[ConfirmELC]
+           ,[CancelELC]
+           ,[RejectELC]
+           ,[SettlementELC]
+           ,[RegisterEC]
+           ,[CancelEC]
+           ,[PaymentEC]
+           ,[DocWithDisc]
+           ,[DocWithNoDisc]
+           ,[RejectedDoc]
+           ,[AmendEC]
+           ,[AcceptEC])
+     VALUES
+           ('ELC.AMEND',
+            'AMEND EXPORT LC',
+            'Phí tu chỉnh BCT nhờ thu xuất',
+            'PL70043',
+			null, null, null, null, null, null, null, null,
+            null, null, null, null, null, null, null, null,
+            null, null, null, null, null, null, null, null)
+End
+GO
