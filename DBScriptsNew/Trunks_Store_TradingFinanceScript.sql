@@ -802,20 +802,20 @@ begin
 			@TaiKhoanNo SoTaiKhoanNo, @TenTaiKhoanNo TenTaiKhoanNo,
 			--Currency + cast(DrawingAmount AS VARCHAR) SoTienTaiKhoanNo, 
 			case when Currency = 'JPY' OR Currency = 'VND' 
-				then (REPLACE(CONVERT(varchar, CONVERT(money, cast((DrawingAmount) as decimal(18,0))), 1),'.00','') + ' ' + Currency)
-				else (CONVERT(varchar, CONVERT(money, cast((DrawingAmount) as decimal(18,2))), 1) + ' ' + Currency) end as SoTienTaiKhoanNo,
+				then (REPLACE(CONVERT(varchar, CONVERT(money, cast(convert(numeric(32,0),DrawingAmount) as decimal(18,0))), 1),'.00','') + ' ' + Currency)
+				else (CONVERT(varchar, CONVERT(money, cast(convert(numeric(32,0),DrawingAmount) as decimal(18,2))), 1) + ' ' + Currency) end as SoTienTaiKhoanNo,
 
 			--REPLACE(CONVERT(varchar, CONVERT(money, cast(isnull(DrawingAmount,0) as decimal(18,2))), 1) , '.00', '')+ ' ' + Currency AS SoTienTaiKhoanNo,
-			dbo.f_CurrencyToTextVn((DrawingAmount), Currency) SoTienTaiKhoanNoBangChu,
+			dbo.f_CurrencyToTextVn(convert(numeric(32,0),DrawingAmount), Currency) SoTienTaiKhoanNoBangChu,
 			--Currency + cast(DrawingAmount AS VARCHAR) SoTienTaiKhoanCo, 
 			
 			case when Currency = 'JPY' OR Currency = 'VND' 
-				then (REPLACE(CONVERT(varchar, CONVERT(money, cast((DrawingAmount) as decimal(18,0))), 1),'.00','') + ' ' + Currency)
-				else (CONVERT(varchar, CONVERT(money, cast((DrawingAmount) as decimal(18,2))), 1) + ' ' + Currency) end as SoTienTaiKhoanCo,
+				then (REPLACE(CONVERT(varchar, CONVERT(money, cast(convert(numeric(32,0),DrawingAmount) as decimal(18,0))), 1),'.00','') + ' ' + Currency)
+				else (CONVERT(varchar, CONVERT(money, cast(convert(numeric(32,0),DrawingAmount) as decimal(18,2))), 1) + ' ' + Currency) end as SoTienTaiKhoanCo,
 			
 			--REPLACE(CONVERT(varchar, CONVERT(money, cast(isnull(DrawingAmount,0) as decimal(18,2))), 1), '.00', '') + ' ' + Currency AS SoTienTaiKhoanCo,
 
-			dbo.f_CurrencyToTextVn((DrawingAmount), Currency) SoTienTaiKhoanCoBangChu,
+			dbo.f_CurrencyToTextVn(convert(numeric(32,0),DrawingAmount), Currency) SoTienTaiKhoanCoBangChu,
 			CreditAccount SoTaiKhoanCo, @TenTaiKhoanCo TenTaiKhoanCo, @CollectionType CollectionType
 		from BOUTGOINGCOLLECTIONPAYMENT where PaymentId = @PaymentId
 		
@@ -856,7 +856,7 @@ begin
 			@LCCode LCCode, @UserId CurrentUserLogin, @CustomerName CustomerName, @CustomerID CustomerID, @CustomerIDNo IdentityNo, @Address1 [Address],
 			@CustomerBankAcc BankAccount, @TaiKhoanNo DebitAccount, @TaiKhoanCo CreaditAccount, @VATNo VATNo,
 			SUBSTRING(a.Currency,1,3) + ' ' + CONVERT(varchar, CONVERT(money, @TongSoTienThanhToan), 1) TongSoTienThanhToan, 
-			dbo.f_CurrencyToTextVn(@TongSoTienThanhToan, SUBSTRING(a.Currency,1,3)) SoTienBangChu,
+			dbo.f_CurrencyToTextVn(convert(numeric(32,0),@TongSoTienThanhToan), SUBSTRING(a.Currency,1,3)) SoTienBangChu,
 			SUBSTRING(a.Currency,1,3) + ' ' + CONVERT(varchar, CONVERT(money, @TongVAT), 1) + ' PL90304' VAT, @collType CollectionType
 		into #tblPayment
 		from BOUTGOINGCOLLECTIONPAYMENT a where PaymentId = @PaymentId
@@ -887,7 +887,7 @@ begin
 		select (SELECT DATEPART(d, GETDATE())) as [Day], (SELECT DATEPART(m, GETDATE())) as [Month], (SELECT DATEPART(yy, GETDATE())) as [Year], @UserId CurrentUserLogin,
 		@PaymentId DocCollectCode, @CustomerName CustomerName, @CustomerID IdentityNo, 
 		@Address1 [Address], @Address2 City, @Address3 Country, @Amount Amount, @currency Currency,
-		dbo.f_CurrencyToTextVn(@Amount, SUBSTRING(a.Currency,1,3)) SoTienVietBangChu
+		dbo.f_CurrencyToTextVn(convert(numeric(32,0),@Amount), SUBSTRING(a.Currency,1,3)) SoTienVietBangChu
 		from BOUTGOINGCOLLECTIONPAYMENT a where PaymentId = @PaymentId
 	end 
 end
