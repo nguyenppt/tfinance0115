@@ -1019,7 +1019,7 @@ begin
 			left join #tblCharge b1 on a.Id = b1.PaymentId and b1.ChargeTab = 'ELC.CABLE' and b1.rowchages = 1--'ELC.RECEIVE'
 			left join #tblCharge b2 on a.Id = b2.PaymentId and b2.ChargeTab = 'ELC.CABLE' and b2.rowchages = 2--'ELC.COURIER'
 			left join #tblCharge b3 on a.Id = b3.PaymentId and b3.ChargeTab = 'ELC.OTHER'
-			left join #tblCharge b4 on a.Id = b4.PaymentId and b4.ChargeTab = 'ELC.PAYMENT'
+			left join #tblCharge b4 on a.Id = b4.PaymentId and b4.ChargeTab = 'ELC.SETTLEMENT'
 		
 		return
 	END
@@ -1107,7 +1107,7 @@ BEGIN
 	insert into @TabCus
 	select CustomerName,IdentityNo, [Address],City, Country from BCUSTOMERS
 	where CustomerID = (select DrawerCusNo from BEXPORT_DOCUMETARYCOLLECTION where DocCollectCode = @Code and Currency = @Currency
-								and ActiveRecordFlag = 'YES'
+								and (ActiveRecordFlag = 'YES' or ActiveRecordFlag is NULL)
 						)
 	--------------------------------------------
 	declare @TongSoTienThanhToan decimal(20,2)
@@ -1221,7 +1221,7 @@ BEGIN
 		
 		
 	from dbo.BEXPORT_DOCUMETARYCOLLECTION doc
-	where doc.DocCollectCode = @Code and Currency = @Currency and ActiveRecordFlag = 'YES'
+	where doc.DocCollectCode = @Code and Currency = @Currency and (ActiveRecordFlag = 'YES' or ActiveRecordFlag is NULL)
 END
 GO
 
@@ -1843,7 +1843,7 @@ BEGIN
 	)
 	insert into @TabCus
 	select CustomerName,IdentityNo, [Address], BankAccount, City, Country from BCUSTOMERS
-	where CustomerID = (select DrawerCusNo from BEXPORT_DOCUMETARYCOLLECTION where DocCollectCode = @Code and ActiveRecordFlag = 'YES')
+	where CustomerID = (select DrawerCusNo from BEXPORT_DOCUMETARYCOLLECTION where DocCollectCode = @Code and (ActiveRecordFlag = 'YES' or ActiveRecordFlag is NULL))
 	
 	-----------------------------------------------------------------------
 	declare @Table_CHARGE as table 
