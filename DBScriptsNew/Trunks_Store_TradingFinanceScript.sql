@@ -1974,7 +1974,7 @@ BEGIN
 		
 		
 	from dbo.BEXPORT_DOCUMETARYCOLLECTION doc
-	where doc.DocCollectCode = @Code and ActiveRecordFlag ='YES'
+	where doc.DocCollectCode = @Code and (ActiveRecordFlag = 'YES' or ActiveRecordFlag is NULL)
 END
 GO
 
