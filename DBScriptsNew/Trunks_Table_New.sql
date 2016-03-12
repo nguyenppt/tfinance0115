@@ -51,4 +51,17 @@ INSERT INTO [dbo].[BCHARGECODE]
             null, null, null, null, null, null, null, null,
             null, null, null, null, null, null, null, null)
 End
+
+BEGIN
+UPDATE [dbo].[BCHARGECODE]
+   SET 
+      [SettlementELC] = NULL
+ WHERE Code = 'ELC.PAYMENT'
+
+UPDATE [dbo].[BCHARGECODE]
+   SET 
+      [SettlementELC] = 'x'
+ WHERE Code = 'ELC.SETTLEMENT'
+END
+
 GO
