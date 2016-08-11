@@ -1630,7 +1630,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         }
         */
         //comment code to fix bug 47 end
- 
+
+        protected void rvDrawingAmount_TextChanged(object sender, EventArgs e)
+        {
+            lblCreditAmount.Text = (numDrawingAmount.Value ?? 0).ToString("#,##0.00");
+        }
+
         protected void rcbPartyCharged_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
         {
             var row = e.Item.DataItem as DataRowView;

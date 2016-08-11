@@ -139,8 +139,8 @@ namespace BankProject.TradingFinance
                 var dtBSWIFTCODE = SQLData.B_BSWIFTCODE_GetByCode(txtReviver.Text.Trim());
                 if (dtBSWIFTCODE.Rows.Count > 0)
                 {
-                    lblReviverCode.Text = dtBSWIFTCODE.Rows[0]["Description"].ToString();
-                    txtReviver.Text = dtBSWIFTCODE.Rows[0]["Code"].ToString();
+                    lblReviverCode.Text = dtBSWIFTCODE.Rows[0]["BankName"].ToString();
+                    txtReviver.Text = dtBSWIFTCODE.Rows[0]["SwiftCode"].ToString();
                 }
                 else
                 {
