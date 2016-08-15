@@ -153,9 +153,7 @@
                         <td class="MyLable">1.3  Receiving Amount
                         </td>
                         <td class="MyContent">
-                            <telerik:radnumerictextbox id="numDrawingAmount" runat="server" value="0" 
-                                AutoPostBack="true"
-                                OnTextChanged="rvDrawingAmount_TextChanged"/>
+                            <telerik:radnumerictextbox id="numDrawingAmount" runat="server" value="0" />
                             <asp:RangeValidator
                                 runat="server" Display="None"
                                 ID="rvDrawingAmount"
@@ -2251,11 +2249,6 @@
          <telerik:AjaxSetting AjaxControlID="rcbChargeCcy6">
         <UpdatedControls>
             <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct6" />
-        </UpdatedControls>
-    </telerik:AjaxSetting>
-    <telerik:AjaxSetting AjaxControlID="numDrawingAmount">
-        <UpdatedControls>
-            <telerik:AjaxUpdatedControl ControlID="lblCreditAmount" />
         </UpdatedControls>
     </telerik:AjaxSetting>
     </ajaxsettings>
